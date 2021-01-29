@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["salvo_extra"] = [{"text":"impl Sink&lt;Message&gt; for WebSocket","synthetic":false,"types":[]}];
+implementors["salvo_extra"] = [{"text":"impl Sink&lt;<a class=\"struct\" href=\"salvo_extra/ws/struct.Message.html\" title=\"struct salvo_extra::ws::Message\">Message</a>&gt; for <a class=\"struct\" href=\"salvo_extra/ws/struct.WebSocket.html\" title=\"struct salvo_extra::ws::WebSocket\">WebSocket</a>","synthetic":false,"types":["salvo_extra::ws::WebSocket"]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
