@@ -195,8 +195,8 @@
         <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">HttpError</span>{
             <span class="ident">code</span>: <span class="ident">StatusCode</span>::<span class="ident">INTERNAL_SERVER_ERROR</span>,
             <span class="ident">name</span>: <span class="string">&quot;Internal Server Error&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">summary</span>: <span class="string">&quot;Http read error happened&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">detail</span>: <span class="string">&quot;There is no more detailed explanation.&quot;</span>.<span class="ident">into</span>(),
+            <span class="ident">summary</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;Http read error happened&quot;</span>.<span class="ident">into</span>()),
+            <span class="ident">detail</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;There is no more detailed explanation.&quot;</span>.<span class="ident">into</span>()),
         });
     }
 }</pre></div>

@@ -547,7 +547,7 @@
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">named_file</span>) <span class="op">=</span> <span class="ident">NamedFile</span>::<span class="ident">open</span>(<span class="ident">ipath</span>) {
                             <span class="ident">named_file</span>.<span class="ident">write</span>(<span class="ident">req</span>, <span class="ident">depot</span>, <span class="ident">res</span>).<span class="kw">await</span>;
                         } <span class="kw">else</span> {
-                            <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">InternalServerError</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;file read error&quot;</span>.<span class="ident">into</span>()), <span class="prelude-val">None</span>));
+                            <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">InternalServerError</span>().<span class="ident">set_summary</span>(<span class="string">&quot;file read error&quot;</span>.<span class="ident">into</span>()));
                         }
                         <span class="kw">return</span>;
                     }
@@ -573,13 +573,13 @@
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">named_file</span>) <span class="op">=</span> <span class="ident">NamedFile</span>::<span class="ident">open</span>(<span class="ident">path</span>) {
                     <span class="ident">named_file</span>.<span class="ident">write</span>(<span class="ident">req</span>, <span class="ident">depot</span>, <span class="ident">res</span>).<span class="kw">await</span>;
                 } <span class="kw">else</span> {
-                    <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">InternalServerError</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;file read error&quot;</span>.<span class="ident">into</span>()), <span class="prelude-val">None</span>));
+                    <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">InternalServerError</span>().<span class="ident">set_summary</span>(<span class="string">&quot;file read error&quot;</span>.<span class="ident">into</span>()));
                 }
                 <span class="kw">return</span>;
             }
         }
         <span class="kw">if</span> <span class="op">!</span><span class="ident">path_exist</span> <span class="op">|</span><span class="op">|</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">options</span>.<span class="ident">listing</span> {
-            <span class="ident">res</span>.<span class="ident">not_found</span>();
+            <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">NotFound</span>());
             <span class="kw">return</span>;
         }
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">format</span> <span class="op">=</span> <span class="ident">req</span>.<span class="ident">frist_accept</span>().<span class="ident">unwrap_or</span>(<span class="ident">mime</span>::<span class="ident">TEXT_HTML</span>);

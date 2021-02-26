@@ -146,6 +146,7 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
+<span id="146">146</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">jsonwebtoken</span>::<span class="ident">errors</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">JwtError</span>;
@@ -156,6 +157,7 @@
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">depot</span>::<span class="ident">Depot</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">header</span>::<span class="ident">AUTHORIZATION</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>};
+<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">Handler</span>;
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">JwtHandler</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>
@@ -275,7 +277,7 @@
                         <span class="ident">depot</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="string">&quot;forbidden&quot;</span>);
                     }
                     <span class="kw">if</span> <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">response_error</span> {
-                        <span class="ident">res</span>.<span class="ident">forbidden</span>();
+                        <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">Forbidden</span>());
                     }
                 }
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">config</span>.<span class="ident">context_token_key</span> {
@@ -288,7 +290,7 @@
             <span class="ident">depot</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="string">&quot;unauthorized&quot;</span>);
         }
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">response_error</span> {
-            <span class="ident">res</span>.<span class="ident">unauthorized</span>();
+            <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">Unauthorized</span>());
         }
     }
 }
