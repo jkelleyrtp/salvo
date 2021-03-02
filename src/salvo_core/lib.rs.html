@@ -44,18 +44,22 @@
 <span id="41">41</span>
 <span id="42">42</span>
 <span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">mod</span> <span class="ident">catcher</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">depot</span>;
+<span class="kw">mod</span> <span class="ident">depot</span>;
 <span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">fs</span>;
 <span class="kw">mod</span> <span class="ident">handler</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">http</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">routing</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">server</span>;
+<span class="kw">mod</span> <span class="ident">server</span>;
+<span class="kw">mod</span> <span class="ident">service</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tls&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tls</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">writer</span>;
+<span class="kw">mod</span> <span class="ident">writer</span>;
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">pin_utils</span>;
@@ -69,6 +73,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">routing</span>::<span class="ident">Router</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">server</span>::<span class="ident">Server</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">service</span>::<span class="ident">Service</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tls&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">server</span>::<span class="ident">TlsServer</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">writer</span>::<span class="ident">Writer</span>;
@@ -81,6 +86,7 @@
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">routing</span>::<span class="ident">filter</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">routing</span>::<span class="ident">Router</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">server</span>::<span class="ident">Server</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">service</span>::<span class="ident">Service</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tls&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">server</span>::<span class="ident">TlsServer</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">writer</span>::<span class="kw-2">*</span>;
