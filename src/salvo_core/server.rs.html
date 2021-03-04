@@ -377,8 +377,6 @@
 <span id="374">374</span>
 <span id="375">375</span>
 <span id="376">376</span>
-<span id="377">377</span>
-<span id="378">378</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">future</span>::<span class="ident">Future</span>;
@@ -388,7 +386,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">Mime</span>;
-<span class="kw">use</span> <span class="ident">futures</span>::{ <span class="ident">TryStream</span>, <span class="ident">TryStreamExt</span>};
+<span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">TryStream</span>, <span class="ident">TryStreamExt</span>};
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">accept</span>::{<span class="self">self</span>, <span class="ident">Accept</span>};
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">conn</span>::<span class="ident">AddrIncoming</span>;
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">Server</span> <span class="kw">as</span> <span class="ident">HyperServer</span>;
@@ -396,7 +394,8 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tls&quot;</span>)]</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">tls</span>::{<span class="ident">TlsAcceptor</span>, <span class="ident">TlsConfigBuilder</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Router</span>, <span class="ident">Service</span>, <span class="ident">Catcher</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">transport</span>::<span class="ident">LiftIo</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Catcher</span>, <span class="ident">Router</span>, <span class="ident">Service</span>};
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Server</span> {
     <span class="ident">service</span>: <span class="ident">Service</span>,
@@ -428,16 +427,13 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">create_bind_incoming_hyper_server</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
-        <span class="self">self</span>,
-        <span class="ident">incoming</span>: <span class="ident">S</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hyper</span>::<span class="ident">Server</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">Accept</span><span class="op">&lt;</span><span class="ident">Conn</span> <span class="op">=</span> <span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>, <span class="ident">Service</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">create_bind_incoming_hyper_server</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">incoming</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hyper</span>::<span class="ident">Server</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">Accept</span><span class="op">&lt;</span><span class="ident">Conn</span> <span class="op">=</span> <span class="ident">LiftIo</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span><span class="op">&gt;</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>, <span class="ident">Service</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">TryStream</span> <span class="op">+</span> <span class="ident">Send</span>,
         <span class="ident">S</span>::<span class="prelude-val">Ok</span>: <span class="ident">AsyncRead</span> <span class="op">+</span> <span class="ident">AsyncWrite</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Unpin</span>,
         <span class="ident">S</span>::<span class="ident">Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">StdError</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
-        <span class="self">Self</span>::<span class="ident">builder</span>(<span class="ident">accept</span>::<span class="ident">from_stream</span>(<span class="ident">incoming</span>.<span class="ident">into_stream</span>())).<span class="ident">serve</span>(<span class="self">self</span>.<span class="ident">service</span>)
+        <span class="self">Self</span>::<span class="ident">builder</span>(<span class="ident">accept</span>::<span class="ident">from_stream</span>(<span class="ident">incoming</span>.<span class="ident">map_ok</span>(<span class="ident">LiftIo</span>).<span class="ident">into_stream</span>())).<span class="ident">serve</span>(<span class="self">self</span>.<span class="ident">service</span>)
     }
 
     <span class="doccomment">/// Bind to a socket address, returning a `Future` that can be</span>

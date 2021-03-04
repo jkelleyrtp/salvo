@@ -380,6 +380,18 @@
 <span id="377">377</span>
 <span id="378">378</span>
 <span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">cookie</span>::{<span class="ident">Cookie</span>, <span class="ident">CookieJar</span>};
 <span class="kw">use</span> <span class="ident">double_checked_cell_async</span>::<span class="ident">DoubleCheckedCell</span>;
@@ -393,6 +405,7 @@
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">DeserializeOwned</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="ident">ReadError</span>;
@@ -429,6 +442,7 @@
 
     <span class="doccomment">/// The version of the HTTP protocol used.</span>
     <span class="ident">version</span>: <span class="ident">Version</span>,
+    <span class="ident">remote_addr</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Request</span> {
@@ -489,6 +503,7 @@
             <span class="ident">payload</span>: <span class="ident">DoubleCheckedCell</span>::<span class="ident">new</span>(),
             <span class="comment">// multipart: OnceCell::new(),</span>
             <span class="ident">version</span>,
+            <span class="ident">remote_addr</span>: <span class="prelude-val">None</span>,
         }
     }
 
@@ -517,6 +532,15 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Version</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">version</span>
+    }
+    
+    <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_remote_addr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">remote_addr</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">remote_addr</span> <span class="op">=</span> <span class="ident">remote_addr</span>;
+    }
+    <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_addr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">remote_addr</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
