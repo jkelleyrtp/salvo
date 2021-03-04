@@ -379,13 +379,15 @@
 <span id="376">376</span>
 <span id="377">377</span>
 <span id="378">378</span>
+<span id="379">379</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">cookie</span>::{<span class="ident">Cookie</span>, <span class="ident">CookieJar</span>};
 <span class="kw">use</span> <span class="ident">double_checked_cell_async</span>::<span class="ident">DoubleCheckedCell</span>;
 <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>::{<span class="self">self</span>, <span class="ident">HeaderMap</span>};
 <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">method</span>::<span class="ident">Method</span>;
-<span class="kw">use</span> <span class="ident">http</span>::<span class="ident">version</span>::<span class="ident">Version</span> <span class="kw">as</span> <span class="ident">HttpVersion</span>;
+<span class="kw">use</span> <span class="ident">http</span>::<span class="ident">version</span>::<span class="ident">Version</span>;
 <span class="kw">use</span> <span class="ident">http</span>::{<span class="self">self</span>, <span class="ident">Extensions</span>, <span class="ident">Uri</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">Body</span>;
 <span class="kw">use</span> <span class="ident">multimap</span>::<span class="ident">MultiMap</span>;
 <span class="kw">use</span> <span class="ident">once_cell</span>::<span class="ident">sync</span>::<span class="ident">OnceCell</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">DeserializeOwned</span>;
@@ -396,7 +398,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="ident">ReadError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">form</span>::{<span class="self">self</span>, <span class="ident">FilePart</span>, <span class="ident">FormData</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">header</span>::<span class="ident">HeaderValue</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::{<span class="ident">Body</span>, <span class="ident">Mime</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">Mime</span>;
 
 <span class="doccomment">/// The `Request` given to all `Middleware`.</span>
 <span class="doccomment">///</span>
@@ -426,7 +428,7 @@
     <span class="ident">payload</span>: <span class="ident">DoubleCheckedCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 
     <span class="doccomment">/// The version of the HTTP protocol used.</span>
-    <span class="ident">version</span>: <span class="ident">HttpVersion</span>,
+    <span class="ident">version</span>: <span class="ident">Version</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Request</span> {
@@ -445,7 +447,7 @@
     <span class="doccomment">/// Create a request from an hyper::Request.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This constructor consumes the hyper::Request.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_hyper</span>(<span class="ident">req</span>: <span class="ident">hyper</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Body</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Request</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_hyper</span>(<span class="ident">req</span>: <span class="ident">hyper</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Body</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span> {
         <span class="kw">let</span> (
             <span class="ident">http</span>::<span class="ident">request</span>::<span class="ident">Parts</span> {
                 <span class="ident">method</span>,
@@ -473,7 +475,7 @@
             <span class="ident">CookieJar</span>::<span class="ident">new</span>()
         };
 
-        <span class="prelude-val">Ok</span>(<span class="ident">Request</span> {
+        <span class="ident">Request</span> {
             <span class="ident">queries</span>: <span class="ident">OnceCell</span>::<span class="ident">new</span>(),
             <span class="ident">uri</span>,
             <span class="ident">headers</span>,
@@ -487,7 +489,7 @@
             <span class="ident">payload</span>: <span class="ident">DoubleCheckedCell</span>::<span class="ident">new</span>(),
             <span class="comment">// multipart: OnceCell::new(),</span>
             <span class="ident">version</span>,
-        })
+        }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -509,11 +511,11 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">HttpVersion</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Version</span> {
         <span class="self">self</span>.<span class="ident">version</span>
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">HttpVersion</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Version</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">version</span>
     }
 

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Body","A stream of `Bytes`, used when receiving bodies."],["Request","The `Request` given to all `Middleware`."]],"trait":[["BodyReader",""]]});

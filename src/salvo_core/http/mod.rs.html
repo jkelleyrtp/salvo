@@ -40,7 +40,6 @@
 <span id="37">37</span>
 <span id="38">38</span>
 <span id="39">39</span>
-<span id="40">40</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// #![feature(specialization)]</span>
 <span class="comment">// #![feature(proc_macro_hygiene)]</span>
@@ -61,18 +60,17 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">form</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">multipart</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">range</span>;
-<span class="kw">mod</span> <span class="ident">request</span>;
-<span class="kw">mod</span> <span class="ident">response</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">request</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">response</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">body_chunk</span>::<span class="ident">BodyChunk</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cookie</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">method</span>::<span class="ident">Method</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::{<span class="ident">HeaderMap</span>, <span class="ident">HeaderValue</span>, <span class="ident">StatusCode</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">Body</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">mime</span>::<span class="ident">Mime</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">range</span>::<span class="ident">HttpRange</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">request</span>::<span class="ident">Request</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">response</span>::{<span class="ident">Response</span>, <span class="ident">ResponseBody</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">response</span>::<span class="ident">Response</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">HttpError</span>, <span class="ident">ReadError</span>};
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">header</span>;

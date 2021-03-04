@@ -149,7 +149,7 @@
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
 <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>::<span class="ident">HeaderValue</span>;
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">header</span>::{<span class="ident">CONTENT_ENCODING</span>, <span class="ident">CONTENT_LENGTH</span>, <span class="ident">CONTENT_TYPE</span>};
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">ResponseBody</span>;
+<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">response</span>::<span class="ident">Body</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">tokio_stream</span>::{<span class="self">self</span>, <span class="ident">StreamExt</span>};
 <span class="kw">use</span> <span class="ident">tokio_util</span>::<span class="ident">io</span>::{<span class="ident">ReaderStream</span>, <span class="ident">StreamReader</span>};
@@ -208,7 +208,7 @@
             <span class="kw">return</span>;
         }
         <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">take_body</span>().<span class="ident">unwrap</span>();
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ResponseBody</span>::<span class="ident">Empty</span> <span class="op">=</span> <span class="ident">body</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Body</span>::<span class="ident">Empty</span> <span class="op">=</span> <span class="ident">body</span> {
             <span class="kw">return</span>;
         }
         <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="ident">body</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="ident">item</span>.<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>));
