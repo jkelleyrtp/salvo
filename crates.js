@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["salvo","salvo_core","salvo_extra","salvo_macros"];
