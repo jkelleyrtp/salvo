@@ -455,7 +455,7 @@
         <span class="self">Self</span>::<span class="ident">builder</span>(<span class="ident">accept</span>::<span class="ident">from_stream</span>(<span class="ident">incoming</span>.<span class="ident">map_ok</span>(<span class="ident">LiftIo</span>).<span class="ident">into_stream</span>())).<span class="ident">serve</span>(<span class="self">self</span>.<span class="ident">service</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">start</span>(<span class="self">self</span>, <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">start</span>(<span class="self">self</span>, <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>) {
         <span class="self">self</span>.<span class="ident">start_with_threads</span>(<span class="ident">addr</span>, <span class="ident">num_cpus</span>::<span class="ident">get</span>())
     }
 
@@ -738,7 +738,7 @@
         <span class="prelude-val">Ok</span>((<span class="ident">addr</span>, <span class="ident">srv</span>))
     }
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">start</span>(<span class="self">self</span>, <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">start</span>(<span class="self">self</span>, <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>) {
         <span class="self">self</span>.<span class="ident">start_with_threads</span>(<span class="ident">addr</span>, <span class="ident">num_cpus</span>::<span class="ident">get</span>())
     }
 
