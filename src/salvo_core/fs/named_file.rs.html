@@ -434,7 +434,6 @@
 <span id="431">431</span>
 <span id="432">432</span>
 <span id="433">433</span>
-<span id="434">434</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::{<span class="ident">File</span>, <span class="ident">Metadata</span>};
@@ -622,10 +621,9 @@
     <span class="doccomment">/// ```rust</span>
     <span class="doccomment">/// # use std::io;</span>
     <span class="doccomment">/// # use salvo_core::fs::NamedFile;</span>
-    <span class="doccomment">/// # fn path() -&gt; io::Result&lt;()&gt; {</span>
-    <span class="doccomment">/// let file = NamedFile::open(&quot;test.txt&quot;.into())?;</span>
-    <span class="doccomment">/// assert_eq!(file.path().as_os_str(), &quot;foo.txt&quot;);</span>
-    <span class="doccomment">/// # Ok(())</span>
+    <span class="doccomment">/// # fn path() {</span>
+    <span class="doccomment">///     let file = NamedFile::open(&quot;test.txt&quot;.into()).unwrap();</span>
+    <span class="doccomment">///     assert_eq!(file.path().as_os_str(), &quot;foo.txt&quot;);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
