@@ -102,6 +102,14 @@
 <span id="99"> 99</span>
 <span id="100">100</span>
 <span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">mod</span> <span class="ident">and</span>;
 <span class="kw">mod</span> <span class="ident">and_then</span>;
@@ -180,27 +188,35 @@
     }
 }
 
+<span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">path</span>(<span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PathFilter</span> {
     <span class="ident">PathFilter</span>::<span class="ident">new</span>(<span class="ident">path</span>)
 }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
     <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">GET</span>)
 }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">head</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
     <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">HEAD</span>)
 }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">options</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
     <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">OPTIONS</span>)
 }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">post</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
     <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">POST</span>)
 }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">patch</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
     <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">PATCH</span>)
 }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">put</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
     <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">PUT</span>)
 }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delete</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
     <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">DELETE</span>)
 }
