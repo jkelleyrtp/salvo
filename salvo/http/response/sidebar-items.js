@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Body",""]],"struct":[["Response","The response representation given to `Middleware`"]]});
+initSidebarItems({"enum":[["Body",""]],"struct":[["Response","Represents an HTTP response"]]});

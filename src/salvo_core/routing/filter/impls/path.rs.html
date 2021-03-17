@@ -366,6 +366,18 @@
 <span id="363">363</span>
 <span id="364">364</span>
 <span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
@@ -527,7 +539,11 @@
                 <span class="kw">break</span>;
             }
         }
-        <span class="prelude-val">Ok</span>(<span class="ident">ident</span>)
+        <span class="kw">if</span> <span class="ident">ident</span>.<span class="ident">is_empty</span>() {
+            <span class="prelude-val">Err</span>(<span class="string">&quot;ident segment is empty&quot;</span>.<span class="ident">to_owned</span>())
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">ident</span>)
+        }
     }
     <span class="kw">fn</span> <span class="ident">scan_regex</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">regex</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>();
@@ -549,7 +565,11 @@
                 <span class="kw">break</span>;
             }
         }
-        <span class="prelude-val">Ok</span>(<span class="ident">regex</span>)
+        <span class="kw">if</span> <span class="ident">regex</span>.<span class="ident">is_empty</span>() {
+            <span class="prelude-val">Err</span>(<span class="string">&quot;regex segment is empty&quot;</span>.<span class="ident">to_owned</span>())
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">regex</span>)
+        }
     }
     <span class="kw">fn</span> <span class="ident">scan_const</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cnst</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>();
@@ -562,7 +582,11 @@
                 <span class="kw">break</span>;
             }
         }
-        <span class="prelude-val">Ok</span>(<span class="ident">cnst</span>)
+        <span class="kw">if</span> <span class="ident">cnst</span>.<span class="ident">is_empty</span>() {
+            <span class="prelude-val">Err</span>(<span class="string">&quot;const segment is empty&quot;</span>.<span class="ident">to_owned</span>())
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">cnst</span>)
+        }
     }
     <span class="kw">fn</span> <span class="ident">scan_segment</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Segment</span><span class="op">&gt;</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">const_seg</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>();

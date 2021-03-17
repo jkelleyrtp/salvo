@@ -440,6 +440,8 @@
 <span id="437">437</span>
 <span id="438">438</span>
 <span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>;
@@ -484,7 +486,7 @@
         <span class="ident">Body</span>::<span class="ident">Stream</span>(<span class="ident">Box</span>::<span class="ident">pin</span>(<span class="ident">hbody</span>.<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span><span class="ident">e</span>.<span class="ident">into_cause</span>().<span class="ident">unwrap</span>()).<span class="ident">into_stream</span>()))
     }
 }
-<span class="doccomment">/// The response representation given to `Middleware`</span>
+<span class="doccomment">/// Represents an HTTP response</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Response</span> {
     <span class="doccomment">/// The response status-code.</span>
     <span class="ident">status_code</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">StatusCode</span><span class="op">&gt;</span>,
@@ -496,8 +498,13 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">body</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Body</span><span class="op">&gt;</span>,
     <span class="ident">is_commited</span>: <span class="ident">bool</span>,
 }
-
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">new</span>()
+    }
+}
 <span class="kw">impl</span> <span class="ident">Response</span> {
+     <span class="doccomment">/// Creates a new blank `Response`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
         <span class="ident">Response</span> {
             <span class="ident">status_code</span>: <span class="prelude-val">None</span>,
@@ -543,7 +550,7 @@
             <span class="ident">status_code</span>: <span class="prelude-val">Some</span>(<span class="ident">status</span>),
             <span class="ident">http_error</span>: <span class="prelude-val">None</span>,
             <span class="ident">body</span>: <span class="prelude-val">Some</span>(<span class="ident">body</span>.<span class="ident">into</span>()),
-            <span class="ident">version</span>: <span class="ident">version</span>,
+            <span class="ident">version</span>,
             <span class="ident">headers</span>,
             <span class="ident">cookies</span>,
             <span class="ident">is_commited</span>: <span class="bool-val">false</span>,
@@ -589,9 +596,6 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">take_body</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Body</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">body</span>.<span class="ident">take</span>()
     }
-    <span class="comment">// pub fn insert_header&lt;K&gt;(&amp;mut self, key: K, val: T) -&gt; Option&lt;T&gt; where K: IntoHeaderName,</span>
-    <span class="comment">//     self.headers.insert(key, val)</span>
-    <span class="comment">// }</span>
 
     <span class="comment">// `write_back` is used to put all the data added to `self`</span>
     <span class="comment">// back onto an `hyper::Response` so that it is sent back to the</span>
