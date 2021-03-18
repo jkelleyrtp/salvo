@@ -193,8 +193,8 @@
     <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_req</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Request</span>, <span class="ident">_depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Depot</span>, <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) {
         <span class="ident">res</span>.<span class="ident">set_http_error</span>(
             <span class="ident">InternalServerError</span>()
-                .<span class="ident">with_summary</span>(<span class="string">&quot;http read error happened&quot;</span>.<span class="ident">into</span>())
-                .<span class="ident">with_detail</span>(<span class="string">&quot;there is no more detailed explanation.&quot;</span>.<span class="ident">into</span>()),
+                .<span class="ident">with_summary</span>(<span class="string">&quot;http read error happened&quot;</span>)
+                .<span class="ident">with_detail</span>(<span class="string">&quot;there is no more detailed explanation.&quot;</span>),
         );
     }
 }

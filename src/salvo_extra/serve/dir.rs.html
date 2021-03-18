@@ -579,7 +579,7 @@
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">named_file</span>) <span class="op">=</span> <span class="ident">NamedFile</span>::<span class="ident">open</span>(<span class="ident">ipath</span>) {
                             <span class="ident">named_file</span>.<span class="ident">write</span>(<span class="ident">req</span>, <span class="ident">depot</span>, <span class="ident">res</span>).<span class="kw">await</span>;
                         } <span class="kw">else</span> {
-                            <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">InternalServerError</span>().<span class="ident">with_summary</span>(<span class="string">&quot;file read error&quot;</span>.<span class="ident">into</span>()));
+                            <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">InternalServerError</span>().<span class="ident">with_summary</span>(<span class="string">&quot;file read error&quot;</span>));
                         }
                         <span class="kw">return</span>;
                     }
@@ -605,7 +605,7 @@
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">named_file</span>) <span class="op">=</span> <span class="ident">NamedFile</span>::<span class="ident">open</span>(<span class="ident">path</span>) {
                     <span class="ident">named_file</span>.<span class="ident">write</span>(<span class="ident">req</span>, <span class="ident">depot</span>, <span class="ident">res</span>).<span class="kw">await</span>;
                 } <span class="kw">else</span> {
-                    <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">InternalServerError</span>().<span class="ident">with_summary</span>(<span class="string">&quot;file read error&quot;</span>.<span class="ident">into</span>()));
+                    <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">InternalServerError</span>().<span class="ident">with_summary</span>(<span class="string">&quot;file read error&quot;</span>));
                 }
                 <span class="kw">return</span>;
             }
