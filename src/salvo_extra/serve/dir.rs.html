@@ -370,8 +370,6 @@
 <span id="367">367</span>
 <span id="368">368</span>
 <span id="369">369</span>
-<span id="370">370</span>
-<span id="371">371</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
 <span class="kw">use</span> <span class="ident">chrono</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
@@ -657,11 +655,11 @@
         .<span class="ident">join</span>(<span class="string">&quot;&quot;</span>))
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ftxt</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-        <span class="string">&quot;&lt;!DOCTYPE html&gt;
+        <span class="string">r#&quot;&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
-        &lt;meta charset=\&quot;utf-8\&quot;&gt;
-        &lt;meta name=\&quot;viewport\&quot; content=\&quot;width=device-width\&quot;&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;&gt;
         &lt;title&gt;{}&lt;/title&gt;
         &lt;style&gt;
         :root {{
@@ -674,19 +672,17 @@
         }}
         body {{background: var(--bg-color); color: var(--text-color);}}
         a{{text-decoration:none;color:var(--link-color);}}
-        a:visited {{
-            color: var(--link-visited-color);
-          }}
-        a:hover{{text-decoration:underline;}}
-        footer{{text-align:center;font-size:12px;}}
-        table{{text-align:left;border-collapse: collapse;}}
-        tr{{border-bottom: solid 1px #ccc;}}
+        a:visited {{color: var(--link-visited-color);}}
+        a:hover {{text-decoration:underline;}}
+        footer {{text-align:center;font-size:12px;}}
+        table {{text-align:left;border-collapse: collapse;}}
+        tr {{border-bottom: solid 1px #ccc;}}
         tr:last-child {{border-bottom: none;}}
         th, td {{padding: 5px;}}
-        th:first-child,td:first-child{{text-align: center;}}
-        svg[data-icon=\&quot;dir\&quot;] {{vertical-align: text-bottom; color: var(--dir-icon-color); fill: currentColor;}}
-        svg[data-icon=\&quot;file\&quot;] {{vertical-align: text-bottom; color: var(--file-icon-color); fill: currentColor;}}
-        svg[data-icon=\&quot;home\&quot;] {{width:24px;vertical-align: bottom;}}
+        th:first-child,td:first-child {{text-align: center;}}
+        svg[data-icon=&quot;dir&quot;] {{vertical-align: text-bottom; color: var(--dir-icon-color); fill: currentColor;}}
+        svg[data-icon=&quot;file&quot;] {{vertical-align: text-bottom; color: var(--file-icon-color); fill: currentColor;}}
+        svg[data-icon=&quot;home&quot;] {{width:24px;vertical-align: bottom;}}
         @media (prefers-color-scheme: dark) {{
             :root {{
                 --bg-color: #222;
@@ -702,7 +698,7 @@
     &lt;body&gt;
         &lt;header&gt;&lt;h3&gt;Index of: {}&lt;/h3&gt;&lt;/header&gt;
         &lt;hr/&gt;
-&quot;</span>,
+&quot;#</span>,
         <span class="ident">current</span>.<span class="ident">path</span>,
         <span class="ident">header_links</span>(<span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">path</span>)
     );
@@ -716,7 +712,7 @@
         <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Last modified&lt;/th&gt;&lt;th&gt;Size&lt;/th&gt;&lt;/tr&gt;&quot;</span>);
         <span class="kw">for</span> <span class="ident">dir</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">dirs</span> {
             <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
-                <span class="string">&quot;&lt;tr&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;a href=\&quot;./{}/\&quot;&gt;{}&lt;/a&gt;&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&quot;</span>,
+                <span class="string">r#&quot;&lt;tr&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;./{}/&quot;&gt;{}&lt;/a&gt;&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&quot;#</span>,
                 <span class="ident">DIR_ICON</span>,
                 <span class="ident">encode_url_path</span>(<span class="kw-2">&amp;</span><span class="ident">dir</span>.<span class="ident">name</span>),
                 <span class="ident">dir</span>.<span class="ident">name</span>,
@@ -725,7 +721,7 @@
         }
         <span class="kw">for</span> <span class="ident">file</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">files</span> {
             <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
-                <span class="string">&quot;&lt;tr&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;a href=\&quot;./{}\&quot;&gt;{}&lt;/a&gt;&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;/tr&gt;&quot;</span>,
+                <span class="string">r#&quot;&lt;tr&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;./{}&quot;&gt;{}&lt;/a&gt;&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;/tr&gt;&quot;#</span>,
                 <span class="ident">FILE_ICON</span>,
                 <span class="ident">encode_url_path</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>.<span class="ident">name</span>),
                 <span class="ident">file</span>.<span class="ident">name</span>,
@@ -735,15 +731,15 @@
         }
         <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;/table&gt;&quot;</span>);
     }
-    <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;hr/&gt;&lt;footer&gt;&lt;a href=\&quot;https://salvo.rs\&quot; target=\&quot;_blank\&quot;&gt;salvo&lt;/a&gt;&lt;/footer&gt;&lt;/body&gt;&quot;</span>);
+    <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">r#&quot;&lt;hr/&gt;&lt;footer&gt;&lt;a href=&quot;https://salvo.rs&quot; target=&quot;_blank&quot;&gt;salvo&lt;/a&gt;&lt;/footer&gt;&lt;/body&gt;&quot;#</span>);
     <span class="ident">ftxt</span>
 }
 <span class="kw">fn</span> <span class="ident">list_text</span>(<span class="ident">current</span>: <span class="kw-2">&amp;</span><span class="ident">CurrentInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
     <span class="macro">json</span><span class="macro">!</span>(<span class="ident">current</span>).<span class="ident">to_string</span>()
 }
 
-<span class="kw">const</span> <span class="ident">DIR_ICON</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;&lt;svg aria-label=&quot;Directory&quot; data-icon=\&quot;dir\&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 512 512&quot; version=&quot;1.1&quot; role=&quot;img&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M464 128H272l-64-64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&quot;#</span>;
-<span class="kw">const</span> <span class="ident">FILE_ICON</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;&lt;svg aria-label=&quot;File&quot; data-icon=\&quot;file\&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 384 512&quot; version=&quot;1.1&quot; role=&quot;img&quot;&gt;&lt;path d=&quot;M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48z&quot;/&gt;&lt;/svg&gt;&quot;#</span>;
+<span class="kw">const</span> <span class="ident">DIR_ICON</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;&lt;svg aria-label=&quot;Directory&quot; data-icon=&quot;dir&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 512 512&quot; version=&quot;1.1&quot; role=&quot;img&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M464 128H272l-64-64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&quot;#</span>;
+<span class="kw">const</span> <span class="ident">FILE_ICON</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;&lt;svg aria-label=&quot;File&quot; data-icon=&quot;file&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 384 512&quot; version=&quot;1.1&quot; role=&quot;img&quot;&gt;&lt;path d=&quot;M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48z&quot;/&gt;&lt;/svg&gt;&quot;#</span>;
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="salvo_extra" data-search-js="../../../search-index.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
