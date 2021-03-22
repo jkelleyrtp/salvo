@@ -361,6 +361,17 @@
 <span id="358">358</span>
 <span id="359">359</span>
 <span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
 <span class="kw">use</span> <span class="ident">chrono</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
@@ -459,14 +470,14 @@
     }
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">struct</span> <span class="ident">BaseInfo</span> {
+<span class="kw">struct</span> <span class="ident">CurrentInfo</span> {
     <span class="ident">path</span>: <span class="ident">String</span>,
     <span class="ident">files</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FileInfo</span><span class="op">&gt;</span>,
     <span class="ident">dirs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">DirInfo</span><span class="op">&gt;</span>,
 }
-<span class="kw">impl</span> <span class="ident">BaseInfo</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">path</span>: <span class="ident">String</span>, <span class="ident">files</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FileInfo</span><span class="op">&gt;</span>, <span class="ident">dirs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">DirInfo</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BaseInfo</span> {
-        <span class="ident">BaseInfo</span> { <span class="ident">path</span>, <span class="ident">files</span>, <span class="ident">dirs</span> }
+<span class="kw">impl</span> <span class="ident">CurrentInfo</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">path</span>: <span class="ident">String</span>, <span class="ident">files</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FileInfo</span><span class="op">&gt;</span>, <span class="ident">dirs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">DirInfo</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CurrentInfo</span> {
+        <span class="ident">CurrentInfo</span> { <span class="ident">path</span>, <span class="ident">files</span>, <span class="ident">dirs</span> }
     }
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>)]</span>
@@ -574,7 +585,7 @@
         <span class="ident">files</span>.<span class="ident">sort_by</span>(<span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">name</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>.<span class="ident">name</span>));
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dirs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">DirInfo</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">dirs</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">name</span>, <span class="ident">metadata</span>)<span class="op">|</span> <span class="ident">DirInfo</span>::<span class="ident">new</span>(<span class="ident">name</span>, <span class="ident">metadata</span>)).<span class="ident">collect</span>();
         <span class="ident">dirs</span>.<span class="ident">sort_by</span>(<span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">name</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>.<span class="ident">name</span>));
-        <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">BaseInfo</span>::<span class="ident">new</span>(<span class="ident">decode_url_path_safely</span>(<span class="ident">req_path</span>), <span class="ident">files</span>, <span class="ident">dirs</span>);
+        <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">CurrentInfo</span>::<span class="ident">new</span>(<span class="ident">decode_url_path_safely</span>(<span class="ident">req_path</span>), <span class="ident">files</span>, <span class="ident">dirs</span>);
         <span class="kw">match</span> <span class="ident">format</span>.<span class="ident">subtype</span>().<span class="ident">as_ref</span>() {
             <span class="string">&quot;text&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">res</span>.<span class="ident">render_plain_text</span>(<span class="kw-2">&amp;</span><span class="ident">list_text</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>)),
             <span class="string">&quot;json&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">res</span>.<span class="ident">render_json_text</span>(<span class="kw-2">&amp;</span><span class="ident">list_json</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>)),
@@ -603,16 +614,16 @@
         .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
 }
 
-<span class="kw">fn</span> <span class="ident">list_json</span>(<span class="ident">root</span>: <span class="kw-2">&amp;</span><span class="ident">BaseInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-    <span class="macro">json</span><span class="macro">!</span>(<span class="ident">root</span>).<span class="ident">to_string</span>()
+<span class="kw">fn</span> <span class="ident">list_json</span>(<span class="ident">current</span>: <span class="kw-2">&amp;</span><span class="ident">CurrentInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="macro">json</span><span class="macro">!</span>(<span class="ident">current</span>).<span class="ident">to_string</span>()
 }
-<span class="kw">fn</span> <span class="ident">list_xml</span>(<span class="ident">root</span>: <span class="kw-2">&amp;</span><span class="ident">BaseInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">fn</span> <span class="ident">list_xml</span>(<span class="ident">current</span>: <span class="kw-2">&amp;</span><span class="ident">CurrentInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ftxt</span> <span class="op">=</span> <span class="string">&quot;&lt;list&gt;&quot;</span>.<span class="ident">to_owned</span>();
-    <span class="kw">if</span> <span class="ident">root</span>.<span class="ident">dirs</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="ident">root</span>.<span class="ident">files</span>.<span class="ident">is_empty</span>() {
+    <span class="kw">if</span> <span class="ident">current</span>.<span class="ident">dirs</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">files</span>.<span class="ident">is_empty</span>() {
         <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;No files&quot;</span>);
     } <span class="kw">else</span> {
         <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;table&gt;&quot;</span>);
-        <span class="kw">for</span> <span class="ident">dir</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">root</span>.<span class="ident">dirs</span> {
+        <span class="kw">for</span> <span class="ident">dir</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">dirs</span> {
             <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
                 <span class="string">&quot;&lt;dir&gt;&lt;name&gt;{}&lt;/name&gt;&lt;modified&gt;{}&lt;/modified&gt;&lt;link&gt;{}&lt;/link&gt;&lt;/dir&gt;&quot;</span>,
                 <span class="ident">dir</span>.<span class="ident">name</span>,
@@ -620,7 +631,7 @@
                 <span class="ident">encode_url_path</span>(<span class="kw-2">&amp;</span><span class="ident">dir</span>.<span class="ident">name</span>),
             ));
         }
-        <span class="kw">for</span> <span class="ident">file</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">root</span>.<span class="ident">files</span> {
+        <span class="kw">for</span> <span class="ident">file</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">files</span> {
             <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
                 <span class="string">&quot;&lt;file&gt;&lt;name&gt;{}&lt;/name&gt;&lt;modified&gt;{}&lt;/modified&gt;&lt;size&gt;{}&lt;/size&gt;&lt;link&gt;{}&lt;/link&gt;&lt;/file&gt;&quot;</span>,
                 <span class="ident">file</span>.<span class="ident">name</span>,
@@ -634,7 +645,17 @@
     <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;/list&gt;&quot;</span>);
     <span class="ident">ftxt</span>
 }
-<span class="kw">fn</span> <span class="ident">list_html</span>(<span class="ident">root</span>: <span class="kw-2">&amp;</span><span class="ident">BaseInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">fn</span> <span class="ident">list_html</span>(<span class="ident">current</span>: <span class="kw-2">&amp;</span><span class="ident">CurrentInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">header_links</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">trim_start_matches</span>(<span class="string">&quot;/&quot;</span>).<span class="ident">trim_end_matches</span>(<span class="string">&quot;/&quot;</span>).<span class="ident">split</span>(<span class="string">&#39;/&#39;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">link</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>();
+        <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}{}&quot;</span>, <span class="string">&quot;&lt;a href=\&quot;/\&quot;&gt;&lt;svg aria-hidden=\&quot;true\&quot; data-icon=\&quot;home\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; viewBox=\&quot;0 0 576 512\&quot;&gt;&lt;path fill=\&quot;currentColor\&quot; d=\&quot;M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z\&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;&quot;</span>, <span class="ident">segments</span>
+        .<span class="ident">map</span>(<span class="op">|</span><span class="ident">seg</span><span class="op">|</span> {
+            <span class="ident">link</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="ident">link</span>, <span class="ident">seg</span>);
+            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;/&lt;a href=\&quot;{}\&quot;&gt;{}&lt;/a&gt;&quot;</span>, <span class="ident">link</span>, <span class="ident">seg</span>)
+        }).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
+        .<span class="ident">join</span>(<span class="string">&quot;&quot;</span>))
+    }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ftxt</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
         <span class="string">&quot;&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -646,32 +667,32 @@
         :root {{
             --bg-color: #fff;
             --text-color: #222;
+            --link-color: #0366d6;
+            --link-visited-color: #f22526;
             --dir-icon-color: #79b8ff;
             --file-icon-color: #959da5;
         }}
-        body {{
-            background: var(--bg-color);
-            color: var(--text-color);
-        }}
+        body {{background: var(--bg-color); color: var(--text-color);}}
+        a{{text-decoration:none;color:var(--link-color);}}
+        a:visited {{
+            color: var(--link-visited-color);
+          }}
+        a:hover{{text-decoration:underline;}}
         footer{{text-align:center;}}
         table{{text-align:left;border-collapse: collapse;}}
         tr{{border-bottom: solid 1px #ccc;}}
+        tr:last-child {{border-bottom: none;}}
         th, td {{padding: 5px;}}
         th:first-child,td:first-child{{text-align: center;}}
-        .dir-icon {{
-            vertical-align: text-bottom;
-            color: var(--dir-icon-color);
-            fill: currentColor;
-        }}
-        .file-icon {{
-            vertical-align: text-bottom;
-            color: var(--file-icon-color);
-            fill: currentColor;
-        }}
+        svg[data-icon=\&quot;dir\&quot;] {{vertical-align: text-bottom; color: var(--dir-icon-color); fill: currentColor;}}
+        svg[data-icon=\&quot;file\&quot;] {{vertical-align: text-bottom; color: var(--file-icon-color); fill: currentColor;}}
+        svg[data-icon=\&quot;home\&quot;] {{width:24px;vertical-align: bottom;}}
         @media (prefers-color-scheme: dark) {{
             :root {{
                 --bg-color: #222;
                 --text-color: #ddd;
+                --link-color: #539bf5;
+                --link-visited-color: #f25555;
                 --dir-icon-color: #7da3d0;
                 --file-icon-color: #545d68;
             }}
@@ -682,17 +703,18 @@
         &lt;header&gt;&lt;h3&gt;Index of: {}&lt;/h3&gt;&lt;/header&gt;
         &lt;hr/&gt;
 &quot;</span>,
-        <span class="ident">root</span>.<span class="ident">path</span>, <span class="ident">root</span>.<span class="ident">path</span>
+        <span class="ident">current</span>.<span class="ident">path</span>,
+        <span class="ident">header_links</span>(<span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">path</span>)
     );
-    <span class="kw">if</span> <span class="ident">root</span>.<span class="ident">dirs</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="ident">root</span>.<span class="ident">files</span>.<span class="ident">is_empty</span>() {
-        <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;No files&quot;</span>);
+    <span class="kw">if</span> <span class="ident">current</span>.<span class="ident">dirs</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">files</span>.<span class="ident">is_empty</span>() {
+        <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;p&gt;No files&lt;/p&gt;&quot;</span>);
     } <span class="kw">else</span> {
         <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;table&gt;&lt;tr&gt;&lt;th&gt;&quot;</span>);
-        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">root</span>.<span class="ident">path</span>.<span class="ident">is_empty</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">root</span>.<span class="ident">path</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;/&quot;</span>) {
+        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">current</span>.<span class="ident">path</span>.<span class="ident">is_empty</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">current</span>.<span class="ident">path</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;/&quot;</span>) {
             <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;a href=\&quot;../\&quot;&gt;[..]&lt;/a&gt;&quot;</span>);
         }
         <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Last modified&lt;/th&gt;&lt;th&gt;Size&lt;/th&gt;&lt;/tr&gt;&quot;</span>);
-        <span class="kw">for</span> <span class="ident">dir</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">root</span>.<span class="ident">dirs</span> {
+        <span class="kw">for</span> <span class="ident">dir</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">dirs</span> {
             <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
                 <span class="string">&quot;&lt;tr&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;a href=\&quot;./{}/\&quot;&gt;{}&lt;/a&gt;&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&quot;</span>,
                 <span class="ident">DIR_ICON</span>,
@@ -701,7 +723,7 @@
                 <span class="ident">dir</span>.<span class="ident">modified</span>.<span class="ident">format</span>(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)
             ));
         }
-        <span class="kw">for</span> <span class="ident">file</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">root</span>.<span class="ident">files</span> {
+        <span class="kw">for</span> <span class="ident">file</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">files</span> {
             <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
                 <span class="string">&quot;&lt;tr&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;a href=\&quot;./{}\&quot;&gt;{}&lt;/a&gt;&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;/tr&gt;&quot;</span>,
                 <span class="ident">FILE_ICON</span>,
@@ -716,11 +738,12 @@
     <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;hr/&gt;&lt;footer&gt;&lt;small&gt;salvo&lt;/small&gt;&lt;/footer&gt;&lt;/body&gt;&quot;</span>);
     <span class="ident">ftxt</span>
 }
-<span class="kw">fn</span> <span class="ident">list_text</span>(<span class="ident">root</span>: <span class="kw-2">&amp;</span><span class="ident">BaseInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-    <span class="macro">json</span><span class="macro">!</span>(<span class="ident">root</span>).<span class="ident">to_string</span>()
+<span class="kw">fn</span> <span class="ident">list_text</span>(<span class="ident">current</span>: <span class="kw-2">&amp;</span><span class="ident">CurrentInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="macro">json</span><span class="macro">!</span>(<span class="ident">current</span>).<span class="ident">to_string</span>()
 }
 
-<span class="kw">const</span> <span class="ident">DIR_ICON</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;&lt;svg aria-label=&quot;Directory&quot; class=&quot;dir-icon&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 512 512&quot; version=&quot;1.1&quot; role=&quot;img&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M464 128H272l-64-64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&quot;#</span>;
-<span class="kw">const</span> <span class="ident">FILE_ICON</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;&lt;svg aria-label=&quot;File&quot; class=&quot;file-icon&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 384 512&quot; version=&quot;1.1&quot; role=&quot;img&quot;&gt;&lt;path d=&quot;M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48z&quot;/&gt;&lt;/svg&gt;&quot;#</span>;</pre></div>
+<span class="kw">const</span> <span class="ident">DIR_ICON</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;&lt;svg aria-label=&quot;Directory&quot; data-icon=\&quot;dir\&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 512 512&quot; version=&quot;1.1&quot; role=&quot;img&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M464 128H272l-64-64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&quot;#</span>;
+<span class="kw">const</span> <span class="ident">FILE_ICON</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;&lt;svg aria-label=&quot;File&quot; data-icon=\&quot;file\&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 384 512&quot; version=&quot;1.1&quot; role=&quot;img&quot;&gt;&lt;path d=&quot;M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48z&quot;/&gt;&lt;/svg&gt;&quot;#</span>;
+</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="salvo_extra" data-search-js="../../../search-index.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
