@@ -490,8 +490,6 @@
 <span id="487">487</span>
 <span id="488">488</span>
 <span id="489">489</span>
-<span id="490">490</span>
-<span id="491">491</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
@@ -975,14 +973,12 @@
 }
 
 <span class="attribute">#[<span class="ident">test</span>]</span>
-<span class="attribute">#[<span class="ident">should_panic</span>]</span>
 <span class="kw">fn</span> <span class="ident">test_rest_failed1</span>() {
-    <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2&lt;*rest&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2&lt;*rest&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">is_err</span>());
 }
 <span class="attribute">#[<span class="ident">test</span>]</span>
-<span class="attribute">#[<span class="ident">should_panic</span>]</span>
 <span class="kw">fn</span> <span class="ident">test_rest_failed2</span>() {
-    <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2/&lt;*rest&gt;wefwe&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2/&lt;*rest&gt;wefwe&quot;</span>).<span class="ident">parse</span>().<span class="ident">is_err</span>());
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../../../" data-current-crate="salvo_core" data-search-js="../../../../../search-index.js"></div>
