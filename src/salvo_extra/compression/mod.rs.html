@@ -231,7 +231,7 @@
     }
 }
 
-<span class="doccomment">/// Create a wrapping filter that compresses the Body of a [`ResponseBody`](salvo_core::http::ResponseBody)</span>
+<span class="doccomment">/// Create a middleware that compresses the [`Body`](salvo_core::http::response::Body)</span>
 <span class="doccomment">/// using gzip, adding `content-encoding: gzip` to the Response&#39;s [`HeaderMap`](hyper::HeaderMap)</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example</span>
@@ -249,7 +249,7 @@
     <span class="ident">CompressionHandler</span>::<span class="ident">new</span>(<span class="ident">CompressionAlgo</span>::<span class="ident">GZIP</span>)
 }
 
-<span class="doccomment">/// Create a wrapping filter that compresses the Body of a [`ResponseBody`](salvo_core::http::ResponseBody)</span>
+<span class="doccomment">/// Create a middleware that compresses the [`Body`](salvo_core::http::response::Body)</span>
 <span class="doccomment">/// using deflate, adding `content-encoding: deflate` to the Response&#39;s [`HeaderMap`](hyper::HeaderMap)</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example</span>
@@ -267,7 +267,7 @@
     <span class="ident">CompressionHandler</span>::<span class="ident">new</span>(<span class="ident">CompressionAlgo</span>::<span class="ident">DEFLATE</span>)
 }
 
-<span class="doccomment">/// Create a wrapping filter that compresses the Body of a [`ResponseBody`](salvo_core::http::ResponseBody)</span>
+<span class="doccomment">/// Create a middleware that compresses the [`Body`](salvo_core::http::response::Body)</span>
 <span class="doccomment">/// using brotli, adding `content-encoding: br` to the Response&#39;s [`HeaderMap`](hyper::HeaderMap)</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example</span>

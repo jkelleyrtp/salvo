@@ -318,8 +318,6 @@
 <span id="315">315</span>
 <span id="316">316</span>
 <span id="317">317</span>
-<span id="318">318</span>
-<span id="319">319</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Server-Sent Events (SSE)</span>
 <span class="doccomment">//!</span>
@@ -553,9 +551,7 @@
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Wrap an event stream with keep-alive functionality.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See [`keep_alive`](keep_alive) for more.</span>
+    <span class="doccomment">/// Send stream.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">streaming</span>(<span class="self">self</span>, <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) {
         <span class="ident">write_request_headers</span>(<span class="ident">res</span>);
         <span class="kw">let</span> <span class="ident">body_stream</span> <span class="op">=</span> <span class="self">self</span>
