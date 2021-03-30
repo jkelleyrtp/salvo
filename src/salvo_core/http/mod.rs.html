@@ -29,32 +29,8 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
-<span id="33">33</span>
-<span id="34">34</span>
-<span id="35">35</span>
-<span id="36">36</span>
-<span id="37">37</span>
-<span id="38">38</span>
-<span id="39">39</span>
-<span id="40">40</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="comment">// #![feature(specialization)]</span>
-<span class="comment">// #![feature(proc_macro_hygiene)]</span>
-<span class="comment">// #![feature(crate_visibility_modifier)]</span>
-<span class="comment">// #![feature(doc_cfg)]</span>
-<span class="comment">// #![recursion_limit=&quot;512&quot;]</span>
-
-<span class="doccomment">//! Types that map to concepts in HTTP.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This module exports types that map to HTTP concepts or to the underlying</span>
-<span class="doccomment">//! HTTP library when needed. Because the underlying HTTP library is likely to</span>
-<span class="doccomment">//! change (see [#17]), types in [`hyper`] should be considered unstable.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [#17]: https://github.com/SergioBenitez/Novel/issues/17</span>
+<span class="comment">//some code port from https://github.com/abonander/multipart-async</span>
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">body_chunk</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">errors</span>;
