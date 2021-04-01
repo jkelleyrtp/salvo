@@ -75,6 +75,15 @@
 <span id="72">72</span>
 <span id="73">73</span>
 <span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
 
@@ -83,6 +92,16 @@
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">StatusCode</span>};
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">Handler</span>;
 
+<span class="kw">use</span> <span class="ident">thiserror</span>::<span class="ident">Error</span>;
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Error</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Base64 decode error.&quot;</span>)]</span>
+    <span class="ident">Base64Decode</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">base64</span>::<span class="ident">DecodeError</span>),
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Parse http header error&quot;</span>)]</span>
+    <span class="ident">ParseHttpHeader</span>,
+}
+
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BasicAuthHandler</span> {
     <span class="ident">config</span>: <span class="ident">BasicAuthConfig</span>,
 }
@@ -90,7 +109,6 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BasicAuthConfig</span> {
     <span class="kw">pub</span> <span class="ident">realm</span>: <span class="ident">String</span>,
     <span class="kw">pub</span> <span class="ident">context_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">expires</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">time</span>::<span class="ident">Duration</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">validator</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">BasicAuthValidator</span><span class="op">&gt;</span>,
 }
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">BasicAuthValidator</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> {
@@ -117,14 +135,14 @@
             .<span class="ident">insert</span>(<span class="string">&quot;WWW-Authenticate&quot;</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Basic realm={:?}&quot;</span>, <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">realm</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>());
         <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">UNAUTHORIZED</span>);
     }
-    <span class="kw">fn</span> <span class="ident">parse_authorization</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">authorization</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>), <span class="kw">super</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse_authorization</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">authorization</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">auth</span> <span class="op">=</span> <span class="ident">base64</span>::<span class="ident">decode</span>(<span class="ident">authorization</span>.<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">auth</span> <span class="op">=</span> <span class="ident">auth</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="kw">as</span> <span class="ident">char</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>();
         <span class="kw">let</span> <span class="ident">parts</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">auth</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="string">&#39;:&#39;</span>).<span class="ident">collect</span>();
         <span class="kw">if</span> <span class="ident">parts</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">2</span> {
             <span class="prelude-val">Ok</span>((<span class="ident">parts</span>[<span class="number">0</span>].<span class="ident">to_owned</span>(), <span class="ident">parts</span>[<span class="number">1</span>].<span class="ident">to_owned</span>()))
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="kw">super</span>::<span class="ident">Error</span>::<span class="ident">ParseHttpHeader</span>)
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">ParseHttpHeader</span>)
         }
     }
 }

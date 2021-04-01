@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Error",""]],"mod":[["basic",""],["jwt",""]]});
+initSidebarItems({"mod":[["basic",""],["jwt",""]]});

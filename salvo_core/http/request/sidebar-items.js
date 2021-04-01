@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Body","A stream of `Bytes`, used when receiving bodies."],["Request","Represents an HTTP request."]],"trait":[["BodyReader",""]]});
+initSidebarItems({"struct":[["Body","A stream of `Bytes`, used when receiving bodies."],["Parts","Component parts of an HTTP `Request`"],["Request","Represents an HTTP request."]],"trait":[["BodyReader",""]]});

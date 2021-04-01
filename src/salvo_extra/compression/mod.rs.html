@@ -142,15 +142,13 @@
 <span id="139">139</span>
 <span id="140">140</span>
 <span id="141">141</span>
-<span id="142">142</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Compress the body of a response.</span>
 <span class="comment">// port from https://github.com/seanmonstar/warp/blob/master/src/filters/compression.rs</span>
 
 <span class="kw">use</span> <span class="ident">async_compression</span>::<span class="ident">tokio</span>::<span class="ident">bufread</span>::{<span class="ident">BrotliEncoder</span>, <span class="ident">DeflateEncoder</span>, <span class="ident">GzipEncoder</span>};
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
-<span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>::<span class="ident">HeaderValue</span>;
-<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">header</span>::{<span class="ident">CONTENT_ENCODING</span>, <span class="ident">CONTENT_LENGTH</span>, <span class="ident">CONTENT_TYPE</span>};
+<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">header</span>::{<span class="ident">HeaderValue</span>, <span class="ident">CONTENT_ENCODING</span>, <span class="ident">CONTENT_LENGTH</span>, <span class="ident">CONTENT_TYPE</span>};
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">response</span>::<span class="ident">Body</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">tokio_stream</span>::{<span class="self">self</span>, <span class="ident">StreamExt</span>};

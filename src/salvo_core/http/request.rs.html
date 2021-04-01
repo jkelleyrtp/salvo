@@ -525,21 +525,60 @@
 <span id="522">522</span>
 <span id="523">523</span>
 <span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
+
 <span class="kw">use</span> <span class="ident">cookie</span>::{<span class="ident">Cookie</span>, <span class="ident">CookieJar</span>};
 <span class="kw">use</span> <span class="ident">double_checked_cell_async</span>::<span class="ident">DoubleCheckedCell</span>;
 <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>::{<span class="self">self</span>, <span class="ident">HeaderMap</span>};
 <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">method</span>::<span class="ident">Method</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">request</span>::<span class="ident">Parts</span>;
 <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">version</span>::<span class="ident">Version</span>;
 <span class="kw">use</span> <span class="ident">http</span>::{<span class="self">self</span>, <span class="ident">Extensions</span>, <span class="ident">Uri</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">Body</span>;
 <span class="kw">use</span> <span class="ident">multimap</span>::<span class="ident">MultiMap</span>;
 <span class="kw">use</span> <span class="ident">once_cell</span>::<span class="ident">sync</span>::<span class="ident">OnceCell</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">DeserializeOwned</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="ident">ReadError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">form</span>::{<span class="self">self</span>, <span class="ident">FilePart</span>, <span class="ident">FormData</span>};
@@ -776,7 +815,10 @@
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">FromStr</span>,
     {
-        <span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">get</span>(<span class="ident">key</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>()).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">ok</span>())
+        <span class="self">self</span>.<span class="ident">headers</span>
+            .<span class="ident">get</span>(<span class="ident">key</span>)
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">ok</span>())
     }
 
     <span class="doccomment">/// Returns a reference to the associated HTTP body.</span>
@@ -859,7 +901,11 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">content_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ctype</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">get</span>(<span class="string">&quot;content-type&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">h</span><span class="op">|</span> <span class="ident">h</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>()) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ctype</span>) <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">headers</span>
+            .<span class="ident">get</span>(<span class="string">&quot;content-type&quot;</span>)
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">h</span><span class="op">|</span> <span class="ident">h</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
+        {
             <span class="ident">ctype</span>.<span class="ident">parse</span>().<span class="ident">ok</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -927,18 +973,28 @@
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_file</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">FilePart</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">form_data</span>().<span class="kw">await</span>.<span class="ident">as_ref</span>().<span class="ident">ok</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">ps</span><span class="op">|</span> <span class="ident">ps</span>.<span class="ident">files</span>.<span class="ident">get</span>(<span class="ident">key</span>))
+        <span class="self">self</span>.<span class="ident">form_data</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">as_ref</span>()
+            .<span class="ident">ok</span>()
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">ps</span><span class="op">|</span> <span class="ident">ps</span>.<span class="ident">files</span>.<span class="ident">get</span>(<span class="ident">key</span>))
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_files</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FilePart</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">form_data</span>().<span class="kw">await</span>.<span class="ident">as_ref</span>().<span class="ident">ok</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">ps</span><span class="op">|</span> <span class="ident">ps</span>.<span class="ident">files</span>.<span class="ident">get_vec</span>(<span class="ident">key</span>))
+        <span class="self">self</span>.<span class="ident">form_data</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">as_ref</span>()
+            .<span class="ident">ok</span>()
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">ps</span><span class="op">|</span> <span class="ident">ps</span>.<span class="ident">files</span>.<span class="ident">get_vec</span>(<span class="ident">key</span>))
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_form_or_query</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FromStr</span>,
     {
-        <span class="self">self</span>.<span class="ident">get_form</span>(<span class="ident">key</span>.<span class="ident">as_ref</span>()).<span class="kw">await</span>.<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">get_query</span>(<span class="ident">key</span>))
+        <span class="self">self</span>.<span class="ident">get_form</span>(<span class="ident">key</span>.<span class="ident">as_ref</span>())
+            .<span class="kw">await</span>
+            .<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">get_query</span>(<span class="ident">key</span>))
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_query_or_form</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
@@ -948,8 +1004,13 @@
         <span class="self">self</span>.<span class="ident">get_query</span>(<span class="ident">key</span>.<span class="ident">as_ref</span>()).<span class="ident">or</span>(<span class="self">self</span>.<span class="ident">get_form</span>(<span class="ident">key</span>).<span class="kw">await</span>)
     }
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">payload</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">ReadError</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">ctype</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">headers</span>().<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>()).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
-        <span class="kw">if</span> <span class="ident">ctype</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;multipart/form-data&quot;</span>) {
+        <span class="kw">let</span> <span class="ident">ctype</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">headers</span>()
+            .<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>)
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
+            .<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
+        <span class="kw">if</span> <span class="ident">ctype</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;multipart/form-data&quot;</span>)
+        {
             <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;failed to read data1&quot;</span>)))
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;application/json&quot;</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;text/&quot;</span>) {
             <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">body</span>.<span class="ident">take</span>();
@@ -967,8 +1028,13 @@
     }
 
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">form_data</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">FormData</span>, <span class="ident">ReadError</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">ctype</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">headers</span>().<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>()).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
-        <span class="kw">if</span> <span class="ident">ctype</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;multipart/form-data&quot;</span>) {
+        <span class="kw">let</span> <span class="ident">ctype</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">headers</span>()
+            .<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>)
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
+            .<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
+        <span class="kw">if</span> <span class="ident">ctype</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;multipart/form-data&quot;</span>)
+        {
             <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">body</span>.<span class="ident">take</span>();
             <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">headers</span>();
             <span class="self">self</span>.<span class="ident">form_data</span>
@@ -996,9 +1062,10 @@
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">FromStr</span>,
     {
-        <span class="self">self</span>.<span class="ident">read_text</span>()
-            .<span class="kw">await</span>
-            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">body</span><span class="op">|</span> <span class="ident">body</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="ident">body</span>.<span class="ident">into</span>())))
+        <span class="self">self</span>.<span class="ident">read_text</span>().<span class="kw">await</span>.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">body</span><span class="op">|</span> {
+            <span class="ident">body</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="ident">body</span>.<span class="ident">into</span>()))
+        })
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">read_from_json</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ReadError</span><span class="op">&gt;</span>
@@ -1029,13 +1096,20 @@
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">DeserializeOwned</span>,
     {
-        <span class="kw">let</span> <span class="ident">ctype</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">headers</span>().<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>()).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
-        <span class="kw">if</span> <span class="ident">ctype</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;multipart/form-data&quot;</span>) {
+        <span class="kw">let</span> <span class="ident">ctype</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">headers</span>()
+            .<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>)
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
+            .<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
+        <span class="kw">if</span> <span class="ident">ctype</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;multipart/form-data&quot;</span>)
+        {
             <span class="self">self</span>.<span class="ident">read_from_form</span>().<span class="kw">await</span>
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;application/json&quot;</span>) {
             <span class="self">self</span>.<span class="ident">read_from_json</span>().<span class="kw">await</span>
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;failed to read data or this type is not supported&quot;</span>)))
+            <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="ident">String</span>::<span class="ident">from</span>(
+                <span class="string">&quot;failed to read data or this type is not supported&quot;</span>,
+            )))
         }
     }
 }

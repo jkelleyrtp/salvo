@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["BasicAuthConfig",""],["BasicAuthHandler",""]],"trait":[["BasicAuthValidator",""]]});
+initSidebarItems({"enum":[["Error",""]],"struct":[["BasicAuthConfig",""],["BasicAuthHandler",""]],"trait":[["BasicAuthValidator",""]]});

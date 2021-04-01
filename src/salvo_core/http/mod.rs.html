@@ -28,7 +28,6 @@
 <span id="25">25</span>
 <span id="26">26</span>
 <span id="27">27</span>
-<span id="28">28</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">//some code port from https://github.com/abonander/multipart-async</span>
 
@@ -43,14 +42,13 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">body_chunk</span>::<span class="ident">BodyChunk</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cookie</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">method</span>::<span class="ident">Method</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::{<span class="ident">HeaderMap</span>, <span class="ident">HeaderValue</span>, <span class="ident">StatusCode</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::{<span class="ident">HeaderMap</span>, <span class="ident">HeaderValue</span>, <span class="ident">StatusCode</span>, <span class="ident">uri</span>, <span class="ident">header</span>, <span class="ident">method</span>, <span class="ident">version</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">mime</span>::<span class="ident">Mime</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">range</span>::<span class="ident">HttpRange</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">request</span>::<span class="ident">Request</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">response</span>::<span class="ident">Response</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">HttpError</span>, <span class="ident">ReadError</span>};
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">headers</span>;
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">guess_accept_mime</span>(<span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span>, <span class="ident">default_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Mime</span> {
