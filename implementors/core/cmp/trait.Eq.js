@@ -1,3 +1,4 @@
 (function() {var implementors = {};
+implementors["salvo_core"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html\" title=\"trait core::cmp::Eq\">Eq</a> for <a class=\"struct\" href=\"salvo_core/routing/struct.PathState.html\" title=\"struct salvo_core::routing::PathState\">PathState</a>","synthetic":false,"types":["salvo_core::routing::PathState"]}];
 implementors["salvo_extra"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html\" title=\"trait core::cmp::Eq\">Eq</a> for <a class=\"struct\" href=\"salvo_extra/ws/struct.Message.html\" title=\"struct salvo_extra::ws::Message\">Message</a>","synthetic":false,"types":["salvo_extra::ws::Message"]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

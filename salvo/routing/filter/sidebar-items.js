@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["delete",""],["fn_filter",""],["get",""],["head",""],["options",""],["patch",""],["path",""],["post",""],["put",""]],"struct":[["FnFilter",""]],"trait":[["Filter",""]]});
+initSidebarItems({"fn":[["delete",""],["fn_filter",""],["get",""],["head",""],["options",""],["patch",""],["path",""],["post",""],["put",""]],"mod":[["method",""]],"struct":[["FnFilter",""],["MethodFilter",""],["PathFilter",""]],"trait":[["Filter",""]]});
