@@ -818,6 +818,25 @@
 <span id="815">815</span>
 <span id="816">816</span>
 <span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
@@ -850,6 +869,21 @@
 }
 <span class="kw">fn</span> <span class="ident">is_hex</span>(<span class="ident">ch</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="ident">ch</span>.<span class="ident">is_ascii_hexdigit</span>()
+}
+
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RegexPartBuilder</span>(<span class="ident">Regex</span>);
+<span class="kw">impl</span> <span class="ident">RegexPartBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">checker</span>: <span class="ident">Regex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>(<span class="ident">checker</span>)
+    }
+}
+<span class="kw">impl</span> <span class="ident">PartBuilder</span> <span class="kw">for</span> <span class="ident">RegexPartBuilder</span> {
+    <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="ident">String</span>, <span class="ident">_sign</span>: <span class="ident">String</span>, <span class="ident">_args</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">PathPart</span><span class="op">&gt;</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">RegexPart</span> {
+            <span class="ident">name</span>,
+            <span class="ident">regex</span>: <span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>(),
+        }))
+    }
 }
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CharPartBuilder</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>(<span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>);
@@ -1402,6 +1436,10 @@
         <span class="ident">B</span>: <span class="ident">PartBuilder</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     {
         <span class="ident">PART_BUILDERS</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>().<span class="ident">insert</span>(<span class="ident">name</span>, <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">builder</span>)));
+    }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_path_part_regex</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="ident">String</span>, <span class="ident">regex</span>: <span class="ident">Regex</span>)
+    {
+        <span class="ident">PART_BUILDERS</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>().<span class="ident">insert</span>(<span class="ident">name</span>, <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">RegexPartBuilder</span>::<span class="ident">new</span>(<span class="ident">regex</span>))));
     }
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">PathState</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">ended</span>() {
