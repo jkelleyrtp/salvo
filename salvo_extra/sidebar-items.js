@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["auth",""],["compression","Compress the body of a response."],["cors","CORS Filters"],["proxy","ProxyHandler."],["serve",""],["sse","Server-Sent Events (SSE)"],["ws","Websocket"]]});
+initSidebarItems({"mod":[["basic_auth",""],["compression","Compress the body of a response."],["cors","CORS Filters"],["jwt_auth",""],["proxy","ProxyHandler."],["serve",""],["size_limiter",""],["sse","Server-Sent Events (SSE)"],["ws","Websocket"]]});
