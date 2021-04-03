@@ -31,10 +31,10 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
 
-<span class="kw">use</span> <span class="ident">salvo_core</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">Depot</span>, <span class="ident">Writer</span>};
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">fs</span>::<span class="ident">NamedFile</span>;
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">Handler</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">Handler</span>;
+<span class="kw">use</span> <span class="ident">salvo_core</span>::{<span class="ident">Depot</span>, <span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">Writer</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StaticFile</span>(<span class="ident">String</span>);
@@ -55,6 +55,7 @@
         <span class="kw">let</span> <span class="ident">named_file</span> <span class="op">=</span> <span class="ident">named_file</span>.<span class="ident">unwrap</span>();
         <span class="ident">named_file</span>.<span class="ident">write</span>(<span class="ident">req</span>, <span class="ident">depot</span>, <span class="ident">res</span>).<span class="kw">await</span>;
     }
-}</pre></div>
+}
+</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="salvo_extra" data-search-js="../../../search-index.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

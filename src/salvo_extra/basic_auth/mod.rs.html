@@ -84,12 +84,14 @@
 <span id="81">81</span>
 <span id="82">82</span>
 <span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
 
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">Depot</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">header</span>::<span class="ident">AUTHORIZATION</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">StatusCode</span>};
+<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">Depot</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">Handler</span>;
 
 <span class="kw">use</span> <span class="ident">thiserror</span>::<span class="ident">Error</span>;
@@ -131,8 +133,10 @@
 }
 <span class="kw">impl</span> <span class="ident">BasicAuthHandler</span> {
     <span class="kw">fn</span> <span class="ident">ask_credentials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) {
-        <span class="ident">res</span>.<span class="ident">headers_mut</span>()
-            .<span class="ident">insert</span>(<span class="string">&quot;WWW-Authenticate&quot;</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Basic realm={:?}&quot;</span>, <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">realm</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>());
+        <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(
+            <span class="string">&quot;WWW-Authenticate&quot;</span>,
+            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Basic realm={:?}&quot;</span>, <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">realm</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>(),
+        );
         <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">UNAUTHORIZED</span>);
     }
     <span class="kw">fn</span> <span class="ident">parse_authorization</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">authorization</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>), <span class="ident">Error</span><span class="op">&gt;</span> {

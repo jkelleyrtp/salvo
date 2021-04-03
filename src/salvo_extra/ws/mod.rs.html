@@ -353,18 +353,6 @@
 <span id="350">350</span>
 <span id="351">351</span>
 <span id="352">352</span>
-<span id="353">353</span>
-<span id="354">354</span>
-<span id="355">355</span>
-<span id="356">356</span>
-<span id="357">357</span>
-<span id="358">358</span>
-<span id="359">359</span>
-<span id="360">360</span>
-<span id="361">361</span>
-<span id="362">362</span>
-<span id="363">363</span>
-<span id="364">364</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Websocket</span>
 <span class="comment">// port from https://github.com/seanmonstar/warp/blob/master/src/filters/ws.rs</span>
@@ -379,9 +367,7 @@
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">upgrade</span>::<span class="ident">OnUpgrade</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">header</span>::{<span class="ident">SEC_WEBSOCKET_VERSION</span>, <span class="ident">UPGRADE</span>};
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">headers</span>::{
-    <span class="ident">Connection</span>, <span class="ident">HeaderMapExt</span>, <span class="ident">SecWebsocketAccept</span>, <span class="ident">SecWebsocketKey</span>, <span class="ident">Upgrade</span>,
-};
+<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">headers</span>::{<span class="ident">Connection</span>, <span class="ident">HeaderMapExt</span>, <span class="ident">SecWebsocketAccept</span>, <span class="ident">SecWebsocketKey</span>, <span class="ident">Upgrade</span>};
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::{<span class="ident">HttpError</span>, <span class="ident">StatusCode</span>};
 <span class="kw">use</span> <span class="ident">salvo_core</span>::{<span class="ident">Error</span>, <span class="ident">Request</span>, <span class="ident">Response</span>};
 <span class="kw">use</span> <span class="ident">tokio_tungstenite</span>::{
@@ -411,17 +397,13 @@
         <span class="ident">WsHandler</span> { <span class="ident">config</span>: <span class="prelude-val">None</span> }
     }
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_config</span>(<span class="ident">config</span>: <span class="ident">WebSocketConfig</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">WsHandler</span> {
-            <span class="ident">config</span>: <span class="prelude-val">Some</span>(<span class="ident">config</span>),
-        }
+        <span class="ident">WsHandler</span> { <span class="ident">config</span>: <span class="prelude-val">Some</span>(<span class="ident">config</span>) }
     }
 
     <span class="comment">// config</span>
     <span class="doccomment">/// Set the size of the internal message send queue.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_send_queue</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">max</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">config</span>
-            .<span class="ident">get_or_insert_with</span>(<span class="ident">WebSocketConfig</span>::<span class="ident">default</span>)
-            .<span class="ident">max_send_queue</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">max</span>);
+        <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">get_or_insert_with</span>(<span class="ident">WebSocketConfig</span>::<span class="ident">default</span>).<span class="ident">max_send_queue</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">max</span>);
         <span class="self">self</span>
     }
 
@@ -462,9 +444,7 @@
             .<span class="ident">unwrap_or</span>(<span class="bool-val">false</span>);
         <span class="kw">if</span> <span class="op">!</span><span class="ident">matched</span> {
             <span class="ident">tracing</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;missing upgrade header or it is not equal websocket&quot;</span>);
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(
-                <span class="ident">BadRequest</span>().<span class="ident">with_summary</span>(<span class="string">&quot;missing upgrade header or it is not equal websocket&quot;</span>)
-            );
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">BadRequest</span>().<span class="ident">with_summary</span>(<span class="string">&quot;missing upgrade header or it is not equal websocket&quot;</span>));
         }
         <span class="kw">let</span> <span class="ident">matched</span> <span class="op">=</span> <span class="op">!</span><span class="ident">req_headers</span>
             .<span class="ident">get</span>(<span class="ident">SEC_WEBSOCKET_VERSION</span>)
@@ -479,17 +459,14 @@
             <span class="ident">key</span>
         } <span class="kw">else</span> {
             <span class="ident">tracing</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;sec_websocket_key is not exist in request headers&quot;</span>);
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(
-                <span class="ident">BadRequest</span>().<span class="ident">with_summary</span>(<span class="string">&quot;sec_websocket_key is not exist in request headers&quot;</span>)
-            );
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">BadRequest</span>().<span class="ident">with_summary</span>(<span class="string">&quot;sec_websocket_key is not exist in request headers&quot;</span>));
         };
 
         <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">SWITCHING_PROTOCOLS</span>);
 
         <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">Connection</span>::<span class="ident">upgrade</span>());
         <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">Upgrade</span>::<span class="ident">websocket</span>());
-        <span class="ident">res</span>.<span class="ident">headers_mut</span>()
-            .<span class="ident">typed_insert</span>(<span class="ident">SecWebsocketAccept</span>::<span class="ident">from</span>(<span class="ident">sec_ws_key</span>));
+        <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">SecWebsocketAccept</span>::<span class="ident">from</span>(<span class="ident">sec_ws_key</span>));
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">on_upgrade</span>) <span class="op">=</span> <span class="ident">req</span>.<span class="ident">extensions_mut</span>().<span class="ident">remove</span>::<span class="op">&lt;</span><span class="ident">OnUpgrade</span><span class="op">&gt;</span>() {
             <span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">clone</span>();
@@ -506,8 +483,7 @@
             <span class="prelude-val">Ok</span>(<span class="ident">fut</span>)
         } <span class="kw">else</span> {
             <span class="ident">tracing</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;ws couldn&#39;t be upgraded since no upgrade state was present&quot;</span>);
-            <span class="prelude-val">Err</span>(<span class="ident">BadRequest</span>()
-                .<span class="ident">with_summary</span>(<span class="string">&quot;ws couldn&#39;t be upgraded since no upgrade state was present&quot;</span>))
+            <span class="prelude-val">Err</span>(<span class="ident">BadRequest</span>().<span class="ident">with_summary</span>(<span class="string">&quot;ws couldn&#39;t be upgraded since no upgrade state was present&quot;</span>))
         }
     }
 }

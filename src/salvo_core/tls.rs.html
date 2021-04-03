@@ -377,27 +377,36 @@
 <span id="374">374</span>
 <span id="375">375</span>
 <span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">//port from https://github.com/seanmonstar/warp/blob/master/src/tls.rs</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">future</span>::<span class="ident">Future</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">BufReader</span>, <span class="ident">Cursor</span>, <span class="ident">Read</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">pin</span>::<span class="ident">Pin</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">task</span>::{<span class="ident">Context</span>, <span class="ident">Poll</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
 
-<span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">io</span>::{<span class="ident">AsyncRead</span>, <span class="ident">AsyncWrite</span>, <span class="ident">ReadBuf</span>};
 <span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">ready</span>;
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">accept</span>::<span class="ident">Accept</span>;
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">conn</span>::{<span class="ident">AddrIncoming</span>, <span class="ident">AddrStream</span>};
+<span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">io</span>::{<span class="ident">AsyncRead</span>, <span class="ident">AsyncWrite</span>, <span class="ident">ReadBuf</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">transport</span>::<span class="ident">Transport</span>;
 
 <span class="kw">use</span> <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::{
-    <span class="ident">AllowAnyAnonymousOrAuthenticatedClient</span>, <span class="ident">AllowAnyAuthenticatedClient</span>, <span class="ident">NoClientAuth</span>, <span class="ident">RootCertStore</span>, <span class="ident">ServerConfig</span>, <span class="ident">TLSError</span>,
+    <span class="ident">AllowAnyAnonymousOrAuthenticatedClient</span>, <span class="ident">AllowAnyAuthenticatedClient</span>, <span class="ident">NoClientAuth</span>, <span class="ident">RootCertStore</span>, <span class="ident">ServerConfig</span>,
+    <span class="ident">TLSError</span>,
 };
 
 <span class="doccomment">/// Represents errors that can occur building the TlsConfig</span>
@@ -550,7 +559,8 @@
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ServerConfig</span>, <span class="ident">TlsConfigError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cert_rdr</span> <span class="op">=</span> <span class="ident">BufReader</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">cert</span>);
-        <span class="kw">let</span> <span class="ident">cert</span> <span class="op">=</span> <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::<span class="ident">internal</span>::<span class="ident">pemfile</span>::<span class="ident">certs</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cert_rdr</span>).<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError</span>::<span class="ident">CertParseError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">cert</span> <span class="op">=</span> <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::<span class="ident">internal</span>::<span class="ident">pemfile</span>::<span class="ident">certs</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cert_rdr</span>)
+            .<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError</span>::<span class="ident">CertParseError</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> {
             <span class="comment">// convert it to Vec&lt;u8&gt; to allow reading it again if key is RSA</span>
@@ -561,14 +571,14 @@
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TlsConfigError</span>::<span class="ident">EmptyKey</span>);
             }
 
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pkcs8</span> <span class="op">=</span>
-                <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::<span class="ident">internal</span>::<span class="ident">pemfile</span>::<span class="ident">pkcs8_private_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>.<span class="ident">as_slice</span>()).<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError</span>::<span class="ident">Pkcs8ParseError</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pkcs8</span> <span class="op">=</span> <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::<span class="ident">internal</span>::<span class="ident">pemfile</span>::<span class="ident">pkcs8_private_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>.<span class="ident">as_slice</span>())
+                .<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError</span>::<span class="ident">Pkcs8ParseError</span>)<span class="question-mark">?</span>;
 
             <span class="kw">if</span> <span class="op">!</span><span class="ident">pkcs8</span>.<span class="ident">is_empty</span>() {
                 <span class="ident">pkcs8</span>.<span class="ident">remove</span>(<span class="number">0</span>)
             } <span class="kw">else</span> {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rsa</span> <span class="op">=</span>
-                    <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::<span class="ident">internal</span>::<span class="ident">pemfile</span>::<span class="ident">rsa_private_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>.<span class="ident">as_slice</span>()).<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError</span>::<span class="ident">RsaParseError</span>)<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::<span class="ident">internal</span>::<span class="ident">pemfile</span>::<span class="ident">rsa_private_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>.<span class="ident">as_slice</span>())
+                    .<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError</span>::<span class="ident">RsaParseError</span>)<span class="question-mark">?</span>;
 
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">rsa</span>.<span class="ident">is_empty</span>() {
                     <span class="ident">rsa</span>.<span class="ident">remove</span>(<span class="number">0</span>)
@@ -590,7 +600,9 @@
 
         <span class="kw">let</span> <span class="ident">client_auth</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">client_auth</span> {
             <span class="ident">TlsClientAuth</span>::<span class="ident">Off</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NoClientAuth</span>::<span class="ident">new</span>(),
-            <span class="ident">TlsClientAuth</span>::<span class="ident">Optional</span>(<span class="ident">trust_anchor</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">AllowAnyAnonymousOrAuthenticatedClient</span>::<span class="ident">new</span>(<span class="ident">read_trust_anchor</span>(<span class="ident">trust_anchor</span>)<span class="question-mark">?</span>),
+            <span class="ident">TlsClientAuth</span>::<span class="ident">Optional</span>(<span class="ident">trust_anchor</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">AllowAnyAnonymousOrAuthenticatedClient</span>::<span class="ident">new</span>(<span class="ident">read_trust_anchor</span>(<span class="ident">trust_anchor</span>)<span class="question-mark">?</span>)
+            }
             <span class="ident">TlsClientAuth</span>::<span class="ident">Required</span>(<span class="ident">trust_anchor</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">AllowAnyAuthenticatedClient</span>::<span class="ident">new</span>(<span class="ident">read_trust_anchor</span>(<span class="ident">trust_anchor</span>)<span class="question-mark">?</span>),
         };
 
@@ -751,7 +763,11 @@
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;../../examples/tls/key.rsa&quot;</span>);
         <span class="kw">let</span> <span class="ident">cert</span> <span class="op">=</span> <span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;../../examples/tls/cert.pem&quot;</span>);
 
-        <span class="ident">TlsConfigBuilder</span>::<span class="ident">new</span>().<span class="ident">key</span>(<span class="ident">key</span>.<span class="ident">as_bytes</span>()).<span class="ident">cert</span>(<span class="ident">cert</span>.<span class="ident">as_bytes</span>()).<span class="ident">build</span>().<span class="ident">unwrap</span>();
+        <span class="ident">TlsConfigBuilder</span>::<span class="ident">new</span>()
+            .<span class="ident">key</span>(<span class="ident">key</span>.<span class="ident">as_bytes</span>())
+            .<span class="ident">cert</span>(<span class="ident">cert</span>.<span class="ident">as_bytes</span>())
+            .<span class="ident">build</span>()
+            .<span class="ident">unwrap</span>();
     }
 }
 </pre></div>

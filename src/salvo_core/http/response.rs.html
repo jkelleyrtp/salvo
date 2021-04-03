@@ -410,6 +410,18 @@
 <span id="407">407</span>
 <span id="408">408</span>
 <span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>;
@@ -587,11 +599,13 @@
                     <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">body_mut</span>() <span class="op">=</span> <span class="ident">hyper</span>::<span class="ident">Body</span>::<span class="ident">wrap_stream</span>(<span class="ident">stream</span>);
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">CONTENT_LENGTH</span>, <span class="ident">header</span>::<span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;0&quot;</span>));
+                    <span class="ident">res</span>.<span class="ident">headers_mut</span>()
+                        .<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">CONTENT_LENGTH</span>, <span class="ident">header</span>::<span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;0&quot;</span>));
                 }
             }
         } <span class="kw">else</span> {
-            <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">CONTENT_LENGTH</span>, <span class="ident">header</span>::<span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;0&quot;</span>));
+            <span class="ident">res</span>.<span class="ident">headers_mut</span>()
+                .<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">CONTENT_LENGTH</span>, <span class="ident">header</span>::<span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;0&quot;</span>));
         }
     }
 
@@ -662,7 +676,10 @@
         }
     }
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_json_text</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">render_binary</span>(<span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;application/json; charset=utf-8&quot;</span>), <span class="ident">data</span>.<span class="ident">as_bytes</span>());
+        <span class="self">self</span>.<span class="ident">render_binary</span>(
+            <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;application/json; charset=utf-8&quot;</span>),
+            <span class="ident">data</span>.<span class="ident">as_bytes</span>(),
+        );
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_html_text</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
@@ -739,7 +756,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">redirect_found</span><span class="op">&lt;</span><span class="ident">U</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">url</span>: <span class="ident">U</span>) {
         <span class="self">self</span>.<span class="ident">status_code</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">StatusCode</span>::<span class="ident">FOUND</span>);
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">headers</span>().<span class="ident">contains_key</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>) {
-            <span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;text/html&quot;</span>));
+            <span class="self">self</span>.<span class="ident">headers</span>
+                .<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;text/html&quot;</span>));
         }
         <span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">LOCATION</span>, <span class="ident">url</span>.<span class="ident">as_ref</span>().<span class="ident">parse</span>().<span class="ident">unwrap</span>());
         <span class="self">self</span>.<span class="ident">commit</span>();
@@ -748,7 +766,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">redirect_other</span><span class="op">&lt;</span><span class="ident">U</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">url</span>: <span class="ident">U</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">InvalidHeaderValue</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">status_code</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">StatusCode</span>::<span class="ident">SEE_OTHER</span>);
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">headers</span>().<span class="ident">contains_key</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>) {
-            <span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;text/html&quot;</span>));
+            <span class="self">self</span>.<span class="ident">headers</span>
+                .<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;text/html&quot;</span>));
         }
         <span class="self">self</span>.<span class="ident">headers</span>.<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">LOCATION</span>, <span class="ident">url</span>.<span class="ident">as_ref</span>().<span class="ident">parse</span>()<span class="question-mark">?</span>);
         <span class="self">self</span>.<span class="ident">commit</span>();
@@ -811,7 +830,12 @@
 
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Response</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;HTTP/1.1 {}\n{:?}&quot;</span>, <span class="self">self</span>.<span class="ident">status_code</span>.<span class="ident">unwrap_or</span>(<span class="ident">StatusCode</span>::<span class="ident">NOT_FOUND</span>), <span class="self">self</span>.<span class="ident">headers</span>)
+        <span class="macro">writeln</span><span class="macro">!</span>(
+            <span class="ident">f</span>,
+            <span class="string">&quot;HTTP/1.1 {}\n{:?}&quot;</span>,
+            <span class="self">self</span>.<span class="ident">status_code</span>.<span class="ident">unwrap_or</span>(<span class="ident">StatusCode</span>::<span class="ident">NOT_FOUND</span>),
+            <span class="self">self</span>.<span class="ident">headers</span>
+        )
     }
 }
 

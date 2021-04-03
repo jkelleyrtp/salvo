@@ -319,8 +319,8 @@
 <span id="316">316</span>
 <span id="317">317</span>
 <span id="318">318</span>
+<span id="319">319</span>
 </pre><div class="example-wrap"><pre class="rust ">
-
 <span class="comment">// port from https://github.com/seanmonstar/warp/blob/master/src/filters/sse.rs</span>
 <span class="doccomment">//! Server-Sent Events (SSE)</span>
 <span class="doccomment">//! # Example</span>
@@ -329,7 +329,7 @@
 <span class="doccomment">//! use std::time::Duration;</span>
 <span class="doccomment">//! use std::convert::Infallible;</span>
 <span class="doccomment">//! use futures::{stream::iter, Stream};</span>
-<span class="doccomment">//! </span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! use salvo_core::prelude::*;</span>
 <span class="doccomment">//! use salvo_extra::sse::{self, SseEvent};</span>
 <span class="doccomment">//!</span>
@@ -376,8 +376,8 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
 
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">future</span>, <span class="ident">Stream</span>, <span class="ident">TryStream</span>, <span class="ident">TryStreamExt</span>};
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">header</span>::{<span class="ident">HeaderValue</span>, <span class="ident">CACHE_CONTROL</span>, <span class="ident">CONTENT_TYPE</span>};
 <span class="kw">use</span> <span class="ident">pin_project</span>::<span class="ident">pin_project</span>;
+<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">header</span>::{<span class="ident">HeaderValue</span>, <span class="ident">CACHE_CONTROL</span>, <span class="ident">CONTENT_TYPE</span>};
 <span class="kw">use</span> <span class="ident">serde_json</span>::{<span class="self">self</span>, <span class="ident">Error</span>};
 <span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">time</span>::{<span class="self">self</span>, <span class="ident">Sleep</span>};
 
@@ -568,9 +568,11 @@
 }
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">fn</span> <span class="ident">write_request_headers</span>(<span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) {
-    <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(<span class="ident">CONTENT_TYPE</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;text/event-stream&quot;</span>));
+    <span class="ident">res</span>.<span class="ident">headers_mut</span>()
+        .<span class="ident">insert</span>(<span class="ident">CONTENT_TYPE</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;text/event-stream&quot;</span>));
     <span class="comment">// Disable response body caching</span>
-    <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(<span class="ident">CACHE_CONTROL</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;no-cache&quot;</span>));
+    <span class="ident">res</span>.<span class="ident">headers_mut</span>()
+        .<span class="ident">insert</span>(<span class="ident">CACHE_CONTROL</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;no-cache&quot;</span>));
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">streaming</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>, <span class="ident">event_stream</span>: <span class="ident">S</span>)

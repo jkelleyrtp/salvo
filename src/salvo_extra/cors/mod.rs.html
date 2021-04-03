@@ -446,6 +446,13 @@
 <span id="443">443</span>
 <span id="444">444</span>
 <span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! CORS Filters</span>
 <span class="comment">// modified from https://github.com/seanmonstar/salvo/blob/master/src/filters/cors.rs</span>
@@ -456,8 +463,10 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
 
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">headers</span>::{<span class="ident">AccessControlAllowHeaders</span>, <span class="ident">AccessControlAllowMethods</span>, <span class="ident">AccessControlExposeHeaders</span>, <span class="ident">HeaderMapExt</span>, <span class="ident">Origin</span>};
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">header</span>::{<span class="self">self</span>, <span class="ident">HeaderMap</span>, <span class="ident">HeaderName</span>, <span class="ident">HeaderValue</span>};
+<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">headers</span>::{
+    <span class="ident">AccessControlAllowHeaders</span>, <span class="ident">AccessControlAllowMethods</span>, <span class="ident">AccessControlExposeHeaders</span>, <span class="ident">HeaderMapExt</span>, <span class="ident">Origin</span>,
+};
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">Method</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>};
 <span class="kw">use</span> <span class="ident">salvo_core</span>::{<span class="ident">Depot</span>, <span class="ident">Handler</span>};
@@ -474,12 +483,12 @@
 <span class="doccomment">///     .allow_methods(vec![&quot;GET&quot;, &quot;POST&quot;, &quot;DELETE&quot;]).build();</span>
 <span class="doccomment">/// let cors = salvo_extra::cors::cors().allow_origin(&quot;https://hyper.rs&quot;)</span>
 <span class="doccomment">///     .allow_methods(vec![&quot;GET&quot;, &quot;POST&quot;, &quot;DELETE&quot;]).build();</span>
-<span class="doccomment">/// </span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// let router = Router::new().before(cors).post(upload_file);</span>
 <span class="doccomment">/// #[fn_handler]</span>
 <span class="doccomment">/// async fn upload_file(res: &amp;mut Response) {</span>
 <span class="doccomment">/// }</span>
-<span class="doccomment">/// </span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// If you want to allow any route:</span>
 <span class="doccomment">/// ```</span>
@@ -656,10 +665,12 @@
         <span class="ident">I</span>: <span class="ident">IntoIterator</span>,
         <span class="ident">I</span>::<span class="ident">Item</span>: <span class="ident">IntoOrigin</span>,
     {
-        <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">origins</span>
-            .<span class="ident">into_iter</span>()
-            .<span class="ident">map</span>(<span class="ident">IntoOrigin</span>::<span class="ident">into_origin</span>)
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">origin</span><span class="op">|</span> <span class="ident">origin</span>.<span class="ident">to_string</span>().<span class="ident">parse</span>().<span class="ident">expect</span>(<span class="string">&quot;Origin is always a valid HeaderValue&quot;</span>));
+        <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">origins</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">IntoOrigin</span>::<span class="ident">into_origin</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">origin</span><span class="op">|</span> {
+            <span class="ident">origin</span>
+                .<span class="ident">to_string</span>()
+                .<span class="ident">parse</span>()
+                .<span class="ident">expect</span>(<span class="string">&quot;Origin is always a valid HeaderValue&quot;</span>)
+        });
 
         <span class="self">self</span>.<span class="ident">origins</span>.<span class="ident">get_or_insert_with</span>(<span class="ident">HashSet</span>::<span class="ident">new</span>).<span class="ident">extend</span>(<span class="ident">iter</span>);
 
@@ -828,7 +839,10 @@
 
     <span class="kw">fn</span> <span class="ident">append_common_headers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">headers</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">HeaderMap</span>) {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cors</span>.<span class="ident">credentials</span> {
-            <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">ACCESS_CONTROL_ALLOW_CREDENTIALS</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;true&quot;</span>));
+            <span class="ident">headers</span>.<span class="ident">insert</span>(
+                <span class="ident">header</span>::<span class="ident">ACCESS_CONTROL_ALLOW_CREDENTIALS</span>,
+                <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;true&quot;</span>),
+            );
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">expose_headers_header</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">expose_headers_header</span> {
             <span class="ident">headers</span>.<span class="ident">typed_insert</span>(<span class="ident">expose_headers_header</span>.<span class="ident">clone</span>())
