@@ -30,7 +30,7 @@ higher-level <a href="../../../../salvo/hyper/server/index.html">Server</a> API.
                     .<span class="ident">http1_keep_alive</span>(<span class="bool-val">true</span>)
                     .<span class="ident">serve_connection</span>(<span class="ident">tcp_stream</span>, <span class="ident">service_fn</span>(<span class="ident">hello</span>))
                     .<span class="kw">await</span> {
-                <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">&quot;Error while serving HTTP connection: {}&quot;</span>, <span class="ident">http_err</span>);
+                <span class="macro">eprintln!</span>(<span class="string">&quot;Error while serving HTTP connection: {}&quot;</span>, <span class="ident">http_err</span>);
             }
         });
     }

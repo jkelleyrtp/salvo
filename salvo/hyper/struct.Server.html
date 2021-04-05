@@ -24,7 +24,7 @@ completes.</p>
 
 <span class="comment">// Await the `server` receiving the signal...</span>
 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">graceful</span>.<span class="kw">await</span> {
-    <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">&quot;server error: {}&quot;</span>, <span class="ident">e</span>);
+    <span class="macro">eprintln!</span>(<span class="string">&quot;server error: {}&quot;</span>, <span class="ident">e</span>);
 }
 
 <span class="comment">// And later, trigger the signal by calling `tx.send(())`.</span>

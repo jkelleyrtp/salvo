@@ -29,7 +29,7 @@
 <span class="kw">use</span> <span class="ident">cookie</span>::<span class="ident">Cookie</span>;
 
 <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Cookie</span>::<span class="ident">build</span>(<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>).<span class="ident">finish</span>();
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">name_value</span>(), (<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>));</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">name_value</span>(), (<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>));</pre></div>
 </div><h4 id="method.expires" class="method"><code>pub fn <a href="#method.expires" class="fnname">expires</a>(self, when: OffsetDateTime) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt;</code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#80" title="goto source code">[src]</a></h4><div class="docblock"><p>Sets the <code>expires</code> field in the cookie being built.</p>
 <h1 id="example-2" class="section-header"><a href="#example-2">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -42,7 +42,7 @@
     .<span class="ident">expires</span>(<span class="ident">OffsetDateTime</span>::<span class="ident">now</span>())
     .<span class="ident">finish</span>();
 
-<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">expires</span>().<span class="ident">is_some</span>());</pre></div>
+<span class="macro">assert!</span>(<span class="ident">c</span>.<span class="ident">expires</span>().<span class="ident">is_some</span>());</pre></div>
 </div><h4 id="method.max_age" class="method"><code>pub fn <a href="#method.max_age" class="fnname">max_age</a>(self, value: Duration) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt;</code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#105" title="goto source code">[src]</a></h4><div class="docblock"><p>Sets the <code>max_age</code> field in the cookie being built.</p>
 <h1 id="example-3" class="section-header"><a href="#example-3">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -55,7 +55,7 @@
     .<span class="ident">max_age</span>(<span class="ident">Duration</span>::<span class="ident">minutes</span>(<span class="number">30</span>))
     .<span class="ident">finish</span>();
 
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">max_age</span>(), <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">seconds</span>(<span class="number">30</span> <span class="op">*</span> <span class="number">60</span>)));</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">max_age</span>(), <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">seconds</span>(<span class="number">30</span> <span class="op">*</span> <span class="number">60</span>)));</pre></div>
 </div><h4 id="method.domain" class="method"><code>pub fn <a href="#method.domain" class="fnname">domain</a>&lt;D&gt;(self, value: D) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html" title="enum alloc::borrow::Cow">Cow</a>&lt;'c, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt;,&nbsp;</span></code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#123" title="goto source code">[src]</a></h4><div class="docblock"><p>Sets the <code>domain</code> field in the cookie being built.</p>
 <h1 id="example-4" class="section-header"><a href="#example-4">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -65,7 +65,7 @@
     .<span class="ident">domain</span>(<span class="string">&quot;www.rust-lang.org&quot;</span>)
     .<span class="ident">finish</span>();
 
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">domain</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;www.rust-lang.org&quot;</span>));</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">domain</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;www.rust-lang.org&quot;</span>));</pre></div>
 </div><h4 id="method.path" class="method"><code>pub fn <a href="#method.path" class="fnname">path</a>&lt;P&gt;(self, path: P) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;P: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html" title="enum alloc::borrow::Cow">Cow</a>&lt;'c, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt;,&nbsp;</span></code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#141" title="goto source code">[src]</a></h4><div class="docblock"><p>Sets the <code>path</code> field in the cookie being built.</p>
 <h1 id="example-5" class="section-header"><a href="#example-5">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -75,7 +75,7 @@
     .<span class="ident">path</span>(<span class="string">&quot;/&quot;</span>)
     .<span class="ident">finish</span>();
 
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/&quot;</span>));</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/&quot;</span>));</pre></div>
 </div><h4 id="method.secure" class="method"><code>pub fn <a href="#method.secure" class="fnname">secure</a>(self, value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt;</code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#160" title="goto source code">[src]</a></h4><div class="docblock"><p>Sets the <code>secure</code> field in the cookie being built.</p>
 <h1 id="example-6" class="section-header"><a href="#example-6">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -85,7 +85,7 @@
     .<span class="ident">secure</span>(<span class="bool-val">true</span>)
     .<span class="ident">finish</span>();
 
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">secure</span>(), <span class="prelude-val">Some</span>(<span class="bool-val">true</span>));</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">secure</span>(), <span class="prelude-val">Some</span>(<span class="bool-val">true</span>));</pre></div>
 </div><h4 id="method.http_only" class="method"><code>pub fn <a href="#method.http_only" class="fnname">http_only</a>(self, value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt;</code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#179" title="goto source code">[src]</a></h4><div class="docblock"><p>Sets the <code>http_only</code> field in the cookie being built.</p>
 <h1 id="example-7" class="section-header"><a href="#example-7">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -95,7 +95,7 @@
     .<span class="ident">http_only</span>(<span class="bool-val">true</span>)
     .<span class="ident">finish</span>();
 
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">http_only</span>(), <span class="prelude-val">Some</span>(<span class="bool-val">true</span>));</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">http_only</span>(), <span class="prelude-val">Some</span>(<span class="bool-val">true</span>));</pre></div>
 </div><h4 id="method.same_site" class="method"><code>pub fn <a href="#method.same_site" class="fnname">same_site</a>(self, value: <a class="enum" href="../../../salvo/http/cookie/enum.SameSite.html" title="enum salvo::http::cookie::SameSite">SameSite</a>) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt;</code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#198" title="goto source code">[src]</a></h4><div class="docblock"><p>Sets the <code>same_site</code> field in the cookie being built.</p>
 <h1 id="example-8" class="section-header"><a href="#example-8">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -105,7 +105,7 @@
     .<span class="ident">same_site</span>(<span class="ident">SameSite</span>::<span class="ident">Strict</span>)
     .<span class="ident">finish</span>();
 
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">same_site</span>(), <span class="prelude-val">Some</span>(<span class="ident">SameSite</span>::<span class="ident">Strict</span>));</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">same_site</span>(), <span class="prelude-val">Some</span>(<span class="ident">SameSite</span>::<span class="ident">Strict</span>));</pre></div>
 </div><h4 id="method.permanent" class="method"><code>pub fn <a href="#method.permanent" class="fnname">permanent</a>(self) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt;</code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#225" title="goto source code">[src]</a></h4><div class="docblock"><p>Makes the cookie being built ‘permanent’ by extending its expiration and
 max age 20 years into the future.</p>
 <h1 id="example-9" class="section-header"><a href="#example-9">Example</a></h1>
@@ -119,7 +119,7 @@ max age 20 years into the future.</p>
     .<span class="ident">permanent</span>()
     .<span class="ident">finish</span>();
 
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">max_age</span>(), <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">days</span>(<span class="number">365</span> <span class="op">*</span> <span class="number">20</span>)));</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">max_age</span>(), <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">days</span>(<span class="number">365</span> <span class="op">*</span> <span class="number">20</span>)));</pre></div>
 </div><h4 id="method.finish" class="method"><code>pub fn <a href="#method.finish" class="fnname">finish</a>(self) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.Cookie.html" title="struct salvo::http::cookie::Cookie">Cookie</a>&lt;'c&gt;</code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#247" title="goto source code">[src]</a></h4><div class="docblock"><p>Finishes building and returns the built <code>Cookie</code>.</p>
 <h1 id="example-10" class="section-header"><a href="#example-10">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -130,9 +130,9 @@ max age 20 years into the future.</p>
     .<span class="ident">path</span>(<span class="string">&quot;/&quot;</span>)
     .<span class="ident">finish</span>();
 
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">name_value</span>(), (<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>));
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">domain</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;crates.io&quot;</span>));
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/&quot;</span>));</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">name_value</span>(), (<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>));
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">domain</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;crates.io&quot;</span>));
+<span class="macro">assert_eq!</span>(<span class="ident">c</span>.<span class="ident">path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/&quot;</span>));</pre></div>
 </div></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><h3 id="impl-Clone" class="impl"><code class="in-band">impl&lt;'c&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt;</code><a href="#impl-Clone" class="anchor"></a><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#34" title="goto source code">[src]</a></h3><div class="impl-items"><h4 id="method.clone" class="method hidden"><code>pub fn <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone" class="fnname">clone</a>(&amp;self) -&gt; <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt;</code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#34" title="goto source code">[src]</a></h4><div class='docblock hidden'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
 </div><h4 id="method.clone_from" class="method hidden"><code>pub fn <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from" class="fnname">clone_from</a>(&amp;mut self, source: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self)</code><span class="since" title="Stable since Rust version 1.0.0">1.0.0</span><a class="srclink" href="https://doc.rust-lang.org/nightly/src/core/clone.rs.html#130" title="goto source code">[src]</a></h4><div class='docblock hidden'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
 </div></div><h3 id="impl-Debug" class="impl"><code class="in-band">impl&lt;'c&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../../salvo/http/cookie/struct.CookieBuilder.html" title="struct salvo::http::cookie::CookieBuilder">CookieBuilder</a>&lt;'c&gt;</code><a href="#impl-Debug" class="anchor"></a><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#34" title="goto source code">[src]</a></h3><div class="impl-items"><h4 id="method.fmt" class="method hidden"><code>pub fn <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt" class="fnname">fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>&lt;'_&gt;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html" title="struct core::fmt::Error">Error</a>&gt;</code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/builder.rs.html#34" title="goto source code">[src]</a></h4><div class='docblock hidden'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>

@@ -15,7 +15,7 @@
     .<span class="ident">extensions</span>()
     .<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">HttpInfo</span><span class="op">&gt;</span>()
     .<span class="ident">map</span>(<span class="op">|</span><span class="ident">info</span><span class="op">|</span> {
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;remote addr = {}&quot;</span>, <span class="ident">info</span>.<span class="ident">remote_addr</span>());
+        <span class="macro">println!</span>(<span class="string">&quot;remote addr = {}&quot;</span>, <span class="ident">info</span>.<span class="ident">remote_addr</span>());
     });</pre></div>
 <h1 id="note" class="section-header"><a href="#note">Note</a></h1>
 <p>If a different connector is used besides <a href="../../../../salvo/hyper/client/struct.HttpConnector.html"><code>HttpConnector</code></a>,

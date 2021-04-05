@@ -400,7 +400,7 @@
         <span class="ident">Options</span> {
             <span class="ident">dot_files</span>: <span class="bool-val">true</span>,
             <span class="ident">listing</span>: <span class="bool-val">true</span>,
-            <span class="ident">defaults</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;index.html&quot;</span>.<span class="ident">to_owned</span>()],
+            <span class="ident">defaults</span>: <span class="macro">vec!</span>[<span class="string">&quot;index.html&quot;</span>.<span class="ident">to_owned</span>()],
         }
     }
 }
@@ -417,7 +417,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">StaticRoots</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
     <span class="kw">fn</span> <span class="ident">collect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
-        <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="self">self</span>)]
+        <span class="macro">vec!</span>[<span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="self">self</span>)]
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">StaticRoots</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> {
@@ -427,7 +427,7 @@
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">StaticRoots</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">String</span> {
     <span class="kw">fn</span> <span class="ident">collect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
-        <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="self">self</span>)]
+        <span class="macro">vec!</span>[<span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="self">self</span>)]
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">StaticRoots</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">String</span><span class="op">&gt;</span> {
@@ -437,7 +437,7 @@
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">StaticRoots</span> <span class="kw">for</span> <span class="ident">String</span> {
     <span class="kw">fn</span> <span class="ident">collect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
-        <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="self">self</span>)]
+        <span class="macro">vec!</span>[<span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="self">self</span>)]
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">StaticRoots</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
@@ -447,7 +447,7 @@
 }
 <span class="kw">impl</span> <span class="ident">StaticRoots</span> <span class="kw">for</span> <span class="ident">Path</span> {
     <span class="kw">fn</span> <span class="ident">collect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
-        <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="self">self</span>)]
+        <span class="macro">vec!</span>[<span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="self">self</span>)]
     }
 }
 
@@ -519,7 +519,7 @@
         }
         .<span class="ident">to_owned</span>();
         <span class="kw">let</span> <span class="ident">base_path</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">base_path</span>.<span class="ident">starts_with</span>(<span class="string">&#39;/&#39;</span>) {
-            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;.{}&quot;</span>, <span class="ident">base_path</span>)
+            <span class="macro">format!</span>(<span class="string">&quot;.{}&quot;</span>, <span class="ident">base_path</span>)
         } <span class="kw">else</span> {
             <span class="ident">base_path</span>
         };
@@ -531,7 +531,7 @@
             <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_dir</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">listing</span> {
                 <span class="ident">path_exist</span> <span class="op">=</span> <span class="bool-val">true</span>;
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">req_path</span>.<span class="ident">ends_with</span>(<span class="string">&#39;/&#39;</span>) {
-                    <span class="ident">res</span>.<span class="ident">redirect_found</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/&quot;</span>, <span class="ident">req_path</span>));
+                    <span class="ident">res</span>.<span class="ident">redirect_found</span>(<span class="macro">format!</span>(<span class="string">&quot;{}/&quot;</span>, <span class="ident">req_path</span>));
                     <span class="kw">return</span>;
                 }
                 <span class="kw">for</span> <span class="ident">ifile</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">options</span>.<span class="ident">defaults</span> {
@@ -613,7 +613,7 @@
 }
 
 <span class="kw">fn</span> <span class="ident">list_json</span>(<span class="ident">current</span>: <span class="kw-2">&amp;</span><span class="ident">CurrentInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-    <span class="macro">json</span><span class="macro">!</span>(<span class="ident">current</span>).<span class="ident">to_string</span>()
+    <span class="macro">json!</span>(<span class="ident">current</span>).<span class="ident">to_string</span>()
 }
 <span class="kw">fn</span> <span class="ident">list_xml</span>(<span class="ident">current</span>: <span class="kw-2">&amp;</span><span class="ident">CurrentInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ftxt</span> <span class="op">=</span> <span class="string">&quot;&lt;list&gt;&quot;</span>.<span class="ident">to_owned</span>();
@@ -622,7 +622,7 @@
     } <span class="kw">else</span> {
         <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;table&gt;&quot;</span>);
         <span class="kw">for</span> <span class="ident">dir</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">dirs</span> {
-            <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+            <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
                 <span class="string">&quot;&lt;dir&gt;&lt;name&gt;{}&lt;/name&gt;&lt;modified&gt;{}&lt;/modified&gt;&lt;link&gt;{}&lt;/link&gt;&lt;/dir&gt;&quot;</span>,
                 <span class="ident">dir</span>.<span class="ident">name</span>,
                 <span class="ident">dir</span>.<span class="ident">modified</span>.<span class="ident">format</span>(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>),
@@ -630,7 +630,7 @@
             ));
         }
         <span class="kw">for</span> <span class="ident">file</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">files</span> {
-            <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+            <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
                 <span class="string">&quot;&lt;file&gt;&lt;name&gt;{}&lt;/name&gt;&lt;modified&gt;{}&lt;/modified&gt;&lt;size&gt;{}&lt;/size&gt;&lt;link&gt;{}&lt;/link&gt;&lt;/file&gt;&quot;</span>,
                 <span class="ident">file</span>.<span class="ident">name</span>,
                 <span class="ident">file</span>.<span class="ident">modified</span>.<span class="ident">format</span>(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>),
@@ -647,14 +647,14 @@
     <span class="kw">fn</span> <span class="ident">header_links</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
         <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">trim_start_matches</span>(<span class="string">&quot;/&quot;</span>).<span class="ident">trim_end_matches</span>(<span class="string">&quot;/&quot;</span>).<span class="ident">split</span>(<span class="string">&#39;/&#39;</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">link</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>();
-        <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}{}&quot;</span>, <span class="string">&quot;&lt;a href=\&quot;/\&quot;&gt;&lt;svg aria-hidden=\&quot;true\&quot; data-icon=\&quot;home\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; viewBox=\&quot;0 0 576 512\&quot;&gt;&lt;path fill=\&quot;currentColor\&quot; d=\&quot;M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z\&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;&quot;</span>, <span class="ident">segments</span>
+        <span class="macro">format!</span>(<span class="string">&quot;{}{}&quot;</span>, <span class="string">&quot;&lt;a href=\&quot;/\&quot;&gt;&lt;svg aria-hidden=\&quot;true\&quot; data-icon=\&quot;home\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; viewBox=\&quot;0 0 576 512\&quot;&gt;&lt;path fill=\&quot;currentColor\&quot; d=\&quot;M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z\&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;&quot;</span>, <span class="ident">segments</span>
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">seg</span><span class="op">|</span> {
-            <span class="ident">link</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="ident">link</span>, <span class="ident">seg</span>);
-            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;/&lt;a href=\&quot;{}\&quot;&gt;{}&lt;/a&gt;&quot;</span>, <span class="ident">link</span>, <span class="ident">seg</span>)
+            <span class="ident">link</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="ident">link</span>, <span class="ident">seg</span>);
+            <span class="macro">format!</span>(<span class="string">&quot;/&lt;a href=\&quot;{}\&quot;&gt;{}&lt;/a&gt;&quot;</span>, <span class="ident">link</span>, <span class="ident">seg</span>)
         }).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         .<span class="ident">join</span>(<span class="string">&quot;&quot;</span>))
     }
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ftxt</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ftxt</span> <span class="op">=</span> <span class="macro">format!</span>(
         <span class="string">r#&quot;&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
@@ -711,7 +711,7 @@
         }
         <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Last modified&lt;/th&gt;&lt;th&gt;Size&lt;/th&gt;&lt;/tr&gt;&quot;</span>);
         <span class="kw">for</span> <span class="ident">dir</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">dirs</span> {
-            <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+            <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
                 <span class="string">r#&quot;&lt;tr&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;./{}/&quot;&gt;{}&lt;/a&gt;&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&quot;#</span>,
                 <span class="ident">DIR_ICON</span>,
                 <span class="ident">encode_url_path</span>(<span class="kw-2">&amp;</span><span class="ident">dir</span>.<span class="ident">name</span>),
@@ -720,7 +720,7 @@
             ));
         }
         <span class="kw">for</span> <span class="ident">file</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">files</span> {
-            <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+            <span class="ident">ftxt</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
                 <span class="string">r#&quot;&lt;tr&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;./{}&quot;&gt;{}&lt;/a&gt;&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;td&gt;{}&lt;/td&gt;&lt;/tr&gt;&quot;#</span>,
                 <span class="ident">FILE_ICON</span>,
                 <span class="ident">encode_url_path</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>.<span class="ident">name</span>),
@@ -735,7 +735,7 @@
     <span class="ident">ftxt</span>
 }
 <span class="kw">fn</span> <span class="ident">list_text</span>(<span class="ident">current</span>: <span class="kw-2">&amp;</span><span class="ident">CurrentInfo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-    <span class="macro">json</span><span class="macro">!</span>(<span class="ident">current</span>).<span class="ident">to_string</span>()
+    <span class="macro">json!</span>(<span class="ident">current</span>).<span class="ident">to_string</span>()
 }
 
 <span class="kw">const</span> <span class="ident">DIR_ICON</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;&lt;svg aria-label=&quot;Directory&quot; data-icon=&quot;dir&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 512 512&quot; version=&quot;1.1&quot; role=&quot;img&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M464 128H272l-64-64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&quot;#</span>;

@@ -220,7 +220,7 @@
     <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Request</span>, <span class="ident">depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Depot</span>, <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>);
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">handler_tuple_impls</span> {
+<span class="macro">macro_rules!</span> <span class="ident">handler_tuple_impls</span> {
     ($(
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Tuple</span>:<span class="ident">tt</span> {
             $((<span class="macro-nonterminal">$</span><span class="macro-nonterminal">idx</span>:<span class="ident">tt</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">tt</span>,)<span class="op">+</span> <span class="comment">//https://github.com/dtolnay/async-trait/issues/46</span>
@@ -240,9 +240,9 @@
     }
 }
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">__for_each_handler_tuple</span> {
+<span class="macro">macro_rules!</span> <span class="ident">__for_each_handler_tuple</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">callback</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro-nonterminal">$</span><span class="macro">callback</span><span class="macro">!</span> {
+        <span class="macro-nonterminal">$</span><span class="macro">callback!</span> {
             <span class="number">1</span> {
                 (<span class="number">0</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">A</span>,
             }
@@ -415,7 +415,7 @@
     };
 }
 
-<span class="macro">__for_each_handler_tuple</span><span class="macro">!</span>(<span class="ident">handler_tuple_impls</span>);
+<span class="macro">__for_each_handler_tuple!</span>(<span class="ident">handler_tuple_impls</span>);
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="salvo_core" data-search-js="../../search-index.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

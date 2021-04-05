@@ -228,7 +228,7 @@
         <span class="comment">// Setup a file to capture the contents.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">TempDir</span>::<span class="ident">new</span>(<span class="string">&quot;salvo_http_multipart&quot;</span>)<span class="question-mark">?</span>.<span class="ident">into_path</span>();
         <span class="kw">let</span> <span class="ident">temp_dir</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">path</span>.<span class="ident">clone</span>());
-        <span class="ident">path</span>.<span class="ident">push</span>(<span class="macro">format</span><span class="macro">!</span>(
+        <span class="ident">path</span>.<span class="ident">push</span>(<span class="macro">format!</span>(
             <span class="string">&quot;{}.{}&quot;</span>,
             <span class="ident">TextNonce</span>::<span class="ident">sized_urlsafe</span>(<span class="number">32</span>).<span class="ident">unwrap</span>().<span class="ident">into_string</span>(),
             <span class="ident">field</span>

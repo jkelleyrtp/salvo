@@ -1,1 +1,1 @@
-initSidebarItems({"attr":[["async_trait",""],["fn_handler",""]],"struct":[["HtmlText",""],["JsonText",""],["PlainText",""],["Router",""],["Server",""],["Service",""],["StatusCode","An HTTP status code (`status-code` in RFC 7230 et al.)."],["TlsServer",""]],"trait":[["Handler",""],["Writer",""]]});
+initSidebarItems({"attr":[["async_trait",""],["fn_handler",""]],"struct":[["HtmlText",""],["JsonText",""],["PlainText",""],["Router",""],["Service",""],["StatusCode","An HTTP status code (`status-code` in RFC 7230 et al.)."]],"trait":[["Handler",""],["Writer",""]]});

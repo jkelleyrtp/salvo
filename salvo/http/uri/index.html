@@ -12,14 +12,14 @@ schemes and hostnames on clients.</p>
 <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">Uri</span>;
 
 <span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="string">&quot;/foo/bar?baz&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Uri</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri</span>.<span class="ident">path</span>(), <span class="string">&quot;/foo/bar&quot;</span>);
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri</span>.<span class="ident">query</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;baz&quot;</span>));
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri</span>.<span class="ident">host</span>(), <span class="prelude-val">None</span>);
+<span class="macro">assert_eq!</span>(<span class="ident">uri</span>.<span class="ident">path</span>(), <span class="string">&quot;/foo/bar&quot;</span>);
+<span class="macro">assert_eq!</span>(<span class="ident">uri</span>.<span class="ident">query</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;baz&quot;</span>));
+<span class="macro">assert_eq!</span>(<span class="ident">uri</span>.<span class="ident">host</span>(), <span class="prelude-val">None</span>);
 
 <span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/install.html&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Uri</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri</span>.<span class="ident">scheme_str</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;https&quot;</span>));
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri</span>.<span class="ident">host</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;www.rust-lang.org&quot;</span>));
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri</span>.<span class="ident">path</span>(), <span class="string">&quot;/install.html&quot;</span>);</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">uri</span>.<span class="ident">scheme_str</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;https&quot;</span>));
+<span class="macro">assert_eq!</span>(<span class="ident">uri</span>.<span class="ident">host</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;www.rust-lang.org&quot;</span>));
+<span class="macro">assert_eq!</span>(<span class="ident">uri</span>.<span class="ident">path</span>(), <span class="string">&quot;/install.html&quot;</span>);</pre></div>
 </div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
 <table><tr class="module-item"><td><a class="struct" href="struct.Authority.html" title="salvo::http::uri::Authority struct">Authority</a></td><td class="docblock-short"><p>Represents the authority component of a URI.</p>
 </td></tr><tr class="module-item"><td><a class="struct" href="struct.Builder.html" title="salvo::http::uri::Builder struct">Builder</a></td><td class="docblock-short"><p>A builder for <code>Uri</code>s.</p>

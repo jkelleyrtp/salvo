@@ -34,12 +34,12 @@ server before any bytes have been written.</li>
 <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">client</span>.<span class="ident">get</span>(<span class="ident">Uri</span>::<span class="ident">from_static</span>(<span class="string">&quot;http://httpbin.org/ip&quot;</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
 
 <span class="comment">// And then, if the request gets a response...</span>
-<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;status: {}&quot;</span>, <span class="ident">res</span>.<span class="ident">status</span>());
+<span class="macro">println!</span>(<span class="string">&quot;status: {}&quot;</span>, <span class="ident">res</span>.<span class="ident">status</span>());
 
 <span class="comment">// Concatenate the body stream into a single buffer...</span>
 <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">hyper</span>::<span class="ident">body</span>::<span class="ident">to_bytes</span>(<span class="ident">res</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 
-<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;body: {:?}&quot;</span>, <span class="ident">buf</span>);</pre></div>
+<span class="macro">println!</span>(<span class="string">&quot;body: {:?}&quot;</span>, <span class="ident">buf</span>);</pre></div>
 </div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
 <table><tr class="module-item"><td><a class="mod" href="conn/index.html" title="salvo::hyper::client::conn mod">conn</a></td><td class="docblock-short"><p>Lower-level client connection API.</p>
 </td></tr><tr class="module-item"><td><a class="mod" href="connect/index.html" title="salvo::hyper::client::connect mod">connect</a></td><td class="docblock-short"><p>Connectors used by the <code>Client</code>.</p>

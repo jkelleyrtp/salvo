@@ -40,7 +40,7 @@ be executed to start serving requests.</p>
 
     <span class="comment">// And run forever...</span>
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">server</span>.<span class="kw">await</span> {
-        <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">&quot;server error: {}&quot;</span>, <span class="ident">e</span>);
+        <span class="macro">eprintln!</span>(<span class="string">&quot;server error: {}&quot;</span>, <span class="ident">e</span>);
     }
 }</pre></div>
 <p>If you don’t need the connection and your service implements <code>Clone</code> you can use
@@ -60,7 +60,7 @@ be executed to start serving requests.</p>
 
     <span class="comment">// And run forever...</span>
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">server</span>.<span class="kw">await</span> {
-        <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">&quot;server error: {}&quot;</span>, <span class="ident">e</span>);
+        <span class="macro">eprintln!</span>(<span class="string">&quot;server error: {}&quot;</span>, <span class="ident">e</span>);
     }
 }</pre></div>
 </div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>

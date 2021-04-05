@@ -192,7 +192,7 @@
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">MsgError</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">msg</span>)
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">msg</span>)
     }
 }
 
@@ -206,7 +206,7 @@
 <span class="kw">impl</span> <span class="ident">ProxyHandler</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">upstreams</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">if</span> <span class="ident">upstreams</span>.<span class="ident">is_empty</span>() {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;proxy upstreams is empty&quot;</span>);
+            <span class="macro">panic!</span>(<span class="string">&quot;proxy upstreams is empty&quot;</span>);
         }
         <span class="ident">ProxyHandler</span> {
             <span class="ident">upstreams</span>,
@@ -225,13 +225,13 @@
         } <span class="kw">else</span> <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">upstreams</span>.<span class="ident">is_empty</span>() {
             <span class="self">self</span>.<span class="ident">upstreams</span>.<span class="ident">get</span>(<span class="number">0</span>)
         } <span class="kw">else</span> {
-            <span class="ident">tracing</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;upstreams is empty&quot;</span>);
+            <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="string">&quot;upstreams is empty&quot;</span>);
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">salvo_core</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">MsgError</span>::<span class="ident">new</span>(<span class="string">&quot;upstreams is empty&quot;</span>)));
         }
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">s</span>)
         .<span class="ident">unwrap_or_default</span>();
         <span class="kw">if</span> <span class="ident">upstream</span>.<span class="ident">is_empty</span>() {
-            <span class="ident">tracing</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;upstreams is empty&quot;</span>);
+            <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="string">&quot;upstreams is empty&quot;</span>);
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">salvo_core</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">MsgError</span>::<span class="ident">new</span>(<span class="string">&quot;upstreams is empty&quot;</span>)));
         }
 
@@ -239,15 +239,15 @@
         <span class="kw">let</span> <span class="ident">rest</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="ident">rest</span>)) <span class="op">=</span> <span class="ident">param</span> { <span class="ident">rest</span> } <span class="kw">else</span> { <span class="string">&quot;&quot;</span> }.<span class="ident">trim_start_matches</span>(<span class="string">&#39;/&#39;</span>);
         <span class="kw">let</span> <span class="ident">forward_url</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">query</span>) <span class="op">=</span> <span class="ident">req</span>.<span class="ident">uri</span>().<span class="ident">query</span>() {
             <span class="kw">if</span> <span class="ident">rest</span>.<span class="ident">is_empty</span>() {
-                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}?{}&quot;</span>, <span class="ident">upstream</span>, <span class="ident">query</span>)
+                <span class="macro">format!</span>(<span class="string">&quot;{}?{}&quot;</span>, <span class="ident">upstream</span>, <span class="ident">query</span>)
             } <span class="kw">else</span> {
-                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}?{}&quot;</span>, <span class="ident">upstream</span>.<span class="ident">trim_end_matches</span>(<span class="string">&#39;/&#39;</span>), <span class="ident">rest</span>, <span class="ident">query</span>)
+                <span class="macro">format!</span>(<span class="string">&quot;{}/{}?{}&quot;</span>, <span class="ident">upstream</span>.<span class="ident">trim_end_matches</span>(<span class="string">&#39;/&#39;</span>), <span class="ident">rest</span>, <span class="ident">query</span>)
             }
         } <span class="kw">else</span> {
             <span class="kw">if</span> <span class="ident">rest</span>.<span class="ident">is_empty</span>() {
                 <span class="ident">upstream</span>.<span class="ident">into</span>()
             } <span class="kw">else</span> {
-                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="ident">upstream</span>.<span class="ident">trim_end_matches</span>(<span class="string">&#39;/&#39;</span>), <span class="ident">rest</span>)
+                <span class="macro">format!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="ident">upstream</span>.<span class="ident">trim_end_matches</span>(<span class="string">&#39;/&#39;</span>), <span class="ident">rest</span>)
             }
         };
         <span class="kw">let</span> <span class="ident">forward_url</span>: <span class="ident">Uri</span> <span class="op">=</span> <span class="ident">TryFrom</span>::<span class="ident">try_from</span>(<span class="ident">forward_url</span>).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
@@ -318,14 +318,14 @@
                         <span class="ident">res</span>.<span class="ident">set_body</span>(<span class="prelude-val">Some</span>(<span class="ident">body</span>.<span class="ident">into</span>()));
                     }
                     <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="ident">tracing</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;error: {}&quot;</span>, <span class="ident">e</span>);
+                        <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="string">&quot;error: {}&quot;</span>, <span class="ident">e</span>);
                         <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">INTERNAL_SERVER_ERROR</span>);
                     }
                 };
                 <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">remove</span>(<span class="ident">CONNECTION</span>);
             }
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">tracing</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;error when build proxied request: {}&quot;</span>, <span class="ident">e</span>);
+                <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="string">&quot;error when build proxied request: {}&quot;</span>, <span class="ident">e</span>);
             }
         }
     }

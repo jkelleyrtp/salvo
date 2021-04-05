@@ -114,7 +114,7 @@
 
 <span class="attribute">#[<span class="ident">proc_macro_attribute</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fn_handler</span>(<span class="kw">_</span>: <span class="ident">TokenStream</span>, <span class="ident">input</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="macro">parse_macro_input</span><span class="macro">!</span>(<span class="ident">input</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">ItemFn</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="macro">parse_macro_input!</span>(<span class="ident">input</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">ItemFn</span>);
     <span class="kw">let</span> <span class="ident">attrs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">input</span>.<span class="ident">attrs</span>;
     <span class="kw">let</span> <span class="ident">vis</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">input</span>.<span class="ident">vis</span>;
     <span class="kw">let</span> <span class="ident">sig</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">input</span>.<span class="ident">sig</span>;
@@ -139,22 +139,22 @@
     <span class="kw">match</span> <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">len</span>() {
         <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="ident">empty_input</span> <span class="op">=</span> <span class="bool-val">true</span>;
-            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span> {<span class="ident">_req</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Request</span>}.<span class="ident">into</span>();
-            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">push</span>(<span class="ident">syn</span>::<span class="macro">parse_macro_input</span><span class="macro">!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
-            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span> {<span class="ident">_depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Depot</span>}.<span class="ident">into</span>();
-            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">push</span>(<span class="ident">syn</span>::<span class="macro">parse_macro_input</span><span class="macro">!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
-            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span> {<span class="ident">_res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Response</span>}.<span class="ident">into</span>();
-            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">push</span>(<span class="ident">syn</span>::<span class="macro">parse_macro_input</span><span class="macro">!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
+            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote!</span> {<span class="ident">_req</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Request</span>}.<span class="ident">into</span>();
+            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">push</span>(<span class="ident">syn</span>::<span class="macro">parse_macro_input!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
+            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote!</span> {<span class="ident">_depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Depot</span>}.<span class="ident">into</span>();
+            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">push</span>(<span class="ident">syn</span>::<span class="macro">parse_macro_input!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
+            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote!</span> {<span class="ident">_res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Response</span>}.<span class="ident">into</span>();
+            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">push</span>(<span class="ident">syn</span>::<span class="macro">parse_macro_input!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
         }
         <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span> {<span class="ident">_depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Depot</span>}.<span class="ident">into</span>();
-            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">insert</span>(<span class="number">0</span>, <span class="ident">syn</span>::<span class="macro">parse_macro_input</span><span class="macro">!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
-            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span> {<span class="ident">_req</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Request</span>}.<span class="ident">into</span>();
-            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">insert</span>(<span class="number">0</span>, <span class="ident">syn</span>::<span class="macro">parse_macro_input</span><span class="macro">!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
+            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote!</span> {<span class="ident">_depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Depot</span>}.<span class="ident">into</span>();
+            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">insert</span>(<span class="number">0</span>, <span class="ident">syn</span>::<span class="macro">parse_macro_input!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
+            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote!</span> {<span class="ident">_req</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Request</span>}.<span class="ident">into</span>();
+            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">insert</span>(<span class="number">0</span>, <span class="ident">syn</span>::<span class="macro">parse_macro_input!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
         }
         <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span> {<span class="ident">_depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Depot</span>}.<span class="ident">into</span>();
-            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">insert</span>(<span class="number">1</span>, <span class="ident">syn</span>::<span class="macro">parse_macro_input</span><span class="macro">!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
+            <span class="kw">let</span> <span class="ident">ts</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="macro">quote!</span> {<span class="ident">_depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> #<span class="ident">salvo</span>::<span class="ident">Depot</span>}.<span class="ident">into</span>();
+            <span class="ident">sig</span>.<span class="ident">inputs</span>.<span class="ident">insert</span>(<span class="number">1</span>, <span class="ident">syn</span>::<span class="macro">parse_macro_input!</span>(<span class="ident">ts</span> <span class="kw">as</span> <span class="ident">syn</span>::<span class="ident">FnArg</span>));
         }
         <span class="number">3</span> <span class="op">=</span><span class="op">&gt;</span> {}
         <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
@@ -164,7 +164,7 @@
         }
     }
 
-    <span class="kw">let</span> <span class="ident">sdef</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span> {
+    <span class="kw">let</span> <span class="ident">sdef</span> <span class="op">=</span> <span class="macro">quote!</span> {
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>)]</span>
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
         #<span class="ident">vis</span> <span class="kw">struct</span> #<span class="ident">name</span>;
@@ -183,7 +183,7 @@
                     .<span class="ident">to_compile_error</span>()
                     .<span class="ident">into</span>();
             }
-            (<span class="macro">quote</span><span class="macro">!</span> {
+            (<span class="macro">quote!</span> {
                 #<span class="ident">sdef</span>
                 <span class="attribute">#[<span class="ident">async_trait</span>]</span>
                 <span class="kw">impl</span> #<span class="ident">salvo</span>::<span class="ident">Handler</span> <span class="kw">for</span> #<span class="ident">name</span> {
@@ -194,7 +194,7 @@
             })
             .<span class="ident">into</span>()
         }
-        <span class="ident">ReturnType</span>::<span class="ident">Type</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="macro">quote</span><span class="macro">!</span> {
+        <span class="ident">ReturnType</span>::<span class="ident">Type</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="macro">quote!</span> {
             #<span class="ident">sdef</span>
             <span class="attribute">#[<span class="ident">async_trait</span>]</span>
             <span class="kw">impl</span> #<span class="ident">salvo</span>::<span class="ident">Handler</span> <span class="kw">for</span> #<span class="ident">name</span> {

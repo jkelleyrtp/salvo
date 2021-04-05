@@ -7,9 +7,9 @@
 
 <span class="kw">let</span> <span class="ident">cors</span> <span class="op">=</span> <span class="ident">salvo_extra</span>::<span class="ident">cors</span>::<span class="ident">cors</span>()
     .<span class="ident">allow_origin</span>(<span class="string">&quot;https://hyper.rs&quot;</span>)
-    .<span class="ident">allow_methods</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>, <span class="string">&quot;DELETE&quot;</span>]).<span class="ident">build</span>();
+    .<span class="ident">allow_methods</span>(<span class="macro">vec!</span>[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>, <span class="string">&quot;DELETE&quot;</span>]).<span class="ident">build</span>();
 <span class="kw">let</span> <span class="ident">cors</span> <span class="op">=</span> <span class="ident">salvo_extra</span>::<span class="ident">cors</span>::<span class="ident">cors</span>().<span class="ident">allow_origin</span>(<span class="string">&quot;https://hyper.rs&quot;</span>)
-    .<span class="ident">allow_methods</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>, <span class="string">&quot;DELETE&quot;</span>]).<span class="ident">build</span>();
+    .<span class="ident">allow_methods</span>(<span class="macro">vec!</span>[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>, <span class="string">&quot;DELETE&quot;</span>]).<span class="ident">build</span>();
 
 <span class="kw">let</span> <span class="ident">router</span> <span class="op">=</span> <span class="ident">Router</span>::<span class="ident">new</span>().<span class="ident">before</span>(<span class="ident">cors</span>).<span class="ident">post</span>(<span class="ident">upload_file</span>);
 <span class="attribute">#[<span class="ident">fn_handler</span>]</span>

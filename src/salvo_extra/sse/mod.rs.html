@@ -558,7 +558,7 @@
         <span class="ident">write_request_headers</span>(<span class="ident">res</span>);
         <span class="kw">let</span> <span class="ident">body_stream</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">error</span><span class="op">|</span> {
-                <span class="ident">tracing</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;sse stream error: {}&quot;</span>, <span class="ident">error</span>);
+                <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="string">&quot;sse stream error: {}&quot;</span>, <span class="ident">error</span>);
                 <span class="ident">SseError</span>
             })
             .<span class="ident">into_stream</span>()
@@ -583,7 +583,7 @@
     <span class="ident">write_request_headers</span>(<span class="ident">res</span>);
     <span class="kw">let</span> <span class="ident">body_stream</span> <span class="op">=</span> <span class="ident">event_stream</span>
         .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">error</span><span class="op">|</span> {
-            <span class="ident">tracing</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;sse stream error: {}&quot;</span>, <span class="ident">error</span>);
+            <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="string">&quot;sse stream error: {}&quot;</span>, <span class="ident">error</span>);
             <span class="ident">SseError</span>
         })
         .<span class="ident">into_stream</span>()
@@ -618,7 +618,7 @@
             }
             <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>),
             <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">error</span>))) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">tracing</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;sse::keep error: {}&quot;</span>, <span class="ident">error</span>);
+                <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="string">&quot;sse::keep error: {}&quot;</span>, <span class="ident">error</span>);
                 <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">SseError</span>)))
             }
         }
@@ -634,7 +634,7 @@
 
     <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">SseError</span> {
         <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-            <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;sse error&quot;</span>)
+            <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;sse error&quot;</span>)
         }
     }
 

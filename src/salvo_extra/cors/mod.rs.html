@@ -537,7 +537,7 @@
     {
         <span class="kw">let</span> <span class="ident">method</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">TryFrom</span>::<span class="ident">try_from</span>(<span class="ident">method</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;illegal Method&quot;</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;illegal Method&quot;</span>),
         };
         <span class="self">self</span>.<span class="ident">methods</span>.<span class="ident">insert</span>(<span class="ident">method</span>);
         <span class="self">self</span>
@@ -555,7 +555,7 @@
     {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">methods</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">TryFrom</span>::<span class="ident">try_from</span>(<span class="ident">m</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;illegal Method&quot;</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;illegal Method&quot;</span>),
         });
         <span class="self">self</span>.<span class="ident">methods</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
         <span class="self">self</span>
@@ -574,7 +574,7 @@
     {
         <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">TryFrom</span>::<span class="ident">try_from</span>(<span class="ident">header</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;illegal Header&quot;</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;illegal Header&quot;</span>),
         };
         <span class="self">self</span>.<span class="ident">allowed_headers</span>.<span class="ident">insert</span>(<span class="ident">header</span>);
         <span class="self">self</span>
@@ -594,7 +594,7 @@
     {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">headers</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">h</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">TryFrom</span>::<span class="ident">try_from</span>(<span class="ident">h</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">h</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">h</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;illegal Header&quot;</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;illegal Header&quot;</span>),
         });
         <span class="self">self</span>.<span class="ident">allowed_headers</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
         <span class="self">self</span>
@@ -611,7 +611,7 @@
     {
         <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">TryFrom</span>::<span class="ident">try_from</span>(<span class="ident">header</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;illegal Header&quot;</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;illegal Header&quot;</span>),
         };
         <span class="self">self</span>.<span class="ident">exposed_headers</span>.<span class="ident">insert</span>(<span class="ident">header</span>);
         <span class="self">self</span>
@@ -629,7 +629,7 @@
     {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">headers</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">h</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">TryFrom</span>::<span class="ident">try_from</span>(<span class="ident">h</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">h</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">h</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;illegal Header&quot;</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;illegal Header&quot;</span>),
         });
         <span class="self">self</span>.<span class="ident">exposed_headers</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
         <span class="self">self</span>
@@ -739,7 +739,7 @@
             <span class="ident">Forbidden</span>::<span class="ident">MethodNotAllowed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;request-method not allowed&quot;</span>,
             <span class="ident">Forbidden</span>::<span class="ident">HeaderNotAllowed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;header not allowed&quot;</span>,
         };
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;CORS request forbidden: {}&quot;</span>, <span class="ident">detail</span>)
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;CORS request forbidden: {}&quot;</span>, <span class="ident">detail</span>)
     }
 }
 
@@ -774,7 +774,7 @@
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Forbidden</span>::<span class="ident">MethodNotAllowed</span>);
                     }
                 } <span class="kw">else</span> {
-                    <span class="ident">tracing</span>::<span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;preflight request missing access-control-request-method header&quot;</span>);
+                    <span class="ident">tracing</span>::<span class="macro">trace!</span>(<span class="string">&quot;preflight request missing access-control-request-method header&quot;</span>);
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Forbidden</span>::<span class="ident">MethodNotAllowed</span>);
                 }
 
@@ -792,7 +792,7 @@
             (<span class="prelude-val">Some</span>(<span class="ident">origin</span>), <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">// Any other method, simply check for a valid origin...</span>
 
-                <span class="ident">tracing</span>::<span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;origin header: {:?}&quot;</span>, <span class="ident">origin</span>);
+                <span class="ident">tracing</span>::<span class="macro">trace!</span>(<span class="string">&quot;origin header: {:?}&quot;</span>, <span class="ident">origin</span>);
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_origin_allowed</span>(<span class="ident">origin</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">Validated</span>::<span class="ident">Simple</span>(<span class="ident">origin</span>.<span class="ident">clone</span>()))
                 } <span class="kw">else</span> {
@@ -870,7 +870,7 @@
                 <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">ACCESS_CONTROL_ALLOW_ORIGIN</span>, <span class="ident">origin</span>);
             }
             <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">tracing</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="ident">error</span> <span class="op">=</span> <span class="op">%</span><span class="ident">err</span>, <span class="string">&quot;CorsHandler validate error&quot;</span>);
+                <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="ident">error</span> <span class="op">=</span> <span class="op">%</span><span class="ident">err</span>, <span class="string">&quot;CorsHandler validate error&quot;</span>);
             }
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
         }

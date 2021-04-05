@@ -135,7 +135,7 @@
     <span class="kw">fn</span> <span class="ident">ask_credentials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) {
         <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(
             <span class="string">&quot;WWW-Authenticate&quot;</span>,
-            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Basic realm={:?}&quot;</span>, <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">realm</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>(),
+            <span class="macro">format!</span>(<span class="string">&quot;Basic realm={:?}&quot;</span>, <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">realm</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>(),
         );
         <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">UNAUTHORIZED</span>);
     }

@@ -37,7 +37,7 @@ level step the application was in the middle of.</p>
     <span class="ident">it</span>.<span class="ident">detach</span>().<span class="ident">context</span>(<span class="string">&quot;Failed to detach the important thing&quot;</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">read</span>(<span class="ident">path</span>)
-        .<span class="ident">with_context</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Failed to read instrs from {}&quot;</span>, <span class="ident">path</span>))<span class="question-mark">?</span>;
+        .<span class="ident">with_context</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">format!</span>(<span class="string">&quot;Failed to read instrs from {}&quot;</span>, <span class="ident">path</span>))<span class="question-mark">?</span>;
     ...
 }</pre></div>
 <pre><code class="language-console">Error: Failed to read instrs from ./path/to/instrs.json
@@ -97,11 +97,11 @@ macro but you can write the impls yourself or use a standalone macro like
 supports string interpolation and produces an <code>anyhow::Error</code>.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow</span><span class="macro">!</span>(<span class="string">&quot;Missing attribute: {}&quot;</span>, <span class="ident">missing</span>));</pre></div>
+<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;Missing attribute: {}&quot;</span>, <span class="ident">missing</span>));</pre></div>
 <p>A <code>bail!</code> macro is provided as a shorthand for the same early return.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="macro">bail</span><span class="macro">!</span>(<span class="string">&quot;Missing attribute: {}&quot;</span>, <span class="ident">missing</span>);</pre></div>
+<span class="macro">bail!</span>(<span class="string">&quot;Missing attribute: {}&quot;</span>, <span class="ident">missing</span>);</pre></div>
 </li>
 </ul>
 <br>

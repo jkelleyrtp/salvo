@@ -27,7 +27,7 @@ higher-level <a href="../../../../salvo/hyper/client/index.html">Client</a> API.
     <span class="comment">// spawn a task to poll the connection and drive the HTTP state</span>
     <span class="ident">tokio</span>::<span class="ident">spawn</span>(<span class="kw">async</span> <span class="kw">move</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">connection</span>.<span class="kw">await</span> {
-            <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">&quot;Error in connection: {}&quot;</span>, <span class="ident">e</span>);
+            <span class="macro">eprintln!</span>(<span class="string">&quot;Error in connection: {}&quot;</span>, <span class="ident">e</span>);
         }
     });
 
@@ -38,7 +38,7 @@ higher-level <a href="../../../../salvo/hyper/client/index.html">Client</a> API.
         .<span class="ident">body</span>(<span class="ident">Body</span>::<span class="ident">from</span>(<span class="string">&quot;&quot;</span>))<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">request_sender</span>.<span class="ident">send_request</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">response</span>.<span class="ident">status</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">StatusCode</span>::<span class="ident">OK</span>);
+    <span class="macro">assert!</span>(<span class="ident">response</span>.<span class="ident">status</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">StatusCode</span>::<span class="ident">OK</span>);
     <span class="prelude-val">Ok</span>(())
 }
 </pre></div>

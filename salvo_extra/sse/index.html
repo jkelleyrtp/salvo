@@ -12,7 +12,7 @@
 <span class="kw">use</span> <span class="ident">salvo_extra</span>::<span class="ident">sse</span>::{<span class="self">self</span>, <span class="ident">SseEvent</span>};
 
 <span class="kw">fn</span> <span class="ident">sse_events</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SseEvent</span>, <span class="ident">Infallible</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="ident">iter</span>(<span class="macro">vec</span><span class="macro">!</span>[
+    <span class="ident">iter</span>(<span class="macro">vec!</span>[
         <span class="prelude-val">Ok</span>(<span class="ident">SseEvent</span>::<span class="ident">default</span>().<span class="ident">data</span>(<span class="string">&quot;unnamed event&quot;</span>)),
         <span class="prelude-val">Ok</span>(
             <span class="ident">SseEvent</span>::<span class="ident">default</span>().<span class="ident">name</span>(<span class="string">&quot;chat&quot;</span>)
