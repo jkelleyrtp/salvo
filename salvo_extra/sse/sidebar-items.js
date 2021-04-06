@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["streaming",""]],"struct":[["SseEvent","Server-sent event"],["SseKeepAlive",""]]});
+initSidebarItems({"fn":[["streaming",""]],"struct":[["SseError",""],["SseEvent","Server-sent event"],["SseKeepAlive",""]]});
