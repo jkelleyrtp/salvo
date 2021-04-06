@@ -255,6 +255,37 @@
 <span id="252">252</span>
 <span id="253">253</span>
 <span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// use std::fmt::{self, Debug};</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
@@ -306,6 +337,7 @@
             }
         }
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">children</span>.<span class="ident">is_empty</span>() {
+            <span class="kw">let</span> <span class="ident">original_cursor</span> <span class="op">=</span> <span class="ident">path_state</span>.<span class="ident">cursor</span>;
             <span class="kw">for</span> <span class="ident">child</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">children</span> {
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">dm</span>) <span class="op">=</span> <span class="ident">child</span>.<span class="ident">detect</span>(<span class="ident">request</span>, <span class="ident">path_state</span>) {
                     <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">DetectMatched</span> {
@@ -313,6 +345,8 @@
                         <span class="ident">afters</span>: [<span class="kw-2">&amp;</span><span class="ident">dm</span>.<span class="ident">afters</span>[..], <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">afters</span>[..]].<span class="ident">concat</span>(),
                         <span class="ident">handler</span>: <span class="ident">dm</span>.<span class="ident">handler</span>.<span class="ident">clone</span>(),
                     });
+                } <span class="kw">else</span> {
+                    <span class="ident">path_state</span>.<span class="ident">cursor</span> <span class="op">=</span> <span class="ident">original_cursor</span>;
                 }
             }
         }
@@ -486,29 +520,58 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">PathState</span>, <span class="ident">Router</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fn_handler</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">PathState</span>, <span class="ident">Router</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fn_handler</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>};
 
-<span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
-    
+    <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
     <span class="attribute">#[<span class="ident">fn_handler</span>]</span>
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">fake_handler</span>(<span class="ident">_res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) {
-    }
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">fake_handler</span>(<span class="ident">_res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) {}
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_router_detect1</span>() {
         <span class="kw">let</span> <span class="ident">router</span> <span class="op">=</span> <span class="ident">Router</span>::<span class="ident">new</span>().<span class="ident">push</span>(
             <span class="ident">Router</span>::<span class="ident">new</span>().<span class="ident">path</span>(<span class="string">&quot;users&quot;</span>).<span class="ident">push</span>(
-                <span class="ident">Router</span>::<span class="ident">new</span>().<span class="ident">path</span>(<span class="string">&quot;&lt;id&gt;&quot;</span>).<span class="ident">push</span>(
-                    <span class="ident">Router</span>::<span class="ident">new</span>().<span class="ident">path</span>(<span class="string">&quot;emails&quot;</span>).<span class="ident">get</span>(<span class="ident">fake_handler</span>)
-                )
-            )
+                <span class="ident">Router</span>::<span class="ident">new</span>()
+                    .<span class="ident">path</span>(<span class="string">&quot;&lt;id&gt;&quot;</span>)
+                    .<span class="ident">push</span>(<span class="ident">Router</span>::<span class="ident">new</span>().<span class="ident">path</span>(<span class="string">&quot;emails&quot;</span>).<span class="ident">get</span>(<span class="ident">fake_handler</span>)),
+            ),
         );
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">req</span> <span class="op">=</span> <span class="ident">Request</span>::<span class="ident">from_hyper</span>(<span class="ident">hyper</span>::<span class="ident">Request</span>::<span class="ident">builder</span>().<span class="ident">uri</span>(<span class="string">&quot;http://local.host/users/12/emails&quot;</span>).<span class="ident">body</span>(<span class="ident">hyper</span>::<span class="ident">Body</span>::<span class="ident">empty</span>()).<span class="ident">unwrap</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">req</span> <span class="op">=</span> <span class="ident">Request</span>::<span class="ident">from_hyper</span>(
+            <span class="ident">hyper</span>::<span class="ident">Request</span>::<span class="ident">builder</span>()
+                .<span class="ident">uri</span>(<span class="string">&quot;http://local.host/users/12/emails&quot;</span>)
+                .<span class="ident">body</span>(<span class="ident">hyper</span>::<span class="ident">Body</span>::<span class="ident">empty</span>())
+                .<span class="ident">unwrap</span>(),
+        );
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path_state</span> <span class="op">=</span> <span class="ident">PathState</span>::<span class="ident">new</span>(<span class="ident">req</span>.<span class="ident">uri</span>().<span class="ident">path</span>());
         <span class="kw">let</span> <span class="ident">matched</span> <span class="op">=</span> <span class="ident">router</span>.<span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">req</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">path_state</span>);
         <span class="macro">assert!</span>(<span class="ident">matched</span>.<span class="ident">is_some</span>());
     }
-}</pre></div>
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_router_detect2</span>() {
+        <span class="kw">let</span> <span class="ident">router</span> <span class="op">=</span> <span class="ident">Router</span>::<span class="ident">new</span>()
+            .<span class="ident">push</span>(
+                <span class="ident">Router</span>::<span class="ident">new</span>()
+                    .<span class="ident">path</span>(<span class="string">&quot;users&quot;</span>)
+                    .<span class="ident">push</span>(<span class="ident">Router</span>::<span class="ident">new</span>().<span class="ident">path</span>(<span class="string">&quot;&lt;id&gt;&quot;</span>).<span class="ident">get</span>(<span class="ident">fake_handler</span>)),
+            )
+            .<span class="ident">push</span>(
+                <span class="ident">Router</span>::<span class="ident">new</span>().<span class="ident">path</span>(<span class="string">&quot;users&quot;</span>).<span class="ident">push</span>(
+                    <span class="ident">Router</span>::<span class="ident">new</span>()
+                        .<span class="ident">path</span>(<span class="string">&quot;&lt;id&gt;&quot;</span>)
+                        .<span class="ident">push</span>(<span class="ident">Router</span>::<span class="ident">new</span>().<span class="ident">path</span>(<span class="string">&quot;emails&quot;</span>).<span class="ident">get</span>(<span class="ident">fake_handler</span>)),
+                ),
+            );
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">req</span> <span class="op">=</span> <span class="ident">Request</span>::<span class="ident">from_hyper</span>(
+            <span class="ident">hyper</span>::<span class="ident">Request</span>::<span class="ident">builder</span>()
+                .<span class="ident">uri</span>(<span class="string">&quot;http://local.host/users/12/emails&quot;</span>)
+                .<span class="ident">body</span>(<span class="ident">hyper</span>::<span class="ident">Body</span>::<span class="ident">empty</span>())
+                .<span class="ident">unwrap</span>(),
+        );
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path_state</span> <span class="op">=</span> <span class="ident">PathState</span>::<span class="ident">new</span>(<span class="ident">req</span>.<span class="ident">uri</span>().<span class="ident">path</span>());
+        <span class="kw">let</span> <span class="ident">matched</span> <span class="op">=</span> <span class="ident">router</span>.<span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">req</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">path_state</span>);
+        <span class="macro">assert!</span>(<span class="ident">matched</span>.<span class="ident">is_some</span>());
+    }
+}
+</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="salvo_core" data-search-js="../../../search-index.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
