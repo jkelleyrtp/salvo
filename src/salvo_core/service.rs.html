@@ -162,6 +162,9 @@
 <span id="159">159</span>
 <span id="160">160</span>
 <span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">future</span>::<span class="ident">Future</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
@@ -178,9 +181,9 @@
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Catcher</span>, <span class="ident">Depot</span>};
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Service</span> {
-    <span class="kw">pub</span> <span class="ident">router</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Router</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">catchers</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Catcher</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">allowed_media_types</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">router</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Router</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">catchers</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Catcher</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">allowed_media_types</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Service</span> {
@@ -190,6 +193,9 @@
             <span class="ident">catchers</span>: <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">catcher</span>::<span class="ident">defaults</span>::<span class="ident">get</span>()),
             <span class="ident">allowed_media_types</span>: <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="macro">vec!</span>[]),
         }
+    }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">router</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Router</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">router</span>.<span class="ident">clone</span>()
     }
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_catchers</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">catchers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Catcher</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">catchers</span> <span class="op">=</span> <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">catchers</span>);
@@ -232,10 +238,10 @@
 }
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HyperHandler</span> {
-    <span class="ident">remote_addr</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span>,
-    <span class="ident">router</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Router</span><span class="op">&gt;</span>,
-    <span class="ident">catchers</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Catcher</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">allowed_media_types</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">remote_addr</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">router</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Router</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">catchers</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Catcher</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">allowed_media_types</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">type_complexity</span>)]</span>
 <span class="kw">impl</span> <span class="ident">hyper</span>::<span class="ident">service</span>::<span class="ident">Service</span><span class="op">&lt;</span><span class="ident">hyper</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">hyper</span>::<span class="ident">body</span>::<span class="ident">Body</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">HyperHandler</span> {

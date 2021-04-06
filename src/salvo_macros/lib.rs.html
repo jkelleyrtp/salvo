@@ -121,12 +121,12 @@
     <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">input</span>.<span class="ident">block</span>;
     <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">sig</span>.<span class="ident">ident</span>;
 
-    <span class="kw">let</span> <span class="ident">salvo</span> <span class="op">=</span> <span class="ident">crate_name</span>(<span class="string">&quot;salvo_core&quot;</span>)
-        .<span class="ident">or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">crate_name</span>(<span class="string">&quot;salvo&quot;</span>))
-        .<span class="ident">unwrap_or</span>(<span class="ident">FoundCrate</span>::<span class="ident">Name</span>(<span class="string">&quot;salvo_core&quot;</span>.<span class="ident">into</span>()));
-    <span class="kw">let</span> <span class="ident">salvo</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">salvo</span> {
-        <span class="ident">FoundCrate</span>::<span class="ident">Itself</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="string">&quot;salvo_core&quot;</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()), <span class="comment">//This never not happend.</span>
-        <span class="ident">FoundCrate</span>::<span class="ident">Name</span>(<span class="ident">name</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()),
+    <span class="kw">let</span> <span class="ident">salvo</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">crate_name</span>(<span class="string">&quot;salvo_core&quot;</span>).<span class="ident">or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">crate_name</span>(<span class="string">&quot;salvo&quot;</span>)) {
+        <span class="prelude-val">Ok</span>(<span class="ident">salvo</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">salvo</span> {
+            <span class="ident">FoundCrate</span>::<span class="ident">Itself</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="string">&quot;crate&quot;</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()),
+            <span class="ident">FoundCrate</span>::<span class="ident">Name</span>(<span class="ident">name</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()),
+        },
+        <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="string">&quot;crate&quot;</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()),
     };
 
     <span class="kw">if</span> <span class="ident">sig</span>.<span class="ident">asyncness</span>.<span class="ident">is_none</span>() {
