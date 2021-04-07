@@ -307,11 +307,6 @@
 <span id="304">304</span>
 <span id="305">305</span>
 <span id="306">306</span>
-<span id="307">307</span>
-<span id="308">308</span>
-<span id="309">309</span>
-<span id="310">310</span>
-<span id="311">311</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Copyright 2017-2019 `multipart-async` Crate Developers</span>
 <span class="comment">//</span>
@@ -337,7 +332,6 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">headers</span>::<span class="ident">FieldHeaders</span>;
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span>::<span class="ident">headers</span>::<span class="ident">ReadHeaders</span>;
 
-<span class="comment">// mod collect;</span>
 <span class="kw">mod</span> <span class="ident">headers</span>;
 
 <span class="doccomment">/// A `Future` potentially yielding the next field in the multipart stream.</span>
@@ -363,10 +357,6 @@
             <span class="ident">has_next_field</span>: <span class="bool-val">false</span>,
         }
     }
-
-    <span class="comment">// fn multipart(&amp;mut self) -&gt; Option&lt;Pin&lt;&amp;mut Multipart&lt;S&gt;&gt;&gt; {</span>
-    <span class="comment">//     Some(self.multipart.as_mut()?.as_mut())</span>
-    <span class="comment">// }</span>
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Future</span> <span class="kw">for</span> <span class="ident">NextField</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span><span class="op">&gt;</span>
@@ -545,7 +535,7 @@
                 <span class="ident">surrogate</span>[..<span class="ident">start_len</span>].<span class="ident">copy_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">start</span>[..<span class="ident">start_len</span>]);
                 <span class="ident">surrogate</span>[<span class="ident">start_len</span>..<span class="ident">width</span>].<span class="ident">copy_from_slice</span>(<span class="ident">data</span>.<span class="ident">slice</span>(..<span class="ident">needed</span>));
 
-                <span class="comment">// trace!(&quot;decoding surrogate: {:?}&quot;, &amp;surrogate[..width]);</span>
+                <span class="comment">// tracing::debug!(&quot;decoding surrogate: {:?}&quot;, &amp;surrogate[..width]);</span>
 
                 <span class="self">self</span>.<span class="ident">string</span>
                     .<span class="ident">push_str</span>(<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="kw-2">&amp;</span><span class="ident">surrogate</span>[..<span class="ident">width</span>]).<span class="ident">map_err</span>(<span class="ident">ReadError</span>::<span class="ident">Utf8</span>)<span class="question-mark">?</span>);
@@ -559,7 +549,7 @@
                 <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">string</span>.<span class="ident">push_str</span>(<span class="ident">s</span>),
                 <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">error_len</span>().<span class="ident">is_some</span>() {
-                        <span class="comment">// trace!(&quot;ReadToString failed to decode; string: {:?}, surrogate: {:?}, data: {:?}&quot;,</span>
+                        <span class="comment">// tracing::debug!(&quot;ReadToString failed to decode; string: {:?}, surrogate: {:?}, data: {:?}&quot;,</span>
                         <span class="comment">//    self.string, self.surrogate, data.as_slice());</span>
                         <span class="comment">// we encountered an invalid surrogate</span>
                         <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Utf8</span>(<span class="ident">e</span>)));

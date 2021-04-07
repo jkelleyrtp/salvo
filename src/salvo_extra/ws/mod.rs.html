@@ -353,9 +353,15 @@
 <span id="350">350</span>
 <span id="351">351</span>
 <span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Websocket</span>
+<span class="comment">// Copyright (c) 2018-2020 Sean McArthur</span>
+<span class="comment">// Licensed under the MIT license http://opensource.org/licenses/MIT</span>
 <span class="comment">// port from https://github.com/seanmonstar/warp/blob/master/src/filters/ws.rs</span>
+
+<span class="doccomment">//! Websocket</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -525,7 +531,7 @@
                 <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">e</span>))))
             }
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">tracing</span>::<span class="macro">trace!</span>(<span class="string">&quot;websocket closed&quot;</span>);
+                <span class="ident">tracing</span>::<span class="macro">debug!</span>(<span class="string">&quot;websocket closed&quot;</span>);
                 <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>)
             }
         }

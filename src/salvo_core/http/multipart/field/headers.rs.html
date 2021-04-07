@@ -603,7 +603,21 @@
 <span id="600">600</span>
 <span id="601">601</span>
 <span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="comment">// Copyright 2017-2019 `multipart-async` Crate Developers</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0, &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://apache.org/licenses/LICENSE-2.0&gt; or the MIT license &lt;LICENSE-MIT or</span>
+<span class="comment">// http://opensource.org/licenses/MIT&gt;, at your option. This file may not be</span>
+<span class="comment">// copied, modified, or distributed except according to those terms.</span>
+
 <span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">task</span>::<span class="ident">Context</span>;
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Stream</span>, <span class="ident">TryStream</span>};
 <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>::{<span class="ident">HeaderMap</span>, <span class="ident">HeaderName</span>, <span class="ident">HeaderValue</span>};
@@ -689,7 +703,7 @@
         <span class="ident">S</span>::<span class="prelude-val">Ok</span>: <span class="ident">BodyChunk</span>,
     {
         <span class="kw">loop</span> {
-            <span class="comment">// trace!(</span>
+            <span class="comment">// tracing::debug!(</span>
             <span class="comment">//     &quot;read_headers state: accumulator: {}&quot;,</span>
             <span class="comment">//     show_bytes(&amp;self.accumulator)</span>
             <span class="comment">// );</span>
@@ -702,7 +716,7 @@
                 ),
             };
 
-            <span class="comment">// trace!(&quot;got chunk for headers: {}&quot;, show_bytes(chunk.as_slice()));</span>
+            <span class="comment">// tracing::debug!(&quot;got chunk for headers: {}&quot;, show_bytes(chunk.as_slice()));</span>
 
             <span class="comment">// End of the headers section is signalled by a double-CRLF</span>
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">header_end</span>) <span class="op">=</span> <span class="ident">twoway</span>::<span class="ident">find_bytes</span>(<span class="ident">chunk</span>.<span class="ident">as_slice</span>(), <span class="string">b&quot;\r\n\r\n&quot;</span>) {
@@ -791,7 +805,7 @@
         }
     };
 
-    <span class="comment">// trace!(&quot;parsed headers: {:?}&quot;, headers);</span>
+    <span class="comment">// tracing::debug!(&quot;parsed headers: {:?}&quot;, headers);</span>
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out_headers</span> <span class="op">=</span> <span class="ident">FieldHeaders</span>::<span class="ident">default</span>();
 

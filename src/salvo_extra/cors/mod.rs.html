@@ -453,9 +453,13 @@
 <span id="450">450</span>
 <span id="451">451</span>
 <span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! CORS Filters</span>
+<span class="comment">// Copyright (c) 2018-2020 Sean McArthur</span>
+<span class="comment">// Licensed under the MIT license http://opensource.org/licenses/MIT</span>
 <span class="comment">// modified from https://github.com/seanmonstar/salvo/blob/master/src/filters/cors.rs</span>
+<span class="doccomment">//! CORS Filters</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -774,7 +778,7 @@
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Forbidden</span>::<span class="ident">MethodNotAllowed</span>);
                     }
                 } <span class="kw">else</span> {
-                    <span class="ident">tracing</span>::<span class="macro">trace!</span>(<span class="string">&quot;preflight request missing access-control-request-method header&quot;</span>);
+                    <span class="ident">tracing</span>::<span class="macro">debug!</span>(<span class="string">&quot;preflight request missing access-control-request-method header&quot;</span>);
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Forbidden</span>::<span class="ident">MethodNotAllowed</span>);
                 }
 
@@ -792,7 +796,7 @@
             (<span class="prelude-val">Some</span>(<span class="ident">origin</span>), <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">// Any other method, simply check for a valid origin...</span>
 
-                <span class="ident">tracing</span>::<span class="macro">trace!</span>(<span class="string">&quot;origin header: {:?}&quot;</span>, <span class="ident">origin</span>);
+                <span class="ident">tracing</span>::<span class="macro">debug!</span>(<span class="string">&quot;origin header: {:?}&quot;</span>, <span class="ident">origin</span>);
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_origin_allowed</span>(<span class="ident">origin</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">Validated</span>::<span class="ident">Simple</span>(<span class="ident">origin</span>.<span class="ident">clone</span>()))
                 } <span class="kw">else</span> {

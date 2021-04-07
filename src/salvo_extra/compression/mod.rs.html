@@ -149,9 +149,13 @@
 <span id="146">146</span>
 <span id="147">147</span>
 <span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Compress the body of a response.</span>
+<span class="comment">// Copyright (c) 2018-2020 Sean McArthur</span>
+<span class="comment">// Licensed under the MIT license http://opensource.org/licenses/MIT</span>
 <span class="comment">// port from https://github.com/seanmonstar/warp/blob/master/src/filters/compression.rs</span>
+<span class="doccomment">//! Compress the body of a response.</span>
 
 <span class="kw">use</span> <span class="ident">async_compression</span>::<span class="ident">tokio</span>::<span class="ident">bufread</span>::{<span class="ident">BrotliEncoder</span>, <span class="ident">DeflateEncoder</span>, <span class="ident">GzipEncoder</span>};
 <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;

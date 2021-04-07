@@ -392,12 +392,14 @@
 <span id="389">389</span>
 <span id="390">390</span>
 <span id="391">391</span>
-<span id="392">392</span>
-<span id="393">393</span>
-<span id="394">394</span>
-<span id="395">395</span>
-<span id="396">396</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="comment">// Copyright 2017-2019 `multipart-async` Crate Developers</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0, &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://apache.org/licenses/LICENSE-2.0&gt; or the MIT license &lt;LICENSE-MIT or</span>
+<span class="comment">// http://opensource.org/licenses/MIT&gt;, at your option. This file may not be</span>
+<span class="comment">// copied, modified, or distributed except according to those terms.</span>
+
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Stream</span>, <span class="ident">TryStream</span>};
 <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>::<span class="ident">HeaderMap</span>;
 <span class="kw">use</span> <span class="ident">mime</span>::<span class="ident">Mime</span>;
@@ -430,10 +432,6 @@
         <span class="kw">return</span> <span class="macro">fmt_err!</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>)<span class="op">+</span>).<span class="ident">into</span>();
     )
 );
-
-<span class="comment">// macro_rules! ret_ok(</span>
-<span class="comment">//     ($expr:expr) =&gt; (return Ok($expr).into());</span>
-<span class="comment">// );</span>
 
 <span class="macro">macro_rules!</span> <span class="ident">fmt_err</span> (
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">string</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
@@ -657,7 +655,6 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pushed</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">pushed</span>().<span class="ident">take</span>() {
             <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">pushed</span>)));
         }
-
         <span class="self">self</span>.<span class="ident">stream</span>().<span class="ident">try_poll_next</span>(<span class="ident">cx</span>)
     }
 }
@@ -668,7 +665,6 @@
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">multipart</span>::<span class="ident">FieldHeaders</span>;
 
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Multipart</span>;
-    <span class="comment">// use std::convert::Infallible;</span>
 
     <span class="kw">const</span> <span class="ident">BOUNDARY</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;boundary&quot;</span>;
 
@@ -759,7 +755,6 @@
         <span class="macro">pin_mut!</span>(<span class="ident">multipart</span>);
 
         <span class="macro">ready_assert_ok_eq!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">multipart</span>.<span class="ident">as_mut</span>().<span class="ident">poll_has_next_field</span>(<span class="ident">cx</span>), <span class="bool-val">true</span>);
-
         <span class="macro">ready_assert_ok_eq!</span>(
             <span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">multipart</span>.<span class="ident">as_mut</span>().<span class="ident">poll_field_headers</span>(<span class="ident">cx</span>),
             <span class="ident">FieldHeaders</span> {
@@ -769,12 +764,9 @@
                 <span class="ident">ext_headers</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
             }
         );
-
         <span class="macro">ready_assert_some_ok_eq!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">multipart</span>.<span class="ident">as_mut</span>().<span class="ident">poll_field_chunk</span>(<span class="ident">cx</span>), <span class="kw-2">&amp;</span><span class="string">b&quot;field data&quot;</span>[..]);
         <span class="macro">ready_assert_eq_none!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">multipart</span>.<span class="ident">as_mut</span>().<span class="ident">poll_field_chunk</span>(<span class="ident">cx</span>));
-
         <span class="macro">ready_assert_ok_eq!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">multipart</span>.<span class="ident">as_mut</span>().<span class="ident">poll_has_next_field</span>(<span class="ident">cx</span>), <span class="bool-val">true</span>);
-
         <span class="macro">ready_assert_ok_eq!</span>(
             <span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">multipart</span>.<span class="ident">as_mut</span>().<span class="ident">poll_field_headers</span>(<span class="ident">cx</span>),
             <span class="ident">FieldHeaders</span> {
@@ -784,13 +776,11 @@
                 <span class="ident">ext_headers</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
             }
         );
-
         <span class="macro">ready_assert_some_ok_eq!</span>(
             <span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">multipart</span>.<span class="ident">as_mut</span>().<span class="ident">poll_field_chunk</span>(<span class="ident">cx</span>),
             <span class="kw-2">&amp;</span><span class="string">b&quot;field data--2\r\n--data--field&quot;</span>[..]
         );
         <span class="macro">ready_assert_eq_none!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">multipart</span>.<span class="ident">as_mut</span>().<span class="ident">poll_field_chunk</span>(<span class="ident">cx</span>));
-
         <span class="macro">ready_assert_ok_eq!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">multipart</span>.<span class="ident">as_mut</span>().<span class="ident">poll_has_next_field</span>(<span class="ident">cx</span>), <span class="bool-val">false</span>);
     }
 }
