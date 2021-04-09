@@ -36,16 +36,16 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">request</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">response</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">body_chunk</span>::<span class="ident">BodyChunk</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">body_chunk::BodyChunk</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cookie</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">HttpError</span>, <span class="ident">ReadError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">method</span>::<span class="ident">Method</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http::method::Method</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::{<span class="ident">header</span>, <span class="ident">method</span>, <span class="ident">uri</span>, <span class="ident">version</span>, <span class="ident">HeaderMap</span>, <span class="ident">HeaderValue</span>, <span class="ident">StatusCode</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">body</span>::<span class="ident">HttpBody</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">mime</span>::<span class="ident">Mime</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">range</span>::<span class="ident">HttpRange</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">request</span>::<span class="ident">Request</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">response</span>::<span class="ident">Response</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper::body::HttpBody</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">mime::Mime</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">range::HttpRange</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">request::Request</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">response::Response</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">headers</span>;
 

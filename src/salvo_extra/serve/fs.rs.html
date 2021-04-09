@@ -29,11 +29,11 @@
 <span id="26">26</span>
 <span id="27">27</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
+<span class="kw">use</span> <span class="ident">async_trait::async_trait</span>;
 
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">fs</span>::<span class="ident">NamedFile</span>;
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">Handler</span>;
+<span class="kw">use</span> <span class="ident">salvo_core::fs::NamedFile</span>;
+<span class="kw">use</span> <span class="ident">salvo_core::http::errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">salvo_core::Handler</span>;
 <span class="kw">use</span> <span class="ident">salvo_core</span>::{<span class="ident">Depot</span>, <span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">Writer</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
@@ -47,7 +47,7 @@
 <span class="attribute">#[<span class="ident">async_trait</span>]</span>
 <span class="kw">impl</span> <span class="ident">Handler</span> <span class="kw">for</span> <span class="ident">StaticFile</span> {
     <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Request</span>, <span class="ident">depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Depot</span>, <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) {
-        <span class="kw">let</span> <span class="ident">named_file</span> <span class="op">=</span> <span class="ident">NamedFile</span>::<span class="ident">open</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>().<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">named_file</span> <span class="op">=</span> <span class="ident">NamedFile::open</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>().<span class="ident">into</span>());
         <span class="kw">if</span> <span class="ident">named_file</span>.<span class="ident">is_err</span>() {
             <span class="ident">res</span>.<span class="ident">set_http_error</span>(<span class="ident">NotFound</span>());
             <span class="kw">return</span>;

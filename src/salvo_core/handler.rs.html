@@ -209,10 +209,10 @@
 <span id="206">206</span>
 <span id="207">207</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
+<span class="kw">use</span> <span class="ident">async_trait::async_trait</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Depot</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Depot</span>;
 
 <span class="attribute">#[<span class="ident">async_trait</span>]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Handler</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {

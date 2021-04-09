@@ -6,10 +6,10 @@
 </div><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><h3 id="impl" class="impl"><code class="in-band">impl&lt;'a, T&gt; <a class="struct" href="../../../salvo_core/http/header/struct.OccupiedEntry.html" title="struct salvo_core::http::header::OccupiedEntry">OccupiedEntry</a>&lt;'a, T&gt;</code><a href="#impl" class="anchor"></a><a class="srclink" href="https://docs.rs/http/0.2.4/src/http/header/map.rs.html#2738-3037" title="goto source code">[src]</a></h3><div class="impl-items"><h4 id="method.key" class="method"><code>pub fn <a href="#method.key" class="fnname">key</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../../salvo_core/http/header/struct.HeaderName.html" title="struct salvo_core::http::header::HeaderName">HeaderName</a></code><a class="srclink" href="https://docs.rs/http/0.2.4/src/http/header/map.rs.html#2752" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns a reference to the entry’s key.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;world&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="macro">assert_eq!</span>(<span class="string">&quot;host&quot;</span>, <span class="ident">e</span>.<span class="ident">key</span>());
 }</pre></div>
 </div><h4 id="method.get" class="method"><code>pub fn <a href="#method.get" class="fnname">get</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<div class="notable-traits-tooltiptext"><span class="docblock"><h3 class="notable">Notable traits for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'_ mut </a>F</h3><code class="content"><span class="where fmt-newline">impl&lt;'_, F&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'_ mut </a>F <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Unpin.html" title="trait core::marker::Unpin">Unpin</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></span><span class="where fmt-newline">    type <a href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html#associatedtype.Output" class="type">Output</a> = &lt;F as <a class="trait" href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&gt;::<a class="type" href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html#associatedtype.Output" title="type core::future::future::Future::Output">Output</a>;</span></code></span></div></span></span></code><a class="srclink" href="https://docs.rs/http/0.2.4/src/http/header/map.rs.html#2779" title="goto source code">[src]</a></h4><div class="docblock"><p>Get a reference to the first value in the entry.</p>
@@ -18,10 +18,10 @@
 <p><code>get</code> panics if there are no values associated with the entry.</p>
 <h1 id="examples-1" class="section-header"><a href="#examples-1">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;hello.world&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="macro">assert_eq!</span>(<span class="ident">e</span>.<span class="ident">get</span>(), <span class="kw-2">&amp;</span><span class="string">&quot;hello.world&quot;</span>);
 
     <span class="ident">e</span>.<span class="ident">append</span>(<span class="string">&quot;hello.earth&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
@@ -34,10 +34,10 @@
 <p><code>get_mut</code> panics if there are no values associated with the entry.</p>
 <h1 id="examples-2" class="section-header"><a href="#examples-2">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::default</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;hello.world&quot;</span>.<span class="ident">to_string</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="ident">e</span>.<span class="ident">get_mut</span>().<span class="ident">push_str</span>(<span class="string">&quot;-2&quot;</span>);
     <span class="macro">assert_eq!</span>(<span class="ident">e</span>.<span class="ident">get</span>(), <span class="kw-2">&amp;</span><span class="string">&quot;hello.world-2&quot;</span>);
 }</pre></div>
@@ -48,11 +48,11 @@ value.</p>
 <p><code>into_mut</code> panics if there are no values associated with the entry.</p>
 <h1 id="examples-3" class="section-header"><a href="#examples-3">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::default</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;hello.world&quot;</span>.<span class="ident">to_string</span>());
 <span class="ident">map</span>.<span class="ident">append</span>(<span class="ident">HOST</span>, <span class="string">&quot;hello.earth&quot;</span>.<span class="ident">to_string</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="ident">e</span>.<span class="ident">into_mut</span>().<span class="ident">push_str</span>(<span class="string">&quot;-2&quot;</span>);
 }
 
@@ -62,10 +62,10 @@ value.</p>
 one is returned. See <code>insert_mult</code> for an API that returns all values.</p>
 <h1 id="examples-4" class="section-header"><a href="#examples-4">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;hello.world&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">prev</span> <span class="op">=</span> <span class="ident">e</span>.<span class="ident">insert</span>(<span class="string">&quot;earth&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
     <span class="macro">assert_eq!</span>(<span class="string">&quot;hello.world&quot;</span>, <span class="ident">prev</span>);
 }
@@ -76,11 +76,11 @@ one is returned. See <code>insert_mult</code> for an API that returns all values
 that yields all values previously associated with the key.</p>
 <h1 id="examples-5" class="section-header"><a href="#examples-5">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;world&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 <span class="ident">map</span>.<span class="ident">append</span>(<span class="ident">HOST</span>, <span class="string">&quot;world2&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">prev</span> <span class="op">=</span> <span class="ident">e</span>.<span class="ident">insert_mult</span>(<span class="string">&quot;earth&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
     <span class="macro">assert_eq!</span>(<span class="string">&quot;world&quot;</span>, <span class="ident">prev</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>());
     <span class="macro">assert_eq!</span>(<span class="string">&quot;world2&quot;</span>, <span class="ident">prev</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>());
@@ -93,10 +93,10 @@ that yields all values previously associated with the key.</p>
 previous values associated with the entry are retained.</p>
 <h1 id="examples-6" class="section-header"><a href="#examples-6">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;world&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="ident">e</span>.<span class="ident">append</span>(<span class="string">&quot;earth&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 }
 
@@ -109,10 +109,10 @@ previous values associated with the entry are retained.</p>
 returned. See <code>remove_entry_mult</code> for an API that returns all values.</p>
 <h1 id="examples-7" class="section-header"><a href="#examples-7">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;world&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">prev</span> <span class="op">=</span> <span class="ident">e</span>.<span class="ident">remove</span>();
     <span class="macro">assert_eq!</span>(<span class="string">&quot;world&quot;</span>, <span class="ident">prev</span>);
 }
@@ -124,10 +124,10 @@ first one is returned. See <code>remove_entry_mult</code> for an API that return
 all values.</p>
 <h1 id="examples-8" class="section-header"><a href="#examples-8">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;world&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="kw">let</span> (<span class="ident">key</span>, <span class="kw-2">mut</span> <span class="ident">prev</span>) <span class="op">=</span> <span class="ident">e</span>.<span class="ident">remove_entry</span>();
     <span class="macro">assert_eq!</span>(<span class="string">&quot;host&quot;</span>, <span class="ident">key</span>.<span class="ident">as_str</span>());
     <span class="macro">assert_eq!</span>(<span class="string">&quot;world&quot;</span>, <span class="ident">prev</span>);
@@ -141,11 +141,11 @@ returned.</p>
 <p>Values are iterated in insertion order.</p>
 <h1 id="examples-9" class="section-header"><a href="#examples-9">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;world&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 <span class="ident">map</span>.<span class="ident">append</span>(<span class="ident">HOST</span>, <span class="string">&quot;earth&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">e</span>.<span class="ident">iter</span>();
     <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="string">&quot;world&quot;</span>, <span class="ident">iter</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>());
     <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="string">&quot;earth&quot;</span>, <span class="ident">iter</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>());
@@ -156,11 +156,11 @@ entry.</p>
 <p>Values are iterated in insertion order.</p>
 <h1 id="examples-10" class="section-header"><a href="#examples-10">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HeaderMap::default</span>();
 <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">HOST</span>, <span class="string">&quot;world&quot;</span>.<span class="ident">to_string</span>());
 <span class="ident">map</span>.<span class="ident">append</span>(<span class="ident">HOST</span>, <span class="string">&quot;earth&quot;</span>.<span class="ident">to_string</span>());
 
-<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
+<span class="kw">if</span> <span class="kw">let</span> <span class="ident">Entry::Occupied</span>(<span class="kw-2">mut</span> <span class="ident">e</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">entry</span>(<span class="string">&quot;host&quot;</span>) {
     <span class="kw">for</span> <span class="ident">e</span> <span class="kw">in</span> <span class="ident">e</span>.<span class="ident">iter_mut</span>() {
         <span class="ident">e</span>.<span class="ident">push_str</span>(<span class="string">&quot;-boop&quot;</span>);
     }

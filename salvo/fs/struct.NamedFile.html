@@ -9,13 +9,13 @@
                        Fields<a href="#fields" class="anchor"></a></h2><span id="structfield.buffer_size" class="structfield small-section-header"><a href="#structfield.buffer_size" class="anchor field"></a><code>buffer_size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><h3 id="impl" class="impl"><code class="in-band">impl <a class="struct" href="../../salvo/fs/struct.NamedFile.html" title="struct salvo::fs::NamedFile">NamedFile</a></code><a href="#impl" class="anchor"></a><a class="srclink" href="../../src/salvo_core/fs/named_file.rs.html#165-306" title="goto source code">[src]</a></h3><div class="impl-items"><h4 id="method.builder" class="method"><code>pub fn <a href="#method.builder" class="fnname">builder</a>(path: <a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html" title="struct std::path::PathBuf">PathBuf</a>) -&gt; <a class="struct" href="../../salvo/fs/struct.NamedFileBuilder.html" title="struct salvo::fs::NamedFileBuilder">NamedFileBuilder</a></code><a class="srclink" href="../../src/salvo_core/fs/named_file.rs.html#166" title="goto source code">[src]</a></h4><h4 id="method.open" class="method"><code>pub fn <a href="#method.open" class="fnname">open</a>(path: <a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html" title="struct std::path::PathBuf">PathBuf</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../salvo/fs/struct.NamedFile.html" title="struct salvo::fs::NamedFile">NamedFile</a>, <a class="struct" href="../../salvo/struct.Error.html" title="struct salvo::Error">Error</a>&gt;</code><a class="srclink" href="../../src/salvo_core/fs/named_file.rs.html#187" title="goto source code">[src]</a></h4><div class="docblock"><p>Attempts to open a file in read-only mode.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">fs</span>::<span class="ident">NamedFile</span>;
-<span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">NamedFile</span>::<span class="ident">open</span>(<span class="string">&quot;foo.txt&quot;</span>.<span class="ident">into</span>());</pre></div>
+<span class="kw">use</span> <span class="ident">salvo_core::fs::NamedFile</span>;
+<span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">NamedFile::open</span>(<span class="string">&quot;foo.txt&quot;</span>.<span class="ident">into</span>());</pre></div>
 </div><h4 id="method.file" class="method"><code>pub fn <a href="#method.file" class="fnname">file</a>(&amp;self) -&gt; &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a><span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<div class="notable-traits-tooltiptext"><span class="docblock"><h3 class="notable">Notable traits for &amp;'_ <a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a></h3><code class="content"><span class="where fmt-newline">impl&lt;'_&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> for &amp;'_ <a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a></span><span class="where fmt-newline">impl <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> for <a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a></span><span class="where fmt-newline">impl&lt;'_&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a> for &amp;'_ <a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a></span><span class="where fmt-newline">impl <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a> for <a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a></span></code></span></div></span></span></code><a class="srclink" href="../../src/salvo_core/fs/named_file.rs.html#193" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns reference to the underlying <code>File</code> object.</p>
 </div><h4 id="method.path" class="method"><code>pub fn <a href="#method.path" class="fnname">path</a>(&amp;self) -&gt; &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html" title="struct std::path::Path">Path</a></code><a class="srclink" href="../../src/salvo_core/fs/named_file.rs.html#210" title="goto source code">[src]</a></h4><div class="docblock"><p>Retrieve the path of this file.</p>
 <h1 id="examples-1" class="section-header"><a href="#examples-1">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-    <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">NamedFile</span>::<span class="ident">open</span>(<span class="string">&quot;test.txt&quot;</span>.<span class="ident">into</span>()).<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">NamedFile::open</span>(<span class="string">&quot;test.txt&quot;</span>.<span class="ident">into</span>()).<span class="ident">unwrap</span>();
     <span class="macro">assert_eq!</span>(<span class="ident">file</span>.<span class="ident">path</span>().<span class="ident">as_os_str</span>(), <span class="string">&quot;foo.txt&quot;</span>);</pre></div>
 </div><h4 id="method.set_content_type" class="method"><code>pub fn <a href="#method.set_content_type" class="fnname">set_content_type</a>(self, content_type: <a class="struct" href="../../salvo/http/struct.Mime.html" title="struct salvo::http::Mime">Mime</a>) -&gt; <a class="struct" href="../../salvo/fs/struct.NamedFile.html" title="struct salvo::fs::NamedFile">NamedFile</a></code><a class="srclink" href="../../src/salvo_core/fs/named_file.rs.html#217" title="goto source code">[src]</a></h4><div class="docblock"><p>Set the MIME Content-Type for serving this file. By default
 the Content-Type is inferred from the filename extension.</p>
@@ -41,11 +41,11 @@ when the <code>File</code> is closed.  Dropping a file will ignore errors in
 synchronizing this in-memory data.</p>
 <h1 id="examples-2" class="section-header"><a href="#examples-2">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">std::fs::File</span>;
+<span class="kw">use</span> <span class="ident">std::io::prelude</span>::<span class="kw-2">*</span>;
 
-<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File::create</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
     <span class="ident">f</span>.<span class="ident">write_all</span>(<span class="string">b&quot;Hello, world!&quot;</span>)<span class="question-mark">?</span>;
 
     <span class="ident">f</span>.<span class="ident">sync_all</span>()<span class="question-mark">?</span>;
@@ -60,11 +60,11 @@ operations.</p>
 <a href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html#method.sync_all"><code>sync_all</code></a>.</p>
 <h1 id="examples-3" class="section-header"><a href="#examples-3">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">std::fs::File</span>;
+<span class="kw">use</span> <span class="ident">std::io::prelude</span>::<span class="kw-2">*</span>;
 
-<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File::create</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
     <span class="ident">f</span>.<span class="ident">write_all</span>(<span class="string">b&quot;Hello, world!&quot;</span>)<span class="question-mark">?</span>;
 
     <span class="ident">f</span>.<span class="ident">sync_data</span>()<span class="question-mark">?</span>;
@@ -85,10 +85,10 @@ Also, std::io::ErrorKind::InvalidInput will be returned if the desired
 length would cause an overflow due to the implementation specifics.</p>
 <h1 id="examples-4" class="section-header"><a href="#examples-4">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
+<span class="kw">use</span> <span class="ident">std::fs::File</span>;
 
-<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File::create</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
     <span class="ident">f</span>.<span class="ident">set_len</span>(<span class="number">10</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }</pre></div>
@@ -97,10 +97,10 @@ though it takes <code>&amp;self</code> rather than <code>&amp;mut self</code>.</
 </div><h4 id="method.metadata" class="method"><code>pub fn <a href="#method.metadata" class="fnname">metadata</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.Metadata.html" title="struct std::fs::Metadata">Metadata</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt;</code><span class="since" title="Stable since Rust version 1.0.0">1.0.0</span><a class="srclink" href="https://doc.rust-lang.org/nightly/src/std/fs.rs.html#500" title="goto source code">[src]</a></h4><div class="docblock"><p>Queries metadata about the underlying file.</p>
 <h1 id="examples-5" class="section-header"><a href="#examples-5">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
+<span class="kw">use</span> <span class="ident">std::fs::File</span>;
 
-<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File::open</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="ident">f</span>.<span class="ident">metadata</span>()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }</pre></div>
@@ -111,10 +111,10 @@ both <code>File</code> instances simultaneously.</p>
 <p>Creates two handles for a file named <code>foo.txt</code>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
+<span class="kw">use</span> <span class="ident">std::fs::File</span>;
 
-<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File::open</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">file_copy</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">try_clone</span>()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }</pre></div>
@@ -123,15 +123,15 @@ two handles, seek one of them, and read the remaining bytes from the
 other handle:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">SeekFrom</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">std::fs::File</span>;
+<span class="kw">use</span> <span class="ident">std::io::SeekFrom</span>;
+<span class="kw">use</span> <span class="ident">std::io::prelude</span>::<span class="kw-2">*</span>;
 
-<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File::open</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file_copy</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">try_clone</span>()<span class="question-mark">?</span>;
 
-    <span class="ident">file</span>.<span class="ident">seek</span>(<span class="ident">SeekFrom</span>::<span class="ident">Start</span>(<span class="number">3</span>))<span class="question-mark">?</span>;
+    <span class="ident">file</span>.<span class="ident">seek</span>(<span class="ident">SeekFrom::Start</span>(<span class="number">3</span>))<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">contents</span> <span class="op">=</span> <span class="macro">vec!</span>[];
     <span class="ident">file_copy</span>.<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">contents</span>)<span class="question-mark">?</span>;
@@ -149,10 +149,10 @@ attributes on the underlying file. It may also return an error in other
 os-specific unspecified cases.</p>
 <h1 id="examples-7" class="section-header"><a href="#examples-7">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
+<span class="kw">fn</span> <span class="ident">main</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">use</span> <span class="ident">std::fs::File</span>;
 
-    <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File::open</span>(<span class="string">&quot;foo.txt&quot;</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">perms</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">metadata</span>()<span class="question-mark">?</span>.<span class="ident">permissions</span>();
     <span class="ident">perms</span>.<span class="ident">set_readonly</span>(<span class="bool-val">true</span>);
     <span class="ident">file</span>.<span class="ident">set_permissions</span>(<span class="ident">perms</span>)<span class="question-mark">?</span>;

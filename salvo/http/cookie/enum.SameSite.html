@@ -29,27 +29,27 @@ definition are subject to change.</p>
 </div><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><h3 id="impl" class="impl"><code class="in-band">impl <a class="enum" href="../../../salvo/http/cookie/enum.SameSite.html" title="enum salvo::http::cookie::SameSite">SameSite</a></code><a href="#impl" class="anchor"></a><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/draft.rs.html#38-98" title="goto source code">[src]</a></h3><div class="impl-items"><h4 id="method.is_strict" class="method"><code>pub fn <a href="#method.is_strict" class="fnname">is_strict</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/draft.rs.html#52" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns <code>true</code> if <code>self</code> is <code>SameSite::Strict</code> and <code>false</code> otherwise.</p>
 <h1 id="example" class="section-header"><a href="#example">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">cookie</span>::<span class="ident">SameSite</span>;
+<span class="kw">use</span> <span class="ident">cookie::SameSite</span>;
 
-<span class="kw">let</span> <span class="ident">strict</span> <span class="op">=</span> <span class="ident">SameSite</span>::<span class="ident">Strict</span>;
+<span class="kw">let</span> <span class="ident">strict</span> <span class="op">=</span> <span class="ident">SameSite::Strict</span>;
 <span class="macro">assert!</span>(<span class="ident">strict</span>.<span class="ident">is_strict</span>());
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">strict</span>.<span class="ident">is_lax</span>());
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">strict</span>.<span class="ident">is_none</span>());</pre></div>
 </div><h4 id="method.is_lax" class="method"><code>pub fn <a href="#method.is_lax" class="fnname">is_lax</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/draft.rs.html#72" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns <code>true</code> if <code>self</code> is <code>SameSite::Lax</code> and <code>false</code> otherwise.</p>
 <h1 id="example-1" class="section-header"><a href="#example-1">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">cookie</span>::<span class="ident">SameSite</span>;
+<span class="kw">use</span> <span class="ident">cookie::SameSite</span>;
 
-<span class="kw">let</span> <span class="ident">lax</span> <span class="op">=</span> <span class="ident">SameSite</span>::<span class="ident">Lax</span>;
+<span class="kw">let</span> <span class="ident">lax</span> <span class="op">=</span> <span class="ident">SameSite::Lax</span>;
 <span class="macro">assert!</span>(<span class="ident">lax</span>.<span class="ident">is_lax</span>());
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">lax</span>.<span class="ident">is_strict</span>());
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">lax</span>.<span class="ident">is_none</span>());</pre></div>
 </div><h4 id="method.is_none" class="method"><code>pub fn <a href="#method.is_none" class="fnname">is_none</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code><a class="srclink" href="https://docs.rs/cookie/0.14/src/cookie/draft.rs.html#92" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns <code>true</code> if <code>self</code> is <code>SameSite::None</code> and <code>false</code> otherwise.</p>
 <h1 id="example-2" class="section-header"><a href="#example-2">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">cookie</span>::<span class="ident">SameSite</span>;
+<span class="kw">use</span> <span class="ident">cookie::SameSite</span>;
 
-<span class="kw">let</span> <span class="ident">none</span> <span class="op">=</span> <span class="ident">SameSite</span>::<span class="prelude-val">None</span>;
+<span class="kw">let</span> <span class="ident">none</span> <span class="op">=</span> <span class="ident">SameSite::None</span>;
 <span class="macro">assert!</span>(<span class="ident">none</span>.<span class="ident">is_none</span>());
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">none</span>.<span class="ident">is_lax</span>());
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">none</span>.<span class="ident">is_strict</span>());</pre></div>

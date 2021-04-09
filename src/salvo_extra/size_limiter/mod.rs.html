@@ -22,10 +22,10 @@
 <span id="19">19</span>
 <span id="20">20</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">http</span>::<span class="ident">HttpBody</span>;
-<span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">async_trait::async_trait</span>;
+<span class="kw">use</span> <span class="ident">salvo_core::http::errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">salvo_core::http::HttpBody</span>;
+<span class="kw">use</span> <span class="ident">salvo_core::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MaxSizeHandler</span>(<span class="ident">u64</span>);
 <span class="attribute">#[<span class="ident">async_trait</span>]</span>

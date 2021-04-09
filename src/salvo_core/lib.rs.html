@@ -74,6 +74,7 @@
 <span id="71">71</span>
 <span id="72">72</span>
 <span id="73">73</span>
+<span id="74">74</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">mod</span> <span class="ident">catcher</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">depot</span>;
@@ -98,41 +99,42 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">anyhow</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">catcher</span>::{<span class="ident">Catcher</span>, <span class="ident">CatcherImpl</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">depot</span>::<span class="ident">Depot</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handler</span>::<span class="ident">Handler</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">routing</span>::<span class="ident">Router</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">server</span>::<span class="ident">Server</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::catcher</span>::{<span class="ident">Catcher</span>, <span class="ident">CatcherImpl</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::depot::Depot</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::error::Error</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::handler::Handler</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::routing::Router</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::server::Server</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tls&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">server</span>::<span class="ident">TlsServer</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">service</span>::<span class="ident">Service</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">writer</span>::<span class="ident">Writer</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">salvo_macros</span>::<span class="ident">fn_handler</span>;
-<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::server::TlsServer</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::service::Service</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::writer::Writer</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">salvo_macros::fn_handler</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">async_trait::async_trait</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std::result::Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prelude</span> {
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">depot</span>::<span class="ident">Depot</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">StatusCode</span>};
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">routing</span>::<span class="ident">filter</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">routing</span>::<span class="ident">Router</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">server</span>::<span class="ident">Server</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::depot::Depot</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::errors</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">StatusCode</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::routing::filter</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::routing::Router</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::server::Server</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tls&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">server</span>::<span class="ident">TlsServer</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">service</span>::<span class="ident">Service</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">writer</span>::<span class="kw-2">*</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Handler</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">salvo_macros</span>::<span class="ident">fn_handler</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::server::TlsServer</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::service::Service</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::writer</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Handler</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">async_trait::async_trait</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">salvo_macros::fn_handler</span>;
 }
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">future</span>::<span class="ident">Future</span>;
-<span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">runtime</span>::{<span class="self">self</span>, <span class="ident">Runtime</span>};
+<span class="kw">use</span> <span class="ident">std::future::Future</span>;
+<span class="kw">use</span> <span class="ident">tokio::runtime</span>::{<span class="self">self</span>, <span class="ident">Runtime</span>};
 
 <span class="kw">fn</span> <span class="ident">new_runtime</span>(<span class="ident">threads</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Runtime</span> {
-    <span class="ident">runtime</span>::<span class="ident">Builder</span>::<span class="ident">new_multi_thread</span>()
+    <span class="ident">runtime::Builder::new_multi_thread</span>()
         .<span class="ident">worker_threads</span>(<span class="ident">threads</span>)
         .<span class="ident">thread_name</span>(<span class="string">&quot;salvo-worker&quot;</span>)
         .<span class="ident">enable_all</span>()
@@ -141,11 +143,11 @@
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">start</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Future</span><span class="op">&gt;</span>(<span class="ident">future</span>: <span class="ident">F</span>) {
-    <span class="ident">start_with_threads</span>(<span class="ident">future</span>, <span class="ident">num_cpus</span>::<span class="ident">get</span>())
+    <span class="ident">start_with_threads</span>(<span class="ident">future</span>, <span class="ident">num_cpus::get</span>())
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">start_with_threads</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Future</span><span class="op">&gt;</span>(<span class="ident">future</span>: <span class="ident">F</span>, <span class="ident">threads</span>: <span class="ident">usize</span>) {
-    <span class="kw">let</span> <span class="ident">runtime</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">new_runtime</span>(<span class="ident">threads</span>);
+    <span class="kw">let</span> <span class="ident">runtime</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::new_runtime</span>(<span class="ident">threads</span>);
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">runtime</span>.<span class="ident">block_on</span>(<span class="kw">async</span> { <span class="ident">future</span>.<span class="kw">await</span> });
 }
 </pre></div>

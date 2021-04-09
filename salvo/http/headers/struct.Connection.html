@@ -19,9 +19,9 @@ connection-option = token
 </code></pre>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">headers</span>::<span class="ident">Connection</span>;
+<span class="kw">use</span> <span class="ident">headers::Connection</span>;
 
-<span class="kw">let</span> <span class="ident">keep_alive</span> <span class="op">=</span> <span class="ident">Connection</span>::<span class="ident">keep_alive</span>();</pre></div>
+<span class="kw">let</span> <span class="ident">keep_alive</span> <span class="op">=</span> <span class="ident">Connection::keep_alive</span>();</pre></div>
 </div><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><h3 id="impl" class="impl"><code class="in-band">impl <a class="struct" href="../../../salvo/http/headers/struct.Connection.html" title="struct salvo::http::headers::Connection">Connection</a></code><a href="#impl" class="anchor"></a><a class="srclink" href="https://docs.rs/headers/0.3.4/src/headers/common/connection.rs.html#45-95" title="goto source code">[src]</a></h3><div class="impl-items"><h4 id="method.close" class="method"><code>pub fn <a href="#method.close" class="fnname">close</a>() -&gt; <a class="struct" href="../../../salvo/http/headers/struct.Connection.html" title="struct salvo::http::headers::Connection">Connection</a></code><a class="srclink" href="https://docs.rs/headers/0.3.4/src/headers/common/connection.rs.html#48" title="goto source code">[src]</a></h4><div class="docblock"><p>A constructor to easily create a <code>Connection: close</code> header.</p>
 </div><h4 id="method.keep_alive" class="method"><code>pub fn <a href="#method.keep_alive" class="fnname">keep_alive</a>() -&gt; <a class="struct" href="../../../salvo/http/headers/struct.Connection.html" title="struct salvo::http::headers::Connection">Connection</a></code><a class="srclink" href="https://docs.rs/headers/0.3.4/src/headers/common/connection.rs.html#54" title="goto source code">[src]</a></h4><div class="docblock"><p>A constructor to easily create a <code>Connection: keep-alive</code> header.</p>
 </div><h4 id="method.upgrade" class="method"><code>pub fn <a href="#method.upgrade" class="fnname">upgrade</a>() -&gt; <a class="struct" href="../../../salvo/http/headers/struct.Connection.html" title="struct salvo::http::headers::Connection">Connection</a></code><a class="srclink" href="https://docs.rs/headers/0.3.4/src/headers/common/connection.rs.html#60" title="goto source code">[src]</a></h4><div class="docblock"><p>A constructor to easily create a <code>Connection: Upgrade</code> header.</p>
@@ -36,10 +36,10 @@ connection-option = token
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">http</span>;
 
-<span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>::<span class="ident">UPGRADE</span>;
-<span class="kw">use</span> <span class="ident">headers</span>::<span class="ident">Connection</span>;
+<span class="kw">use</span> <span class="ident">http::header::UPGRADE</span>;
+<span class="kw">use</span> <span class="ident">headers::Connection</span>;
 
-<span class="kw">let</span> <span class="ident">conn</span> <span class="op">=</span> <span class="ident">Connection</span>::<span class="ident">keep_alive</span>();
+<span class="kw">let</span> <span class="ident">conn</span> <span class="op">=</span> <span class="ident">Connection::keep_alive</span>();
 
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">conn</span>.<span class="ident">contains</span>(<span class="string">&quot;close&quot;</span>));
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">conn</span>.<span class="ident">contains</span>(<span class="ident">UPGRADE</span>));

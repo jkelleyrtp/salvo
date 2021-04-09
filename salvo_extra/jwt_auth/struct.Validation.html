@@ -13,16 +13,16 @@
 <p>All time validation happen on UTC timestamps as seconds.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">jsonwebtoken</span>::<span class="ident">Validation</span>;
+<span class="kw">use</span> <span class="ident">jsonwebtoken::Validation</span>;
 
 <span class="comment">// Default value</span>
-<span class="kw">let</span> <span class="ident">validation</span> <span class="op">=</span> <span class="ident">Validation</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="ident">validation</span> <span class="op">=</span> <span class="ident">Validation::default</span>();
 
 <span class="comment">// Changing one parameter</span>
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">validation</span> <span class="op">=</span> <span class="ident">Validation</span> {<span class="ident">leeway</span>: <span class="number">60</span>, ..<span class="ident">Default</span>::<span class="ident">default</span>()};
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">validation</span> <span class="op">=</span> <span class="ident">Validation</span> {<span class="ident">leeway</span>: <span class="number">60</span>, ..<span class="ident">Default::default</span>()};
 
 <span class="comment">// Setting audience</span>
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">validation</span> <span class="op">=</span> <span class="ident">Validation</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">validation</span> <span class="op">=</span> <span class="ident">Validation::default</span>();
 <span class="ident">validation</span>.<span class="ident">set_audience</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Me&quot;</span>]); <span class="comment">// a single string</span>
 <span class="ident">validation</span>.<span class="ident">set_audience</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Me&quot;</span>, <span class="string">&quot;You&quot;</span>]); <span class="comment">// array of strings</span></pre></div>
 </div><h2 id="fields" class="fields small-section-header">

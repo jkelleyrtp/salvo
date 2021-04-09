@@ -8,7 +8,7 @@ through a builder pattern.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 
-<span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="ident">uri</span>::<span class="ident">Builder</span>::<span class="ident">new</span>()
+<span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="ident">uri::Builder::new</span>()
     .<span class="ident">scheme</span>(<span class="string">&quot;https&quot;</span>)
     .<span class="ident">authority</span>(<span class="string">&quot;hyper.rs&quot;</span>)
     .<span class="ident">path_and_query</span>(<span class="string">&quot;/&quot;</span>)
@@ -18,13 +18,13 @@ through a builder pattern.</p>
 <h1 id="examples-1" class="section-header"><a href="#examples-1">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">uri</span>::<span class="ident">Builder</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">uri::Builder::new</span>();
 <span class="ident">builder</span>.<span class="ident">scheme</span>(<span class="string">&quot;https&quot;</span>);</pre></div>
 </div><h4 id="method.authority" class="method"><code>pub fn <a href="#method.authority" class="fnname">authority</a>&lt;T&gt;(self, auth: T) -&gt; <a class="struct" href="../../../salvo/http/uri/struct.Builder.html" title="struct salvo::http::uri::Builder">Builder</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;<a class="struct" href="../../../salvo/http/uri/struct.Authority.html" title="struct salvo::http::uri::Authority">Authority</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html" title="trait core::convert::TryFrom">TryFrom</a>&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<a class="struct" href="../../../salvo/http/uri/struct.Authority.html" title="struct salvo::http::uri::Authority">Authority</a> as <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html" title="trait core::convert::TryFrom">TryFrom</a>&lt;T&gt;&gt;::<a class="type" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#associatedtype.Error" title="type core::convert::TryFrom::Error">Error</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="struct" href="../../../salvo/hyper/http/struct.Error.html" title="struct salvo::hyper::http::Error">Error</a>&gt;,&nbsp;</span></code><a class="srclink" href="https://docs.rs/http/0.2.4/src/http/uri/builder.rs.html#69-72" title="goto source code">[src]</a></h4><div class="docblock"><p>Set the <code>Authority</code> for this URI.</p>
 <h1 id="examples-2" class="section-header"><a href="#examples-2">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 
-<span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="ident">uri</span>::<span class="ident">Builder</span>::<span class="ident">new</span>()
+<span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="ident">uri::Builder::new</span>()
     .<span class="ident">authority</span>(<span class="string">&quot;tokio.rs&quot;</span>)
     .<span class="ident">build</span>()
     .<span class="ident">unwrap</span>();</pre></div>
@@ -32,7 +32,7 @@ through a builder pattern.</p>
 <h1 id="examples-3" class="section-header"><a href="#examples-3">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 
-<span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="ident">uri</span>::<span class="ident">Builder</span>::<span class="ident">new</span>()
+<span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="ident">uri::Builder::new</span>()
     .<span class="ident">path_and_query</span>(<span class="string">&quot;/hello?foo=bar&quot;</span>)
     .<span class="ident">build</span>()
     .<span class="ident">unwrap</span>();</pre></div>
@@ -50,7 +50,7 @@ valid forms of URI, a new error is returned.</p>
 <h1 id="examples-4" class="section-header"><a href="#examples-4">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 
-<span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="ident">Uri</span>::<span class="ident">builder</span>()
+<span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="ident">Uri::builder</span>()
     .<span class="ident">build</span>()
     .<span class="ident">unwrap</span>();</pre></div>
 </div></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><h3 id="impl-Debug" class="impl"><code class="in-band">impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../../salvo/http/uri/struct.Builder.html" title="struct salvo::http::uri::Builder">Builder</a></code><a href="#impl-Debug" class="anchor"></a><a class="srclink" href="https://docs.rs/http/0.2.4/src/http/uri/builder.rs.html#10" title="goto source code">[src]</a></h3><div class="impl-items"><h4 id="method.fmt" class="method hidden"><code>pub fn <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt" class="fnname">fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>&lt;'_&gt;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html" title="struct core::fmt::Error">Error</a>&gt;</code><a class="srclink" href="https://docs.rs/http/0.2.4/src/http/uri/builder.rs.html#10" title="goto source code">[src]</a></h4><div class='docblock hidden'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>

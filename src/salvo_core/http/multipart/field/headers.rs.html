@@ -618,19 +618,19 @@
 <span class="comment">// http://opensource.org/licenses/MIT&gt;, at your option. This file may not be</span>
 <span class="comment">// copied, modified, or distributed except according to those terms.</span>
 
-<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">task</span>::<span class="ident">Context</span>;
+<span class="kw">use</span> <span class="ident">futures::task::Context</span>;
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Stream</span>, <span class="ident">TryStream</span>};
-<span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>::{<span class="ident">HeaderMap</span>, <span class="ident">HeaderName</span>, <span class="ident">HeaderValue</span>};
+<span class="kw">use</span> <span class="ident">http::header</span>::{<span class="ident">HeaderMap</span>, <span class="ident">HeaderName</span>, <span class="ident">HeaderValue</span>};
 <span class="kw">use</span> <span class="ident">httparse</span>::{<span class="ident">Status</span>, <span class="ident">EMPTY_HEADER</span>};
 <span class="kw">use</span> <span class="ident">mime</span>::{<span class="self">self</span>, <span class="ident">Mime</span>, <span class="ident">Name</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">pin</span>::<span class="ident">Pin</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">task</span>::<span class="ident">Poll</span>;
+<span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+<span class="kw">use</span> <span class="ident">std::str</span>;
+<span class="kw">use</span> <span class="ident">std::task::Poll</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="ident">ReadError</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">multipart</span>::<span class="ident">helpers</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">multipart</span>::<span class="ident">PushChunk</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">BodyChunk</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::errors::ReadError</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::multipart::helpers</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::multipart::PushChunk</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::BodyChunk</span>;
 
 <span class="kw">const</span> <span class="ident">MAX_BUF_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1024</span>;
 <span class="kw">const</span> <span class="ident">MAX_HEADERS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4</span>;
@@ -675,12 +675,12 @@
     <span class="doccomment">/// `FieldData::read_text()`; supporting more encodings than ASCII/UTF-8 is (currently)</span>
     <span class="doccomment">/// beyond the scope of this crate.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">as_ref</span>().<span class="ident">map_or</span>(<span class="bool-val">true</span>, <span class="op">|</span><span class="ident">ct</span><span class="op">|</span> <span class="ident">ct</span>.<span class="ident">type_</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">mime</span>::<span class="ident">TEXT</span>)
+        <span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">as_ref</span>().<span class="ident">map_or</span>(<span class="bool-val">true</span>, <span class="op">|</span><span class="ident">ct</span><span class="op">|</span> <span class="ident">ct</span>.<span class="ident">type_</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">mime::TEXT</span>)
     }
 
     <span class="doccomment">/// The character set of this field, if provided.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">charset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Name</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">as_ref</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">ct</span><span class="op">|</span> <span class="ident">ct</span>.<span class="ident">get_param</span>(<span class="ident">mime</span>::<span class="ident">CHARSET</span>))
+        <span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">as_ref</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">ct</span><span class="op">|</span> <span class="ident">ct</span>.<span class="ident">get_param</span>(<span class="ident">mime::CHARSET</span>))
     }
 }
 
@@ -696,11 +696,11 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_headers</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">TryStream</span><span class="op">&lt;</span><span class="ident">Error</span> <span class="op">=</span> <span class="ident">ReadError</span><span class="op">&gt;</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="kw-2">mut</span> <span class="ident">stream</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">PushChunk</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">S</span>::<span class="prelude-val">Ok</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+        <span class="kw-2">mut</span> <span class="ident">stream</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">PushChunk</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">S::Ok</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">FieldHeaders</span>, <span class="ident">ReadError</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">S</span>::<span class="prelude-val">Ok</span>: <span class="ident">BodyChunk</span>,
+        <span class="ident">S::Ok</span>: <span class="ident">BodyChunk</span>,
     {
         <span class="kw">loop</span> {
             <span class="comment">// tracing::debug!(</span>
@@ -719,7 +719,7 @@
             <span class="comment">// tracing::debug!(&quot;got chunk for headers: {}&quot;, show_bytes(chunk.as_slice()));</span>
 
             <span class="comment">// End of the headers section is signalled by a double-CRLF</span>
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">header_end</span>) <span class="op">=</span> <span class="ident">twoway</span>::<span class="ident">find_bytes</span>(<span class="ident">chunk</span>.<span class="ident">as_slice</span>(), <span class="string">b&quot;\r\n\r\n&quot;</span>) {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">header_end</span>) <span class="op">=</span> <span class="ident">twoway::find_bytes</span>(<span class="ident">chunk</span>.<span class="ident">as_slice</span>(), <span class="string">b&quot;\r\n\r\n&quot;</span>) {
                 <span class="comment">// Split after the double-CRLF because we don&#39;t want to yield it and httparse expects it</span>
                 <span class="kw">let</span> (<span class="ident">headers</span>, <span class="ident">rem</span>) <span class="op">=</span> <span class="ident">chunk</span>.<span class="ident">split_into</span>(<span class="ident">header_end</span> <span class="op">+</span> <span class="number">4</span>);
 
@@ -734,7 +734,7 @@
 
                     <span class="kw">return</span> <span class="ident">ready_ok</span>(<span class="ident">headers</span>);
                 } <span class="kw">else</span> {
-                    <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="ident">parse_headers</span>(<span class="ident">headers</span>.<span class="ident">as_slice</span>()));
+                    <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="ident">parse_headers</span>(<span class="ident">headers</span>.<span class="ident">as_slice</span>()));
                 }
             } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">split_idx</span>) <span class="op">=</span> <span class="ident">header_end_split</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">accumulator</span>, <span class="ident">chunk</span>.<span class="ident">as_slice</span>()) {
                 <span class="kw">let</span> (<span class="ident">head</span>, <span class="ident">tail</span>) <span class="op">=</span> <span class="ident">chunk</span>.<span class="ident">split_into</span>(<span class="ident">split_idx</span>);
@@ -788,16 +788,16 @@
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">header_buf</span> <span class="op">=</span> [<span class="ident">EMPTY_HEADER</span>; <span class="ident">MAX_HEADERS</span>];
 
-    <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">httparse</span>::<span class="ident">parse_headers</span>(<span class="ident">bytes</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">header_buf</span>) {
-        <span class="prelude-val">Ok</span>(<span class="ident">Status</span>::<span class="ident">Complete</span>((<span class="kw">_</span>, <span class="ident">headers</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">headers</span>,
-        <span class="prelude-val">Ok</span>(<span class="ident">Status</span>::<span class="ident">Partial</span>) <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(
+    <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">httparse::parse_headers</span>(<span class="ident">bytes</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">header_buf</span>) {
+        <span class="prelude-val">Ok</span>(<span class="ident">Status::Complete</span>((<span class="kw">_</span>, <span class="ident">headers</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">headers</span>,
+        <span class="prelude-val">Ok</span>(<span class="ident">Status::Partial</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(
                 <span class="string">&quot;field headers incomplete: {}&quot;</span>,
                 <span class="ident">show_bytes</span>(<span class="ident">bytes</span>)
             )))
         }
         <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(
                 <span class="string">&quot;error parsing headers: {}; from buffer: {}&quot;</span>,
                 <span class="ident">e</span>,
                 <span class="ident">show_bytes</span>(<span class="ident">bytes</span>)
@@ -807,22 +807,22 @@
 
     <span class="comment">// tracing::debug!(&quot;parsed headers: {:?}&quot;, headers);</span>
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out_headers</span> <span class="op">=</span> <span class="ident">FieldHeaders</span>::<span class="ident">default</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out_headers</span> <span class="op">=</span> <span class="ident">FieldHeaders::default</span>();
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dupe_cont_type</span> <span class="op">=</span> <span class="bool-val">false</span>;
 
     <span class="kw">for</span> <span class="ident">header</span> <span class="kw">in</span> <span class="ident">headers</span> {
         <span class="kw">if</span> <span class="string">&quot;Content-Disposition&quot;</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="ident">header</span>.<span class="ident">name</span>) {
             <span class="kw">if</span> <span class="op">!</span><span class="ident">out_headers</span>.<span class="ident">name</span>.<span class="ident">is_empty</span>() {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(
                     <span class="string">&quot;duplicate `Content-Disposition` header on field: {}&quot;</span>,
                     <span class="ident">out_headers</span>.<span class="ident">name</span>
                 )));
             }
 
-            <span class="kw">let</span> <span class="ident">str_val</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">header</span>.<span class="ident">value</span>)
+            <span class="kw">let</span> <span class="ident">str_val</span> <span class="op">=</span> <span class="ident">str::from_utf8</span>(<span class="ident">header</span>.<span class="ident">value</span>)
                 .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                    <span class="ident">ReadError</span>::<span class="ident">Parsing</span>(
+                    <span class="ident">ReadError::Parsing</span>(
                         <span class="string">&quot;multipart `Content-Disposition` header values \
                      must be UTF-8 encoded&quot;</span>
                             .<span class="ident">into</span>(),
@@ -839,9 +839,9 @@
                 <span class="kw">continue</span>;
             }
 
-            <span class="kw">let</span> <span class="ident">str_val</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">header</span>.<span class="ident">value</span>)
+            <span class="kw">let</span> <span class="ident">str_val</span> <span class="op">=</span> <span class="ident">str::from_utf8</span>(<span class="ident">header</span>.<span class="ident">value</span>)
                 .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                    <span class="ident">ReadError</span>::<span class="ident">Parsing</span>(
+                    <span class="ident">ReadError::Parsing</span>(
                         <span class="string">&quot;multipart `Content-Type` header values \
                      must be UTF-8 encoded&quot;</span>
                             .<span class="ident">into</span>(),
@@ -852,15 +852,15 @@
             <span class="ident">out_headers</span>.<span class="ident">content_type</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
                 <span class="ident">str_val</span>
                     .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>()
-                    .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(<span class="string">&quot;could not parse MIME type from {:?}&quot;</span>, <span class="ident">str_val</span>)))<span class="question-mark">?</span>,
+                    .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(<span class="string">&quot;could not parse MIME type from {:?}&quot;</span>, <span class="ident">str_val</span>)))<span class="question-mark">?</span>,
             );
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">hdr_name</span> <span class="op">=</span> <span class="ident">HeaderName</span>::<span class="ident">from_bytes</span>(<span class="ident">header</span>.<span class="ident">name</span>.<span class="ident">as_bytes</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
-                <span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(<span class="string">&quot;error on multipart field header \&quot;{}\&quot;: {}&quot;</span>, <span class="ident">header</span>.<span class="ident">name</span>, <span class="ident">e</span>))
+            <span class="kw">let</span> <span class="ident">hdr_name</span> <span class="op">=</span> <span class="ident">HeaderName::from_bytes</span>(<span class="ident">header</span>.<span class="ident">name</span>.<span class="ident">as_bytes</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
+                <span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(<span class="string">&quot;error on multipart field header \&quot;{}\&quot;: {}&quot;</span>, <span class="ident">header</span>.<span class="ident">name</span>, <span class="ident">e</span>))
             })<span class="question-mark">?</span>;
 
-            <span class="kw">let</span> <span class="ident">hdr_val</span> <span class="op">=</span> <span class="ident">HeaderValue</span>::<span class="ident">from_bytes</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
-                <span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(<span class="string">&quot;error on multipart field header \&quot;{}\&quot;: {}&quot;</span>, <span class="ident">header</span>.<span class="ident">name</span>, <span class="ident">e</span>))
+            <span class="kw">let</span> <span class="ident">hdr_val</span> <span class="op">=</span> <span class="ident">HeaderValue::from_bytes</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
+                <span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(<span class="string">&quot;error on multipart field header \&quot;{}\&quot;: {}&quot;</span>, <span class="ident">header</span>.<span class="ident">name</span>, <span class="ident">e</span>))
             })<span class="question-mark">?</span>;
 
             <span class="ident">out_headers</span>.<span class="ident">ext_headers</span>.<span class="ident">append</span>(<span class="ident">hdr_name</span>, <span class="ident">hdr_val</span>);
@@ -870,7 +870,7 @@
     <span class="kw">if</span> <span class="ident">out_headers</span>.<span class="ident">name</span>.<span class="ident">is_empty</span>() {
         <span class="comment">// missing `name` parameter in a provided `Content-Disposition` is covered separately</span>
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">filename</span>) <span class="op">=</span> <span class="ident">out_headers</span>.<span class="ident">filename</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(
                 <span class="string">&quot;missing `Content-Disposition` header on a field \
                  (filename: {}) in this multipart request&quot;</span>,
                 <span class="ident">filename</span>
@@ -878,20 +878,20 @@
         }
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">content_type</span>) <span class="op">=</span> <span class="ident">out_headers</span>.<span class="ident">content_type</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(
                 <span class="string">&quot;missing `Content-Disposition` header on a field \
                  (Content-Type: {}) in this multipart request&quot;</span>,
                 <span class="ident">content_type</span>
             )));
         }
 
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Parsing</span>(
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::Parsing</span>(
             <span class="string">&quot;missing `Content-Disposition` header on a field in this multipart request&quot;</span>.<span class="ident">to_string</span>(),
         ));
     }
 
     <span class="kw">if</span> <span class="ident">dupe_cont_type</span> {
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(
             <span class="string">&quot;duplicate `Content-Type` header in field: {}&quot;</span>,
             <span class="ident">out_headers</span>.<span class="ident">name</span>
         )));
@@ -904,10 +904,10 @@
     <span class="comment">// debug!(&quot;parse_cont_disp_val({:?})&quot;, val);</span>
 
     <span class="comment">// Only take the first section, the rest can be in quoted strings that we want to handle</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sections</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="string">&#39;;&#39;</span>).<span class="ident">map</span>(<span class="ident">str</span>::<span class="ident">trim</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sections</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="string">&#39;;&#39;</span>).<span class="ident">map</span>(<span class="ident">str::trim</span>);
 
     <span class="kw">if</span> <span class="op">!</span><span class="ident">sections</span>.<span class="ident">next</span>().<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>).<span class="ident">eq_ignore_ascii_case</span>(<span class="string">&quot;form-data&quot;</span>) {
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(
             <span class="string">&quot;unexpected/unsupported field header `Content-Disposition: {}` \
              in this multipart request; each field must have exactly one \
              `Content-Disposition: form-data` header with a `name` parameter&quot;</span>,
@@ -932,7 +932,7 @@
     }
 
     <span class="kw">if</span> <span class="ident">out</span>.<span class="ident">name</span>.<span class="ident">is_empty</span>() {
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="macro">format!</span>(
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::Parsing</span>(<span class="macro">format!</span>(
             <span class="string">&quot;expected &#39;name&#39; parameter in `Content-Disposition: {}`&quot;</span>,
             <span class="ident">val</span>
         )));
@@ -980,7 +980,7 @@
     <span class="kw">let</span> <span class="ident">rem</span> <span class="op">=</span> <span class="ident">qt_splits</span>
         .<span class="ident">next</span>()
         .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> {
-            <span class="ident">tracing</span>::<span class="macro">warn!</span>(<span class="string">&quot;unterminated quote: {:?}&quot;</span>, <span class="ident">qstr</span>);
+            <span class="macro">tracing::warn!</span>(<span class="string">&quot;unterminated quote: {:?}&quot;</span>, <span class="ident">qstr</span>);
             <span class="string">&quot;&quot;</span>
         })
         .<span class="ident">trim_matches</span>(<span class="kw-2">&amp;</span>[<span class="string">&#39; &#39;</span>, <span class="string">&#39;;&#39;</span>][..]);
@@ -1020,7 +1020,7 @@
         <span class="ident">parse_headers</span>(<span class="string">b&quot;Content-Disposition: form-data; name = \&quot;field\&quot;\r\n\r\n&quot;</span>).<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1032,8 +1032,8 @@
         .<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime</span>::<span class="ident">APPLICATION_OCTET_STREAM</span>),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime::APPLICATION_OCTET_STREAM</span>),
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1045,8 +1045,8 @@
         .<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime</span>::<span class="ident">TEXT_PLAIN_UTF_8</span>),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime::TEXT_PLAIN_UTF_8</span>),
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1055,7 +1055,7 @@
         <span class="ident">parse_headers</span>(<span class="string">b&quot;content-disposition: form-data; name = \&quot;field\&quot;\r\n\r\n&quot;</span>).<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1067,8 +1067,8 @@
         .<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime</span>::<span class="ident">APPLICATION_OCTET_STREAM</span>),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime::APPLICATION_OCTET_STREAM</span>),
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1077,7 +1077,7 @@
         <span class="ident">parse_headers</span>(<span class="string">b&quot;cOnTent-dIsPosition: form-data; name = \&quot;field\&quot;\r\n\r\n&quot;</span>).<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1089,8 +1089,8 @@
         .<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime</span>::<span class="ident">APPLICATION_OCTET_STREAM</span>),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime::APPLICATION_OCTET_STREAM</span>),
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1099,7 +1099,7 @@
         <span class="ident">parse_headers</span>(<span class="string">b&quot;Content-Disposition: form-data; name = field\r\n\r\n&quot;</span>).<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1111,8 +1111,8 @@
         .<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime</span>::<span class="ident">APPLICATION_OCTET_STREAM</span>),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime::APPLICATION_OCTET_STREAM</span>),
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1124,8 +1124,8 @@
         .<span class="ident">unwrap</span>(),
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime</span>::<span class="ident">TEXT_PLAIN_UTF_8</span>),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime::TEXT_PLAIN_UTF_8</span>),
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1139,8 +1139,8 @@
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
             <span class="ident">filename</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;file.bin&quot;</span>.<span class="ident">into</span>()),
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime</span>::<span class="ident">APPLICATION_OCTET_STREAM</span>),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime::APPLICATION_OCTET_STREAM</span>),
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1154,8 +1154,8 @@
         <span class="ident">FieldHeaders</span> {
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
             <span class="ident">filename</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;file.bin&quot;</span>.<span class="ident">into</span>()),
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime</span>::<span class="ident">APPLICATION_OCTET_STREAM</span>),
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="ident">mime::APPLICATION_OCTET_STREAM</span>),
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     );
 
@@ -1170,7 +1170,7 @@
             <span class="ident">name</span>: <span class="string">&quot;field&quot;</span>.<span class="ident">into</span>(),
             <span class="ident">filename</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;file.bin&quot;</span>.<span class="ident">into</span>()),
             <span class="ident">content_type</span>: <span class="prelude-val">None</span>,
-            ..<span class="ident">FieldHeaders</span>::<span class="ident">default</span>()
+            ..<span class="ident">FieldHeaders::default</span>()
         }
     )
 }
@@ -1198,8 +1198,8 @@
 
 <span class="attribute">#[<span class="ident">test</span>]</span>
 <span class="kw">fn</span> <span class="ident">test_read_headers</span>() {
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">multipart</span>::<span class="ident">test_util</span>::<span class="ident">mock_stream</span>;
-    <span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">PushChunk</span>::<span class="ident">new</span>(<span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[
+    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::multipart::test_util::mock_stream</span>;
+    <span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">PushChunk::new</span>(<span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[
         <span class="string">b&quot;Content-Disposition&quot;</span>,
         <span class="string">b&quot;: &quot;</span>,
         <span class="string">b&quot;form-data;&quot;</span>,
@@ -1210,14 +1210,14 @@
     ]));
     <span class="macro">pin_mut!</span>(<span class="ident">stream</span>);
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">read_headers</span> <span class="op">=</span> <span class="ident">ReadHeaders</span>::<span class="ident">default</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">read_headers</span> <span class="op">=</span> <span class="ident">ReadHeaders::default</span>();
 
     <span class="kw">let</span> <span class="ident">headers</span>: <span class="ident">FieldHeaders</span> <span class="op">=</span> <span class="macro">until_ready!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">read_headers</span>.<span class="ident">read_headers</span>(<span class="ident">stream</span>.<span class="ident">as_mut</span>(), <span class="ident">cx</span>)).<span class="ident">unwrap</span>();
 
     <span class="macro">assert_eq!</span>(<span class="ident">headers</span>.<span class="ident">name</span>, <span class="string">&quot;foo&quot;</span>);
     <span class="macro">assert_eq!</span>(<span class="ident">headers</span>.<span class="ident">content_type</span>, <span class="prelude-val">None</span>);
     <span class="macro">assert_eq!</span>(<span class="ident">headers</span>.<span class="ident">filename</span>, <span class="prelude-val">None</span>);
-    <span class="macro">assert_eq!</span>(<span class="ident">headers</span>.<span class="ident">ext_headers</span>, <span class="ident">HeaderMap</span>::<span class="ident">new</span>());
+    <span class="macro">assert_eq!</span>(<span class="ident">headers</span>.<span class="ident">ext_headers</span>, <span class="ident">HeaderMap::new</span>());
     <span class="macro">assert!</span>(<span class="ident">read_headers</span>.<span class="ident">accumulator</span>.<span class="ident">is_empty</span>());
 }
 </pre></div>

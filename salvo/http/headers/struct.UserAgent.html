@@ -26,9 +26,9 @@ product-version = token
 </ul>
 <h1 id="example" class="section-header"><a href="#example">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">headers</span>::<span class="ident">UserAgent</span>;
+<span class="kw">use</span> <span class="ident">headers::UserAgent</span>;
 
-<span class="kw">let</span> <span class="ident">ua</span> <span class="op">=</span> <span class="ident">UserAgent</span>::<span class="ident">from_static</span>(<span class="string">&quot;hyper/0.12.2&quot;</span>);</pre></div>
+<span class="kw">let</span> <span class="ident">ua</span> <span class="op">=</span> <span class="ident">UserAgent::from_static</span>(<span class="string">&quot;hyper/0.12.2&quot;</span>);</pre></div>
 </div><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><h3 id="impl" class="impl"><code class="in-band">impl <a class="struct" href="../../../salvo/http/headers/struct.UserAgent.html" title="struct salvo::http::headers::UserAgent">UserAgent</a></code><a href="#impl" class="anchor"></a><a class="srclink" href="https://docs.rs/headers/0.3.4/src/headers/common/user_agent.rs.html#50-64" title="goto source code">[src]</a></h3><div class="impl-items"><h4 id="method.from_static" class="method"><code>pub fn <a href="#method.from_static" class="fnname">from_static</a>(src: &amp;'static <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="struct" href="../../../salvo/http/headers/struct.UserAgent.html" title="struct salvo::http::headers::UserAgent">UserAgent</a></code><a class="srclink" href="https://docs.rs/headers/0.3.4/src/headers/common/user_agent.rs.html#56" title="goto source code">[src]</a></h4><div class="docblock"><p>Create a <code>UserAgent</code> from a static string.</p>
 <h1 id="panic" class="section-header"><a href="#panic">Panic</a></h1>
 <p>Panics if the static string is not a legal header value.</p>

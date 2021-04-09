@@ -549,27 +549,27 @@
 <span id="546">546</span>
 <span id="547">547</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
+<span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
+<span class="kw">use</span> <span class="ident">std::fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
+<span class="kw">use</span> <span class="ident">std::net::SocketAddr</span>;
+<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
 
 <span class="kw">use</span> <span class="ident">cookie</span>::{<span class="ident">Cookie</span>, <span class="ident">CookieJar</span>};
-<span class="kw">use</span> <span class="ident">double_checked_cell_async</span>::<span class="ident">DoubleCheckedCell</span>;
-<span class="kw">use</span> <span class="ident">http</span>::<span class="ident">header</span>::{<span class="self">self</span>, <span class="ident">HeaderMap</span>};
-<span class="kw">use</span> <span class="ident">http</span>::<span class="ident">method</span>::<span class="ident">Method</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">request</span>::<span class="ident">Parts</span>;
-<span class="kw">use</span> <span class="ident">http</span>::<span class="ident">version</span>::<span class="ident">Version</span>;
+<span class="kw">use</span> <span class="ident">double_checked_cell_async::DoubleCheckedCell</span>;
+<span class="kw">use</span> <span class="ident">http::header</span>::{<span class="self">self</span>, <span class="ident">HeaderMap</span>};
+<span class="kw">use</span> <span class="ident">http::method::Method</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">http::request::Parts</span>;
+<span class="kw">use</span> <span class="ident">http::version::Version</span>;
 <span class="kw">use</span> <span class="ident">http</span>::{<span class="self">self</span>, <span class="ident">Extensions</span>, <span class="ident">Uri</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">Body</span>;
-<span class="kw">use</span> <span class="ident">multimap</span>::<span class="ident">MultiMap</span>;
-<span class="kw">use</span> <span class="ident">once_cell</span>::<span class="ident">sync</span>::<span class="ident">OnceCell</span>;
-<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">DeserializeOwned</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper::Body</span>;
+<span class="kw">use</span> <span class="ident">multimap::MultiMap</span>;
+<span class="kw">use</span> <span class="ident">once_cell::sync::OnceCell</span>;
+<span class="kw">use</span> <span class="ident">serde::de::DeserializeOwned</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="ident">ReadError</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">form</span>::{<span class="self">self</span>, <span class="ident">FilePart</span>, <span class="ident">FormData</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">header</span>::<span class="ident">HeaderValue</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">Mime</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::errors::ReadError</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::form</span>::{<span class="self">self</span>, <span class="ident">FilePart</span>, <span class="ident">FormData</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::header::HeaderValue</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::Mime</span>;
 
 <span class="doccomment">/// Represents an HTTP request.</span>
 <span class="doccomment">///</span>
@@ -603,7 +603,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Request</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Request&quot;</span>)
             .<span class="ident">field</span>(<span class="string">&quot;method&quot;</span>, <span class="self">self</span>.<span class="ident">method</span>())
             .<span class="ident">field</span>(<span class="string">&quot;uri&quot;</span>, <span class="self">self</span>.<span class="ident">uri</span>())
@@ -617,7 +617,7 @@
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Request</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span> {
-        <span class="ident">Request</span>::<span class="ident">new</span>()
+        <span class="ident">Request::new</span>()
     }
 }
 
@@ -625,17 +625,17 @@
     <span class="doccomment">/// Creates a new blank `Request`</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span> {
         <span class="ident">Request</span> {
-            <span class="ident">uri</span>: <span class="ident">Uri</span>::<span class="ident">default</span>(),
-            <span class="ident">headers</span>: <span class="ident">HeaderMap</span>::<span class="ident">default</span>(),
-            <span class="ident">body</span>: <span class="prelude-val">Some</span>(<span class="ident">Body</span>::<span class="ident">default</span>()),
-            <span class="ident">extensions</span>: <span class="ident">Extensions</span>::<span class="ident">default</span>(),
-            <span class="ident">method</span>: <span class="ident">Method</span>::<span class="ident">default</span>(),
-            <span class="ident">cookies</span>: <span class="ident">CookieJar</span>::<span class="ident">default</span>(),
-            <span class="ident">params</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
-            <span class="ident">queries</span>: <span class="ident">OnceCell</span>::<span class="ident">new</span>(),
-            <span class="ident">form_data</span>: <span class="ident">DoubleCheckedCell</span>::<span class="ident">new</span>(),
-            <span class="ident">payload</span>: <span class="ident">DoubleCheckedCell</span>::<span class="ident">new</span>(),
-            <span class="ident">version</span>: <span class="ident">Version</span>::<span class="ident">default</span>(),
+            <span class="ident">uri</span>: <span class="ident">Uri::default</span>(),
+            <span class="ident">headers</span>: <span class="ident">HeaderMap::default</span>(),
+            <span class="ident">body</span>: <span class="prelude-val">Some</span>(<span class="ident">Body::default</span>()),
+            <span class="ident">extensions</span>: <span class="ident">Extensions::default</span>(),
+            <span class="ident">method</span>: <span class="ident">Method::default</span>(),
+            <span class="ident">cookies</span>: <span class="ident">CookieJar::default</span>(),
+            <span class="ident">params</span>: <span class="ident">HashMap::new</span>(),
+            <span class="ident">queries</span>: <span class="ident">OnceCell::new</span>(),
+            <span class="ident">form_data</span>: <span class="ident">DoubleCheckedCell::new</span>(),
+            <span class="ident">payload</span>: <span class="ident">DoubleCheckedCell::new</span>(),
+            <span class="ident">version</span>: <span class="ident">Version::default</span>(),
             <span class="ident">remote_addr</span>: <span class="prelude-val">None</span>,
         }
     }
@@ -643,9 +643,9 @@
     <span class="doccomment">/// Create a request from an hyper::Request.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This constructor consumes the hyper::Request.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_hyper</span>(<span class="ident">req</span>: <span class="ident">hyper</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Body</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_hyper</span>(<span class="ident">req</span>: <span class="ident">hyper::Request</span><span class="op">&lt;</span><span class="ident">Body</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span> {
         <span class="kw">let</span> (
-            <span class="ident">http</span>::<span class="ident">request</span>::<span class="ident">Parts</span> {
+            <span class="ident">http::request::Parts</span> {
                 <span class="ident">method</span>,
                 <span class="ident">uri</span>,
                 <span class="ident">version</span>,
@@ -658,21 +658,21 @@
 
         <span class="comment">// Set the request cookies, if they exist.</span>
         <span class="kw">let</span> <span class="ident">cookies</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">header</span>) <span class="op">=</span> <span class="ident">headers</span>.<span class="ident">get</span>(<span class="string">&quot;Cookie&quot;</span>) {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cookie_jar</span> <span class="op">=</span> <span class="ident">CookieJar</span>::<span class="ident">new</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cookie_jar</span> <span class="op">=</span> <span class="ident">CookieJar::new</span>();
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">header</span>) <span class="op">=</span> <span class="ident">header</span>.<span class="ident">to_str</span>() {
                 <span class="kw">for</span> <span class="ident">cookie_str</span> <span class="kw">in</span> <span class="ident">header</span>.<span class="ident">split</span>(<span class="string">&#39;;&#39;</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">trim</span>()) {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">cookie</span>) <span class="op">=</span> <span class="ident">Cookie</span>::<span class="ident">parse_encoded</span>(<span class="ident">cookie_str</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">into_owned</span>()) {
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">cookie</span>) <span class="op">=</span> <span class="ident">Cookie::parse_encoded</span>(<span class="ident">cookie_str</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">into_owned</span>()) {
                         <span class="ident">cookie_jar</span>.<span class="ident">add_original</span>(<span class="ident">cookie</span>);
                     }
                 }
             }
             <span class="ident">cookie_jar</span>
         } <span class="kw">else</span> {
-            <span class="ident">CookieJar</span>::<span class="ident">new</span>()
+            <span class="ident">CookieJar::new</span>()
         };
 
         <span class="ident">Request</span> {
-            <span class="ident">queries</span>: <span class="ident">OnceCell</span>::<span class="ident">new</span>(),
+            <span class="ident">queries</span>: <span class="ident">OnceCell::new</span>(),
             <span class="ident">uri</span>,
             <span class="ident">headers</span>,
             <span class="ident">body</span>: <span class="prelude-val">Some</span>(<span class="ident">body</span>),
@@ -680,9 +680,9 @@
             <span class="ident">method</span>,
             <span class="ident">cookies</span>,
             <span class="comment">// accept: None,</span>
-            <span class="ident">params</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
-            <span class="ident">form_data</span>: <span class="ident">DoubleCheckedCell</span>::<span class="ident">new</span>(),
-            <span class="ident">payload</span>: <span class="ident">DoubleCheckedCell</span>::<span class="ident">new</span>(),
+            <span class="ident">params</span>: <span class="ident">HashMap::new</span>(),
+            <span class="ident">form_data</span>: <span class="ident">DoubleCheckedCell::new</span>(),
+            <span class="ident">payload</span>: <span class="ident">DoubleCheckedCell::new</span>(),
             <span class="comment">// multipart: OnceCell::new(),</span>
             <span class="ident">version</span>,
             <span class="ident">remote_addr</span>: <span class="prelude-val">None</span>,
@@ -928,7 +928,7 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">queries</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">MultiMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">queries</span>.<span class="ident">get_or_init</span>(<span class="op">|</span><span class="op">|</span> {
-            <span class="ident">form_urlencoded</span>::<span class="ident">parse</span>(<span class="self">self</span>.<span class="ident">uri</span>.<span class="ident">query</span>().<span class="ident">unwrap_or_default</span>().<span class="ident">as_bytes</span>())
+            <span class="ident">form_urlencoded::parse</span>(<span class="self">self</span>.<span class="ident">uri</span>.<span class="ident">query</span>().<span class="ident">unwrap_or_default</span>().<span class="ident">as_bytes</span>())
                 .<span class="ident">into_owned</span>()
                 .<span class="ident">collect</span>()
         })
@@ -982,30 +982,30 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">payload</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">ReadError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">ctype</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">headers</span>()
-            .<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>)
+            .<span class="ident">get</span>(<span class="ident">header::CONTENT_TYPE</span>)
             .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
             .<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
         <span class="kw">if</span> <span class="ident">ctype</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;multipart/form-data&quot;</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;failed to read data1&quot;</span>)))
+            <span class="prelude-val">Err</span>(<span class="ident">ReadError::General</span>(<span class="ident">String::from</span>(<span class="string">&quot;failed to read data1&quot;</span>)))
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;application/json&quot;</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;text/&quot;</span>) {
             <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">body</span>.<span class="ident">take</span>();
             <span class="self">self</span>.<span class="ident">payload</span>
                 .<span class="ident">get_or_try_init</span>(<span class="kw">async</span> {
                     <span class="kw">match</span> <span class="ident">body</span> {
                         <span class="prelude-val">Some</span>(<span class="ident">body</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">read_body_bytes</span>(<span class="ident">body</span>).<span class="kw">await</span>,
-                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;failed to read data2&quot;</span>))),
+                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::General</span>(<span class="ident">String::from</span>(<span class="string">&quot;failed to read data2&quot;</span>))),
                     }
                 })
                 .<span class="kw">await</span>
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;failed to read data3&quot;</span>)))
+            <span class="prelude-val">Err</span>(<span class="ident">ReadError::General</span>(<span class="ident">String::from</span>(<span class="string">&quot;failed to read data3&quot;</span>)))
         }
     }
 
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">form_data</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">FormData</span>, <span class="ident">ReadError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">ctype</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">headers</span>()
-            .<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>)
+            .<span class="ident">get</span>(<span class="ident">header::CONTENT_TYPE</span>)
             .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
             .<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
         <span class="kw">if</span> <span class="ident">ctype</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;multipart/form-data&quot;</span>) {
@@ -1014,21 +1014,21 @@
             <span class="self">self</span>.<span class="ident">form_data</span>
                 .<span class="ident">get_or_try_init</span>(<span class="kw">async</span> {
                     <span class="kw">match</span> <span class="ident">body</span> {
-                        <span class="prelude-val">Some</span>(<span class="ident">body</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">form</span>::<span class="ident">read_form_data</span>(<span class="ident">headers</span>, <span class="ident">body</span>).<span class="kw">await</span>,
-                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="string">&quot;empty body&quot;</span>.<span class="ident">into</span>())),
+                        <span class="prelude-val">Some</span>(<span class="ident">body</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">form::read_form_data</span>(<span class="ident">headers</span>, <span class="ident">body</span>).<span class="kw">await</span>,
+                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::General</span>(<span class="string">&quot;empty body&quot;</span>.<span class="ident">into</span>())),
                     }
                 })
                 .<span class="kw">await</span>
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="string">&quot;failed to read form data&quot;</span>.<span class="ident">into</span>()))
+            <span class="prelude-val">Err</span>(<span class="ident">ReadError::General</span>(<span class="string">&quot;failed to read form data&quot;</span>.<span class="ident">into</span>()))
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">read_text</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">ReadError</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">payload</span>().<span class="kw">await</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">body</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="kw-2">&amp;</span><span class="ident">body</span>)<span class="question-mark">?</span>),
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="string">&quot;read text from body failed&quot;</span>.<span class="ident">into</span>())),
+            <span class="prelude-val">Ok</span>(<span class="ident">body</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">std::str::from_utf8</span>(<span class="kw-2">&amp;</span><span class="ident">body</span>)<span class="question-mark">?</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::General</span>(<span class="string">&quot;read text from body failed&quot;</span>.<span class="ident">into</span>())),
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1038,7 +1038,7 @@
     {
         <span class="self">self</span>.<span class="ident">read_text</span>()
             .<span class="kw">await</span>
-            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">body</span><span class="op">|</span> <span class="ident">body</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ReadError</span>::<span class="ident">Parsing</span>(<span class="ident">body</span>.<span class="ident">into</span>())))
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">body</span><span class="op">|</span> <span class="ident">body</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ReadError::Parsing</span>(<span class="ident">body</span>.<span class="ident">into</span>())))
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">read_from_json</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ReadError</span><span class="op">&gt;</span>
@@ -1046,8 +1046,8 @@
         <span class="ident">T</span>: <span class="ident">DeserializeOwned</span>,
     {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">payload</span>().<span class="kw">await</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">body</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">serde_json</span>::<span class="ident">from_slice</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">body</span>)<span class="question-mark">?</span>),
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="string">&quot;read json from body failed&quot;</span>.<span class="ident">into</span>())),
+            <span class="prelude-val">Ok</span>(<span class="ident">body</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">serde_json::from_slice</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">body</span>)<span class="question-mark">?</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::General</span>(<span class="string">&quot;read json from body failed&quot;</span>.<span class="ident">into</span>())),
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1057,10 +1057,10 @@
     {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">form_data</span>().<span class="kw">await</span> {
             <span class="prelude-val">Ok</span>(<span class="ident">form_data</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">serde_json</span>::<span class="ident">to_value</span>(<span class="kw-2">&amp;</span><span class="ident">form_data</span>.<span class="ident">fields</span>)<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(<span class="ident">serde_json</span>::<span class="ident">from_value</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">data</span>)<span class="question-mark">?</span>)
+                <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">serde_json::to_value</span>(<span class="kw-2">&amp;</span><span class="ident">form_data</span>.<span class="ident">fields</span>)<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(<span class="ident">serde_json::from_value</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">data</span>)<span class="question-mark">?</span>)
             }
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="string">&quot;read data from form failed&quot;</span>.<span class="ident">into</span>())),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ReadError::General</span>(<span class="string">&quot;read data from form failed&quot;</span>.<span class="ident">into</span>())),
         }
     }
 
@@ -1071,7 +1071,7 @@
     {
         <span class="kw">let</span> <span class="ident">ctype</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">headers</span>()
-            .<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>)
+            .<span class="ident">get</span>(<span class="ident">header::CONTENT_TYPE</span>)
             .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
             .<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
         <span class="kw">if</span> <span class="ident">ctype</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;application/x-www-form-urlencoded&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;multipart/form-data&quot;</span>) {
@@ -1079,7 +1079,7 @@
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ctype</span>.<span class="ident">starts_with</span>(<span class="string">&quot;application/json&quot;</span>) {
             <span class="self">self</span>.<span class="ident">read_from_json</span>().<span class="kw">await</span>
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="ident">String</span>::<span class="ident">from</span>(
+            <span class="prelude-val">Err</span>(<span class="ident">ReadError::General</span>(<span class="ident">String::from</span>(
                 <span class="string">&quot;failed to read data or this type is not supported&quot;</span>,
             )))
         }
@@ -1091,9 +1091,9 @@
 <span class="comment">//     Ok(Cursor::new(read_body_bytes(body).await?))</span>
 <span class="comment">// }</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">read_body_bytes</span>(<span class="ident">body</span>: <span class="ident">Body</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">ReadError</span><span class="op">&gt;</span> {
-    <span class="ident">hyper</span>::<span class="ident">body</span>::<span class="ident">to_bytes</span>(<span class="ident">body</span>)
+    <span class="ident">hyper::body::to_bytes</span>(<span class="ident">body</span>)
         .<span class="kw">await</span>
-        .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ReadError</span>::<span class="ident">General</span>(<span class="string">&quot;read body bytes error&quot;</span>.<span class="ident">into</span>()))
+        .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ReadError::General</span>(<span class="string">&quot;read body bytes error&quot;</span>.<span class="ident">into</span>()))
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">to_vec</span>())
 }
 </pre></div>

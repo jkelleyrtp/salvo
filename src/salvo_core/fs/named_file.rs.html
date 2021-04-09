@@ -479,27 +479,27 @@
 <span class="comment">//</span>
 <span class="comment">// port from https://github.com/actix/actix-web/blob/master/actix-files/src/named.rs</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::{<span class="ident">File</span>, <span class="ident">Metadata</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{<span class="ident">SystemTime</span>, <span class="ident">UNIX_EPOCH</span>};
+<span class="kw">use</span> <span class="ident">std::cmp</span>;
+<span class="kw">use</span> <span class="ident">std::fs</span>::{<span class="ident">File</span>, <span class="ident">Metadata</span>};
+<span class="kw">use</span> <span class="ident">std::ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>};
+<span class="kw">use</span> <span class="ident">std::path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
+<span class="kw">use</span> <span class="ident">std::time</span>::{<span class="ident">SystemTime</span>, <span class="ident">UNIX_EPOCH</span>};
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">fs</span>::<span class="ident">MetadataExt</span>;
+<span class="kw">use</span> <span class="ident">std::os::unix::fs::MetadataExt</span>;
 
-<span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
-<span class="kw">use</span> <span class="ident">bitflags</span>::<span class="ident">bitflags</span>;
+<span class="kw">use</span> <span class="ident">async_trait::async_trait</span>;
+<span class="kw">use</span> <span class="ident">bitflags::bitflags</span>;
 <span class="kw">use</span> <span class="ident">headers</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">mime_guess</span>::<span class="ident">from_path</span>;
+<span class="kw">use</span> <span class="ident">mime_guess::from_path</span>;
 
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">FileChunk</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">header</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">header</span>::{<span class="ident">CONTENT_DISPOSITION</span>, <span class="ident">CONTENT_ENCODING</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">range</span>::<span class="ident">HttpRange</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">StatusCode</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Depot</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Writer</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::FileChunk</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::header</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::header</span>::{<span class="ident">CONTENT_DISPOSITION</span>, <span class="ident">CONTENT_ENCODING</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::range::HttpRange</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http</span>::{<span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">StatusCode</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Depot</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Writer</span>;
 
 <span class="macro">bitflags!</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">Flags</span>: <span class="ident">u8</span> {
@@ -511,7 +511,7 @@
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Flags</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">Flags</span>::<span class="ident">all</span>()
+        <span class="ident">Flags::all</span>()
     }
 }
 
@@ -525,7 +525,7 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">metadata</span>: <span class="ident">Metadata</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">flags</span>: <span class="ident">Flags</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">status_code</span>: <span class="ident">StatusCode</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">content_type</span>: <span class="ident">mime</span>::<span class="ident">Mime</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">content_type</span>: <span class="ident">mime::Mime</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">content_disposition</span>: <span class="ident">HeaderValue</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">content_encoding</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HeaderValue</span><span class="op">&gt;</span>,
 }
@@ -535,7 +535,7 @@
     <span class="ident">file</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;</span>,
     <span class="ident">attached_filename</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">disposition_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">content_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">mime</span>::<span class="ident">Mime</span><span class="op">&gt;</span>,
+    <span class="ident">content_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">mime::Mime</span><span class="op">&gt;</span>,
     <span class="ident">content_encoding</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">content_disposition</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">buffer_size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
@@ -549,7 +549,7 @@
         <span class="self">self</span>.<span class="ident">disposition_type</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">disposition_type</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_content_type</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">mime</span>::<span class="ident">Mime</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">content_type</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NamedFileBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_content_type</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">mime::Mime</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">content_type</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NamedFileBuilder</span> {
         <span class="self">self</span>.<span class="ident">content_type</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">content_type</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
@@ -561,7 +561,7 @@
         <span class="self">self</span>.<span class="ident">buffer_size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">buffer_size</span>);
         <span class="self">self</span>
     }
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NamedFile</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">crate</span><span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">NamedFile</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">NamedFileBuilder</span> {
             <span class="ident">path</span>,
             <span class="ident">file</span>,
@@ -576,13 +576,13 @@
 
         <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">file</span> {
             <span class="prelude-val">Some</span>(<span class="ident">file</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">file</span>,
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>).<span class="ident">map_err</span>(<span class="kw">crate</span>::<span class="ident">Error</span>::<span class="ident">new</span>)<span class="question-mark">?</span>,
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">File::open</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>).<span class="ident">map_err</span>(<span class="kw">crate</span><span class="ident">::Error::new</span>)<span class="question-mark">?</span>,
         };
         <span class="kw">let</span> <span class="ident">content_type</span> <span class="op">=</span> <span class="ident">content_type</span>.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">ct</span> <span class="op">=</span> <span class="ident">from_path</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>).<span class="ident">first_or_octet_stream</span>();
-            <span class="kw">if</span> <span class="ident">ct</span>.<span class="ident">type_</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">mime</span>::<span class="ident">TEXT</span> <span class="op">&amp;&amp;</span> <span class="ident">ct</span>.<span class="ident">get_param</span>(<span class="ident">mime</span>::<span class="ident">CHARSET</span>).<span class="ident">is_none</span>() {
+            <span class="kw">if</span> <span class="ident">ct</span>.<span class="ident">type_</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">mime::TEXT</span> <span class="op">&amp;&amp;</span> <span class="ident">ct</span>.<span class="ident">get_param</span>(<span class="ident">mime::CHARSET</span>).<span class="ident">is_none</span>() {
                 <span class="comment">//TODO: auto detect charset</span>
-                <span class="macro">format!</span>(<span class="string">&quot;{}; charset=utf-8&quot;</span>, <span class="ident">ct</span>).<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">mime</span>::<span class="ident">Mime</span><span class="op">&gt;</span>().<span class="ident">unwrap_or</span>(<span class="ident">ct</span>)
+                <span class="macro">format!</span>(<span class="string">&quot;{}; charset=utf-8&quot;</span>, <span class="ident">ct</span>).<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">mime::Mime</span><span class="op">&gt;</span>().<span class="ident">unwrap_or</span>(<span class="ident">ct</span>)
             } <span class="kw">else</span> {
                 <span class="ident">ct</span>
             }
@@ -593,7 +593,7 @@
                     <span class="string">&quot;attachment&quot;</span>
                 } <span class="kw">else</span> {
                     <span class="kw">match</span> <span class="ident">content_type</span>.<span class="ident">type_</span>() {
-                        <span class="ident">mime</span>::<span class="ident">IMAGE</span> <span class="op">|</span> <span class="ident">mime</span>::<span class="ident">TEXT</span> <span class="op">|</span> <span class="ident">mime</span>::<span class="ident">VIDEO</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;inline&quot;</span>,
+                        <span class="ident">mime::IMAGE</span> <span class="op">|</span> <span class="ident">mime::TEXT</span> <span class="op">|</span> <span class="ident">mime::VIDEO</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;inline&quot;</span>,
                         <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;attachment&quot;</span>,
                     }
                 };
@@ -611,11 +611,11 @@
                 }
             })
         });
-        <span class="kw">let</span> <span class="ident">content_disposition</span> <span class="op">=</span> <span class="ident">content_disposition</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">HeaderValue</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="kw">crate</span>::<span class="ident">Error</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">metadata</span>().<span class="ident">map_err</span>(<span class="kw">crate</span>::<span class="ident">Error</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">content_disposition</span> <span class="op">=</span> <span class="ident">content_disposition</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">HeaderValue</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="kw">crate</span><span class="ident">::Error::new</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">metadata</span>().<span class="ident">map_err</span>(<span class="kw">crate</span><span class="ident">::Error::new</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">modified</span> <span class="op">=</span> <span class="ident">metadata</span>.<span class="ident">modified</span>().<span class="ident">ok</span>();
         <span class="kw">let</span> <span class="ident">content_encoding</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">content_encoding</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">content_encoding</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">content_encoding</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">HeaderValue</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="kw">crate</span>::<span class="ident">Error</span>::<span class="ident">new</span>)<span class="question-mark">?</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">content_encoding</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">content_encoding</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">HeaderValue</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="kw">crate</span><span class="ident">::Error::new</span>)<span class="question-mark">?</span>),
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         };
 
@@ -628,8 +628,8 @@
             <span class="ident">modified</span>,
             <span class="ident">content_encoding</span>,
             <span class="ident">buffer_size</span>: <span class="ident">buffer_size</span>.<span class="ident">unwrap_or</span>(<span class="number">65_536</span>),
-            <span class="ident">status_code</span>: <span class="ident">StatusCode</span>::<span class="ident">OK</span>,
-            <span class="ident">flags</span>: <span class="ident">Flags</span>::<span class="ident">default</span>(),
+            <span class="ident">status_code</span>: <span class="ident">StatusCode::OK</span>,
+            <span class="ident">flags</span>: <span class="ident">Flags::default</span>(),
         })
     }
 }
@@ -656,8 +656,8 @@
     <span class="doccomment">/// use salvo_core::fs::NamedFile;</span>
     <span class="doccomment">/// let file = NamedFile::open(&quot;foo.txt&quot;.into());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="ident">path</span>: <span class="ident">PathBuf</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NamedFile</span><span class="op">&gt;</span> {
-        <span class="self">Self</span>::<span class="ident">builder</span>(<span class="ident">path</span>).<span class="ident">build</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="ident">path</span>: <span class="ident">PathBuf</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">crate</span><span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">NamedFile</span><span class="op">&gt;</span> {
+        <span class="self">Self</span><span class="ident">::builder</span>(<span class="ident">path</span>).<span class="ident">build</span>()
     }
 
     <span class="doccomment">/// Returns reference to the underlying `File` object.</span>
@@ -686,7 +686,7 @@
     <span class="doccomment">/// Set the MIME Content-Type for serving this file. By default</span>
     <span class="doccomment">/// the Content-Type is inferred from the filename extension.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_content_type</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">content_type</span>: <span class="ident">mime</span>::<span class="ident">Mime</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_content_type</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">content_type</span>: <span class="ident">mime::Mime</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">content_type</span> <span class="op">=</span> <span class="ident">content_type</span>;
         <span class="self">self</span>
     }
@@ -701,7 +701,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_content_disposition</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">content_disposition</span>: <span class="ident">HeaderValue</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">content_disposition</span> <span class="op">=</span> <span class="ident">content_disposition</span>;
-        <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">insert</span>(<span class="ident">Flags</span>::<span class="ident">CONTENT_DISPOSITION</span>);
+        <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">insert</span>(<span class="ident">Flags::CONTENT_DISPOSITION</span>);
         <span class="self">self</span>
     }
 
@@ -710,7 +710,7 @@
     <span class="doccomment">/// By default Content-Disposition` header is enabled.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable_content_disposition</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">remove</span>(<span class="ident">Flags</span>::<span class="ident">CONTENT_DISPOSITION</span>);
+        <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">remove</span>(<span class="ident">Flags::CONTENT_DISPOSITION</span>);
         <span class="self">self</span>
     }
 
@@ -726,7 +726,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">///Default is true.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">use_etag</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">set</span>(<span class="ident">Flags</span>::<span class="ident">ETAG</span>, <span class="ident">value</span>);
+        <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">set</span>(<span class="ident">Flags::ETAG</span>, <span class="ident">value</span>);
         <span class="self">self</span>
     }
 
@@ -735,7 +735,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">///Default is true.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">use_last_modified</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">set</span>(<span class="ident">Flags</span>::<span class="ident">LAST_MODIFIED</span>, <span class="ident">value</span>);
+        <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">set</span>(<span class="ident">Flags::LAST_MODIFIED</span>, <span class="ident">value</span>);
         <span class="self">self</span>
     }
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">etag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ETag</span><span class="op">&gt;</span> {
@@ -765,7 +765,7 @@
             <span class="kw">match</span> <span class="ident">etag_str</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">ETag</span><span class="op">&gt;</span>() {
                 <span class="prelude-val">Ok</span>(<span class="ident">etag</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">etag</span>),
                 <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="ident">error</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">e</span>, <span class="ident">etag</span> <span class="op">=</span> <span class="op">%</span><span class="ident">etag_str</span>, <span class="string">&quot;set file&#39;s etag failed&quot;</span>);
+                    <span class="macro">tracing::error!</span>(<span class="ident">error</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">e</span>, <span class="ident">etag</span> <span class="op">=</span> <span class="op">%</span><span class="ident">etag_str</span>, <span class="string">&quot;set file&#39;s etag failed&quot;</span>);
                     <span class="prelude-val">None</span>
                 }
             }
@@ -780,12 +780,12 @@
 <span class="attribute">#[<span class="ident">async_trait</span>]</span>
 <span class="kw">impl</span> <span class="ident">Writer</span> <span class="kw">for</span> <span class="ident">NamedFile</span> {
     <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Request</span>, <span class="ident">_depot</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Depot</span>, <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) {
-        <span class="kw">let</span> <span class="ident">etag</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">contains</span>(<span class="ident">Flags</span>::<span class="ident">ETAG</span>) {
+        <span class="kw">let</span> <span class="ident">etag</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">contains</span>(<span class="ident">Flags::ETAG</span>) {
             <span class="self">self</span>.<span class="ident">etag</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
         };
-        <span class="kw">let</span> <span class="ident">last_modified</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">contains</span>(<span class="ident">Flags</span>::<span class="ident">LAST_MODIFIED</span>) {
+        <span class="kw">let</span> <span class="ident">last_modified</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">contains</span>(<span class="ident">Flags::LAST_MODIFIED</span>) {
             <span class="self">self</span>.<span class="ident">last_modified</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -805,7 +805,7 @@
         <span class="comment">// check last modified</span>
         <span class="kw">let</span> <span class="ident">not_modified</span> <span class="op">=</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">none_match</span>(<span class="ident">etag</span>.<span class="ident">as_ref</span>(), <span class="ident">req</span>) {
             <span class="bool-val">true</span>
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">req</span>.<span class="ident">headers</span>().<span class="ident">contains_key</span>(<span class="ident">header</span>::<span class="ident">IF_NONE_MATCH</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">req</span>.<span class="ident">headers</span>().<span class="ident">contains_key</span>(<span class="ident">header::IF_NONE_MATCH</span>) {
             <span class="bool-val">false</span>
         } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> (<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">last_modified</span>), <span class="prelude-val">Some</span>(<span class="ident">since</span>)) <span class="op">=</span>
             (<span class="ident">last_modified</span>, <span class="ident">req</span>.<span class="ident">headers</span>().<span class="ident">typed_get</span>::<span class="op">&lt;</span><span class="ident">IfModifiedSince</span><span class="op">&gt;</span>())
@@ -818,14 +818,14 @@
         <span class="ident">res</span>.<span class="ident">headers_mut</span>()
             .<span class="ident">insert</span>(<span class="ident">CONTENT_DISPOSITION</span>, <span class="self">self</span>.<span class="ident">content_disposition</span>.<span class="ident">clone</span>());
         <span class="ident">res</span>.<span class="ident">headers_mut</span>()
-            .<span class="ident">typed_insert</span>(<span class="ident">ContentType</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">clone</span>()));
+            .<span class="ident">typed_insert</span>(<span class="ident">ContentType::from</span>(<span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">clone</span>()));
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">lm</span>) <span class="op">=</span> <span class="ident">last_modified</span> {
-            <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">LastModified</span>::<span class="ident">from</span>(<span class="ident">lm</span>));
+            <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">LastModified::from</span>(<span class="ident">lm</span>));
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">etag</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">etag</span>() {
             <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">etag</span>);
         }
-        <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">AcceptRanges</span>::<span class="ident">bytes</span>());
+        <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">AcceptRanges::bytes</span>());
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">length</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">len</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">content_encoding</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">content_encoding</span> {
@@ -835,43 +835,43 @@
 
         <span class="comment">// check for range header</span>
         <span class="comment">// let mut range = None;</span>
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ranges</span>) <span class="op">=</span> <span class="ident">req</span>.<span class="ident">headers</span>().<span class="ident">get</span>(<span class="ident">header</span>::<span class="ident">RANGE</span>) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ranges</span>) <span class="op">=</span> <span class="ident">req</span>.<span class="ident">headers</span>().<span class="ident">get</span>(<span class="ident">header::RANGE</span>) {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">rangesheader</span>) <span class="op">=</span> <span class="ident">ranges</span>.<span class="ident">to_str</span>() {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">rangesvec</span>) <span class="op">=</span> <span class="ident">HttpRange</span>::<span class="ident">parse</span>(<span class="ident">rangesheader</span>, <span class="ident">length</span>) {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">rangesvec</span>) <span class="op">=</span> <span class="ident">HttpRange::parse</span>(<span class="ident">rangesheader</span>, <span class="ident">length</span>) {
                     <span class="ident">length</span> <span class="op">=</span> <span class="ident">rangesvec</span>[<span class="number">0</span>].<span class="ident">length</span>;
                     <span class="ident">offset</span> <span class="op">=</span> <span class="ident">rangesvec</span>[<span class="number">0</span>].<span class="ident">start</span>;
                 } <span class="kw">else</span> {
-                    <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">ContentRange</span>::<span class="ident">unsatisfied_bytes</span>(<span class="ident">length</span>));
-                    <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">RANGE_NOT_SATISFIABLE</span>);
+                    <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">ContentRange::unsatisfied_bytes</span>(<span class="ident">length</span>));
+                    <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode::RANGE_NOT_SATISFIABLE</span>);
                     <span class="kw">return</span>;
                 };
             } <span class="kw">else</span> {
-                <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">BAD_REQUEST</span>);
+                <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode::BAD_REQUEST</span>);
                 <span class="kw">return</span>;
             };
         }
 
         <span class="kw">if</span> <span class="ident">precondition_failed</span> {
-            <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">PRECONDITION_FAILED</span>);
+            <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode::PRECONDITION_FAILED</span>);
             <span class="kw">return</span>;
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">not_modified</span> {
-            <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">NOT_MODIFIED</span>);
+            <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode::NOT_MODIFIED</span>);
             <span class="kw">return</span>;
         }
 
         <span class="kw">if</span> <span class="ident">offset</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">length</span> <span class="op">!</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">len</span>() {
-            <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">PARTIAL_CONTENT</span>);
-            <span class="kw">match</span> <span class="ident">ContentRange</span>::<span class="ident">bytes</span>(<span class="ident">offset</span>..<span class="ident">offset</span> <span class="op">+</span> <span class="ident">length</span> <span class="op">-</span> <span class="number">1</span>, <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">len</span>()) {
+            <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode::PARTIAL_CONTENT</span>);
+            <span class="kw">match</span> <span class="ident">ContentRange::bytes</span>(<span class="ident">offset</span>..<span class="ident">offset</span> <span class="op">+</span> <span class="ident">length</span> <span class="op">-</span> <span class="number">1</span>, <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">len</span>()) {
                 <span class="prelude-val">Ok</span>(<span class="ident">content_range</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">content_range</span>);
                 }
                 <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="ident">error</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">e</span>, <span class="string">&quot;set file&#39;s content ranage failed&quot;</span>);
+                    <span class="macro">tracing::error!</span>(<span class="ident">error</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">e</span>, <span class="string">&quot;set file&#39;s content ranage failed&quot;</span>);
                 }
             }
             <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">FileChunk</span> {
                 <span class="ident">offset</span>,
-                <span class="ident">chunk_size</span>: <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">length</span>, <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">len</span>()),
+                <span class="ident">chunk_size</span>: <span class="ident">cmp::min</span>(<span class="ident">length</span>, <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">len</span>()),
                 <span class="ident">read_size</span>: <span class="number">0</span>,
                 <span class="ident">file</span>: <span class="self">self</span>.<span class="ident">file</span>,
                 <span class="ident">buffer_size</span>: <span class="self">self</span>.<span class="ident">buffer_size</span>,
@@ -879,7 +879,7 @@
             <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">typed_insert</span>(<span class="ident">ContentLength</span>(<span class="ident">reader</span>.<span class="ident">chunk_size</span>));
             <span class="ident">res</span>.<span class="ident">streaming</span>(<span class="ident">reader</span>)
         } <span class="kw">else</span> {
-            <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode</span>::<span class="ident">OK</span>);
+            <span class="ident">res</span>.<span class="ident">set_status_code</span>(<span class="ident">StatusCode::OK</span>);
             <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">FileChunk</span> {
                 <span class="ident">offset</span>,
                 <span class="ident">file</span>: <span class="self">self</span>.<span class="ident">file</span>,
@@ -912,7 +912,7 @@
     <span class="kw">match</span> <span class="ident">req</span>.<span class="ident">headers</span>().<span class="ident">typed_get</span>::<span class="op">&lt;</span><span class="ident">IfMatch</span><span class="op">&gt;</span>() {
         <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
         <span class="prelude-val">Some</span>(<span class="ident">if_match</span>) <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">if</span> <span class="ident">if_match</span> <span class="op">=</span><span class="op">=</span> <span class="ident">IfMatch</span>::<span class="ident">any</span>() {
+            <span class="kw">if</span> <span class="ident">if_match</span> <span class="op">=</span><span class="op">=</span> <span class="ident">IfMatch::any</span>() {
                 <span class="bool-val">true</span>
             } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">etag</span>) <span class="op">=</span> <span class="ident">etag</span> {
                 <span class="ident">if_match</span>.<span class="ident">precondition_passes</span>(<span class="ident">etag</span>)
@@ -928,7 +928,7 @@
     <span class="kw">match</span> <span class="ident">req</span>.<span class="ident">headers</span>().<span class="ident">typed_get</span>::<span class="op">&lt;</span><span class="ident">IfMatch</span><span class="op">&gt;</span>() {
         <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
         <span class="prelude-val">Some</span>(<span class="ident">if_match</span>) <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">if</span> <span class="ident">if_match</span> <span class="op">=</span><span class="op">=</span> <span class="ident">IfMatch</span>::<span class="ident">any</span>() {
+            <span class="kw">if</span> <span class="ident">if_match</span> <span class="op">=</span><span class="op">=</span> <span class="ident">IfMatch::any</span>() {
                 <span class="bool-val">false</span>
             } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">etag</span>) <span class="op">=</span> <span class="ident">etag</span> {
                 <span class="op">!</span><span class="ident">if_match</span>.<span class="ident">precondition_passes</span>(<span class="ident">etag</span>)

@@ -100,14 +100,14 @@
 <span id="97">97</span>
 <span id="98">98</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">Utf8Error</span>;
+<span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
+<span class="kw">use</span> <span class="ident">std::io</span>;
+<span class="kw">use</span> <span class="ident">std::str::Utf8Error</span>;
 
-<span class="kw">use</span> <span class="ident">async_trait</span>::<span class="ident">async_trait</span>;
-<span class="kw">use</span> <span class="ident">thiserror</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">async_trait::async_trait</span>;
+<span class="kw">use</span> <span class="ident">thiserror::Error</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::errors</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Depot</span>, <span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">Writer</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Error</span>, <span class="ident">Debug</span>)]</span>
@@ -161,13 +161,13 @@
     <span class="ident">EofInPart</span>,
 
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;An HTTP parsing error from a multipart section: {0}&quot;</span>)]</span>
-    <span class="ident">HttParse</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">httparse</span>::<span class="ident">Error</span>),
+    <span class="ident">HttParse</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">httparse::Error</span>),
 
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;An I/O error: {}&quot;</span>, <span class="ident">_0</span>)]</span>
-    <span class="ident">Io</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">io</span>::<span class="ident">Error</span>),
+    <span class="ident">Io</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">io::Error</span>),
 
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;An error was returned from Hyper: {0}&quot;</span>)]</span>
-    <span class="ident">Hyper</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">hyper</span>::<span class="ident">Error</span>),
+    <span class="ident">Hyper</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">hyper::Error</span>),
 
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;An error occurred during UTF-8 processing: {0}&quot;</span>)]</span>
     <span class="ident">Utf8</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">Utf8Error</span>),
@@ -176,7 +176,7 @@
     <span class="ident">Decoding</span>(<span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>),
 
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;serde json error: {0}&quot;</span>)]</span>
-    <span class="ident">SerdeJson</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">serde_json</span>::<span class="ident">error</span>::<span class="ident">Error</span>),
+    <span class="ident">SerdeJson</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">serde_json::error::Error</span>),
 
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;general error: {0}&quot;</span>)]</span>
     <span class="ident">General</span>(<span class="ident">String</span>),

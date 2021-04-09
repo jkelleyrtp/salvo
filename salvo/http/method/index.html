@@ -8,11 +8,11 @@ crate as <code>http::Method</code> and is intended for import through that locat
 primarily.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">http</span>::<span class="ident">Method</span>;
+<span class="kw">use</span> <span class="ident">http::Method</span>;
 
-<span class="macro">assert_eq!</span>(<span class="ident">Method</span>::<span class="ident">GET</span>, <span class="ident">Method</span>::<span class="ident">from_bytes</span>(<span class="string">b&quot;GET&quot;</span>).<span class="ident">unwrap</span>());
-<span class="macro">assert!</span>(<span class="ident">Method</span>::<span class="ident">GET</span>.<span class="ident">is_idempotent</span>());
-<span class="macro">assert_eq!</span>(<span class="ident">Method</span>::<span class="ident">POST</span>.<span class="ident">as_str</span>(), <span class="string">&quot;POST&quot;</span>);</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">Method::GET</span>, <span class="ident">Method::from_bytes</span>(<span class="string">b&quot;GET&quot;</span>).<span class="ident">unwrap</span>());
+<span class="macro">assert!</span>(<span class="ident">Method::GET</span>.<span class="ident">is_idempotent</span>());
+<span class="macro">assert_eq!</span>(<span class="ident">Method::POST</span>.<span class="ident">as_str</span>(), <span class="string">&quot;POST&quot;</span>);</pre></div>
 </div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
 <table><tr class="module-item"><td><a class="struct" href="struct.InvalidMethod.html" title="salvo::http::method::InvalidMethod struct">InvalidMethod</a></td><td class="docblock-short"><p>A possible error value when converting <code>Method</code> from bytes.</p>
 </td></tr><tr class="module-item"><td><a class="struct" href="struct.Method.html" title="salvo::http::method::Method struct">Method</a></td><td class="docblock-short"><p>The Request Method (VERB)</p>

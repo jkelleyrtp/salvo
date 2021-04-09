@@ -394,23 +394,23 @@
 <span class="comment">//</span>
 <span class="comment">// port from https://github.com/seanmonstar/warp/blob/master/src/tls.rs</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">future</span>::<span class="ident">Future</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">BufReader</span>, <span class="ident">Cursor</span>, <span class="ident">Read</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">pin</span>::<span class="ident">Pin</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">task</span>::{<span class="ident">Context</span>, <span class="ident">Poll</span>};
+<span class="kw">use</span> <span class="ident">std::fs::File</span>;
+<span class="kw">use</span> <span class="ident">std::future::Future</span>;
+<span class="kw">use</span> <span class="ident">std::io</span>::{<span class="self">self</span>, <span class="ident">BufReader</span>, <span class="ident">Cursor</span>, <span class="ident">Read</span>};
+<span class="kw">use</span> <span class="ident">std::net::SocketAddr</span>;
+<span class="kw">use</span> <span class="ident">std::path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
+<span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+<span class="kw">use</span> <span class="ident">std::sync::Arc</span>;
+<span class="kw">use</span> <span class="ident">std::task</span>::{<span class="ident">Context</span>, <span class="ident">Poll</span>};
 
-<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">ready</span>;
-<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">accept</span>::<span class="ident">Accept</span>;
-<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">conn</span>::{<span class="ident">AddrIncoming</span>, <span class="ident">AddrStream</span>};
-<span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">io</span>::{<span class="ident">AsyncRead</span>, <span class="ident">AsyncWrite</span>, <span class="ident">ReadBuf</span>};
+<span class="kw">use</span> <span class="ident">futures::ready</span>;
+<span class="kw">use</span> <span class="ident">hyper::server::accept::Accept</span>;
+<span class="kw">use</span> <span class="ident">hyper::server::conn</span>::{<span class="ident">AddrIncoming</span>, <span class="ident">AddrStream</span>};
+<span class="kw">use</span> <span class="ident">tokio::io</span>::{<span class="ident">AsyncRead</span>, <span class="ident">AsyncWrite</span>, <span class="ident">ReadBuf</span>};
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">transport</span>::<span class="ident">Transport</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::transport::Transport</span>;
 
-<span class="kw">use</span> <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::{
+<span class="kw">use</span> <span class="ident">tokio_rustls::rustls</span>::{
     <span class="ident">AllowAnyAnonymousOrAuthenticatedClient</span>, <span class="ident">AllowAnyAuthenticatedClient</span>, <span class="ident">NoClientAuth</span>, <span class="ident">RootCertStore</span>, <span class="ident">ServerConfig</span>,
     <span class="ident">TLSError</span>,
 };
@@ -418,7 +418,7 @@
 <span class="doccomment">/// Represents errors that can occur building the TlsConfig</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum</span> <span class="ident">TlsConfigError</span> {
-    <span class="ident">Io</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
+    <span class="ident">Io</span>(<span class="ident">io::Error</span>),
     <span class="doccomment">/// An Error parsing the Certificate</span>
     <span class="ident">CertParseError</span>,
     <span class="doccomment">/// An Error parsing a Pkcs8 key</span>
@@ -431,20 +431,20 @@
     <span class="ident">InvalidKey</span>(<span class="ident">TLSError</span>),
 }
 
-<span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">TlsConfigError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">TlsConfigError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">TlsConfigError</span>::<span class="ident">Io</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">err</span>.<span class="ident">fmt</span>(<span class="ident">f</span>),
-            <span class="ident">TlsConfigError</span>::<span class="ident">CertParseError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;certificate parse error&quot;</span>),
-            <span class="ident">TlsConfigError</span>::<span class="ident">Pkcs8ParseError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;pkcs8 parse error&quot;</span>),
-            <span class="ident">TlsConfigError</span>::<span class="ident">RsaParseError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;rsa parse error&quot;</span>),
-            <span class="ident">TlsConfigError</span>::<span class="ident">EmptyKey</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;key contains no private key&quot;</span>),
-            <span class="ident">TlsConfigError</span>::<span class="ident">InvalidKey</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;key contains an invalid key, {}&quot;</span>, <span class="ident">err</span>),
+            <span class="ident">TlsConfigError::Io</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">err</span>.<span class="ident">fmt</span>(<span class="ident">f</span>),
+            <span class="ident">TlsConfigError::CertParseError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;certificate parse error&quot;</span>),
+            <span class="ident">TlsConfigError::Pkcs8ParseError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;pkcs8 parse error&quot;</span>),
+            <span class="ident">TlsConfigError::RsaParseError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;rsa parse error&quot;</span>),
+            <span class="ident">TlsConfigError::EmptyKey</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;key contains no private key&quot;</span>),
+            <span class="ident">TlsConfigError::InvalidKey</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;key contains an invalid key, {}&quot;</span>, <span class="ident">err</span>),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">TlsConfigError</span> {}
+<span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">TlsConfigError</span> {}
 
 <span class="doccomment">/// Tls client authentication configuration.</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum</span> <span class="ident">TlsClientAuth</span> {
@@ -464,8 +464,8 @@
     <span class="ident">ocsp_resp</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">TlsConfigBuilder</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">TlsConfigBuilder</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::std::fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;TlsConfigBuilder&quot;</span>).<span class="ident">finish</span>()
     }
 }
@@ -474,16 +474,16 @@
     <span class="doccomment">/// Create a new TlsConfigBuilder</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TlsConfigBuilder</span> {
         <span class="ident">TlsConfigBuilder</span> {
-            <span class="ident">key</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">empty</span>()),
-            <span class="ident">cert</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">empty</span>()),
-            <span class="ident">client_auth</span>: <span class="ident">TlsClientAuth</span>::<span class="ident">Off</span>,
-            <span class="ident">ocsp_resp</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">key</span>: <span class="ident">Box::new</span>(<span class="ident">io::empty</span>()),
+            <span class="ident">cert</span>: <span class="ident">Box::new</span>(<span class="ident">io::empty</span>()),
+            <span class="ident">client_auth</span>: <span class="ident">TlsClientAuth::Off</span>,
+            <span class="ident">ocsp_resp</span>: <span class="ident">Vec::new</span>(),
         }
     }
 
     <span class="doccomment">/// sets the Tls key via File Path, returns `TlsConfigError::IoError` if the file cannot be open</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">key_path</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">LazyFile</span> {
+        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">LazyFile</span> {
             <span class="ident">path</span>: <span class="ident">path</span>.<span class="ident">as_ref</span>().<span class="ident">into</span>(),
             <span class="ident">file</span>: <span class="prelude-val">None</span>,
         });
@@ -492,13 +492,13 @@
 
     <span class="doccomment">/// sets the Tls key via bytes slice</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">key</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">Vec</span>::<span class="ident">from</span>(<span class="ident">key</span>)));
+        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">Cursor::new</span>(<span class="ident">Vec::from</span>(<span class="ident">key</span>)));
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Specify the file path for the TLS certificate to use.</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">cert_path</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">cert</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">LazyFile</span> {
+        <span class="self">self</span>.<span class="ident">cert</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">LazyFile</span> {
             <span class="ident">path</span>: <span class="ident">path</span>.<span class="ident">as_ref</span>().<span class="ident">into</span>(),
             <span class="ident">file</span>: <span class="prelude-val">None</span>,
         });
@@ -507,7 +507,7 @@
 
     <span class="doccomment">/// sets the Tls certificate via bytes slice</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">cert</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cert</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">cert</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">Vec</span>::<span class="ident">from</span>(<span class="ident">cert</span>)));
+        <span class="self">self</span>.<span class="ident">cert</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">Cursor::new</span>(<span class="ident">Vec::from</span>(<span class="ident">cert</span>)));
         <span class="self">self</span>
     }
 
@@ -516,11 +516,11 @@
     <span class="doccomment">/// Anonymous and authenticated clients will be accepted. If no trust anchor is provided by any</span>
     <span class="doccomment">/// of the `client_auth_` methods, then client authentication is disabled by default.</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">client_auth_optional_path</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">LazyFile</span> {
+        <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">LazyFile</span> {
             <span class="ident">path</span>: <span class="ident">path</span>.<span class="ident">as_ref</span>().<span class="ident">into</span>(),
             <span class="ident">file</span>: <span class="prelude-val">None</span>,
         });
-        <span class="self">self</span>.<span class="ident">client_auth</span> <span class="op">=</span> <span class="ident">TlsClientAuth</span>::<span class="ident">Optional</span>(<span class="ident">file</span>);
+        <span class="self">self</span>.<span class="ident">client_auth</span> <span class="op">=</span> <span class="ident">TlsClientAuth::Optional</span>(<span class="ident">file</span>);
         <span class="self">self</span>
     }
 
@@ -529,8 +529,8 @@
     <span class="doccomment">/// Anonymous and authenticated clients will be accepted. If no trust anchor is provided by any</span>
     <span class="doccomment">/// of the `client_auth_` methods, then client authentication is disabled by default.</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">client_auth_optional</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">trust_anchor</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">Vec</span>::<span class="ident">from</span>(<span class="ident">trust_anchor</span>)));
-        <span class="self">self</span>.<span class="ident">client_auth</span> <span class="op">=</span> <span class="ident">TlsClientAuth</span>::<span class="ident">Optional</span>(<span class="ident">cursor</span>);
+        <span class="kw">let</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">Cursor::new</span>(<span class="ident">Vec::from</span>(<span class="ident">trust_anchor</span>)));
+        <span class="self">self</span>.<span class="ident">client_auth</span> <span class="op">=</span> <span class="ident">TlsClientAuth::Optional</span>(<span class="ident">cursor</span>);
         <span class="self">self</span>
     }
 
@@ -539,11 +539,11 @@
     <span class="doccomment">/// Only authenticated clients will be accepted. If no trust anchor is provided by any of the</span>
     <span class="doccomment">/// `client_auth_` methods, then client authentication is disabled by default.</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">client_auth_required_path</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">LazyFile</span> {
+        <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">LazyFile</span> {
             <span class="ident">path</span>: <span class="ident">path</span>.<span class="ident">as_ref</span>().<span class="ident">into</span>(),
             <span class="ident">file</span>: <span class="prelude-val">None</span>,
         });
-        <span class="self">self</span>.<span class="ident">client_auth</span> <span class="op">=</span> <span class="ident">TlsClientAuth</span>::<span class="ident">Required</span>(<span class="ident">file</span>);
+        <span class="self">self</span>.<span class="ident">client_auth</span> <span class="op">=</span> <span class="ident">TlsClientAuth::Required</span>(<span class="ident">file</span>);
         <span class="self">self</span>
     }
 
@@ -552,70 +552,70 @@
     <span class="doccomment">/// Only authenticated clients will be accepted. If no trust anchor is provided by any of the</span>
     <span class="doccomment">/// `client_auth_` methods, then client authentication is disabled by default.</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">client_auth_required</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">trust_anchor</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">Vec</span>::<span class="ident">from</span>(<span class="ident">trust_anchor</span>)));
-        <span class="self">self</span>.<span class="ident">client_auth</span> <span class="op">=</span> <span class="ident">TlsClientAuth</span>::<span class="ident">Required</span>(<span class="ident">cursor</span>);
+        <span class="kw">let</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">Cursor::new</span>(<span class="ident">Vec::from</span>(<span class="ident">trust_anchor</span>)));
+        <span class="self">self</span>.<span class="ident">client_auth</span> <span class="op">=</span> <span class="ident">TlsClientAuth::Required</span>(<span class="ident">cursor</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// sets the DER-encoded OCSP response</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">ocsp_resp</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ocsp_resp</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">ocsp_resp</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">from</span>(<span class="ident">ocsp_resp</span>);
+        <span class="self">self</span>.<span class="ident">ocsp_resp</span> <span class="op">=</span> <span class="ident">Vec::from</span>(<span class="ident">ocsp_resp</span>);
         <span class="self">self</span>
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ServerConfig</span>, <span class="ident">TlsConfigError</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cert_rdr</span> <span class="op">=</span> <span class="ident">BufReader</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">cert</span>);
-        <span class="kw">let</span> <span class="ident">cert</span> <span class="op">=</span> <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::<span class="ident">internal</span>::<span class="ident">pemfile</span>::<span class="ident">certs</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cert_rdr</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError</span>::<span class="ident">CertParseError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cert_rdr</span> <span class="op">=</span> <span class="ident">BufReader::new</span>(<span class="self">self</span>.<span class="ident">cert</span>);
+        <span class="kw">let</span> <span class="ident">cert</span> <span class="op">=</span> <span class="ident">tokio_rustls::rustls::internal::pemfile::certs</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cert_rdr</span>)
+            .<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError::CertParseError</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> {
             <span class="comment">// convert it to Vec&lt;u8&gt; to allow reading it again if key is RSA</span>
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">key_vec</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-            <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>).<span class="ident">map_err</span>(<span class="ident">TlsConfigError</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">key_vec</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+            <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>).<span class="ident">map_err</span>(<span class="ident">TlsConfigError::Io</span>)<span class="question-mark">?</span>;
 
             <span class="kw">if</span> <span class="ident">key_vec</span>.<span class="ident">is_empty</span>() {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TlsConfigError</span>::<span class="ident">EmptyKey</span>);
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TlsConfigError::EmptyKey</span>);
             }
 
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pkcs8</span> <span class="op">=</span> <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::<span class="ident">internal</span>::<span class="ident">pemfile</span>::<span class="ident">pkcs8_private_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>.<span class="ident">as_slice</span>())
-                .<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError</span>::<span class="ident">Pkcs8ParseError</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pkcs8</span> <span class="op">=</span> <span class="ident">tokio_rustls::rustls::internal::pemfile::pkcs8_private_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>.<span class="ident">as_slice</span>())
+                .<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError::Pkcs8ParseError</span>)<span class="question-mark">?</span>;
 
             <span class="kw">if</span> <span class="op">!</span><span class="ident">pkcs8</span>.<span class="ident">is_empty</span>() {
                 <span class="ident">pkcs8</span>.<span class="ident">remove</span>(<span class="number">0</span>)
             } <span class="kw">else</span> {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">tokio_rustls</span>::<span class="ident">rustls</span>::<span class="ident">internal</span>::<span class="ident">pemfile</span>::<span class="ident">rsa_private_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>.<span class="ident">as_slice</span>())
-                    .<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError</span>::<span class="ident">RsaParseError</span>)<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">tokio_rustls::rustls::internal::pemfile::rsa_private_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key_vec</span>.<span class="ident">as_slice</span>())
+                    .<span class="ident">map_err</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">TlsConfigError::RsaParseError</span>)<span class="question-mark">?</span>;
 
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">rsa</span>.<span class="ident">is_empty</span>() {
                     <span class="ident">rsa</span>.<span class="ident">remove</span>(<span class="number">0</span>)
                 } <span class="kw">else</span> {
-                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TlsConfigError</span>::<span class="ident">EmptyKey</span>);
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TlsConfigError::EmptyKey</span>);
                 }
             }
         };
 
         <span class="kw">fn</span> <span class="ident">read_trust_anchor</span>(<span class="ident">trust_anchor</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Read</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RootCertStore</span>, <span class="ident">TlsConfigError</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">BufReader</span>::<span class="ident">new</span>(<span class="ident">trust_anchor</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">store</span> <span class="op">=</span> <span class="ident">RootCertStore</span>::<span class="ident">empty</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">BufReader::new</span>(<span class="ident">trust_anchor</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">store</span> <span class="op">=</span> <span class="ident">RootCertStore::empty</span>();
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>((<span class="number">0</span>, <span class="kw">_</span>)) <span class="op">|</span> <span class="prelude-val">Err</span>(()) <span class="op">=</span> <span class="ident">store</span>.<span class="ident">add_pem_file</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader</span>) {
-                <span class="prelude-val">Err</span>(<span class="ident">TlsConfigError</span>::<span class="ident">CertParseError</span>)
+                <span class="prelude-val">Err</span>(<span class="ident">TlsConfigError::CertParseError</span>)
             } <span class="kw">else</span> {
                 <span class="prelude-val">Ok</span>(<span class="ident">store</span>)
             }
         }
 
         <span class="kw">let</span> <span class="ident">client_auth</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">client_auth</span> {
-            <span class="ident">TlsClientAuth</span>::<span class="ident">Off</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NoClientAuth</span>::<span class="ident">new</span>(),
-            <span class="ident">TlsClientAuth</span>::<span class="ident">Optional</span>(<span class="ident">trust_anchor</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">AllowAnyAnonymousOrAuthenticatedClient</span>::<span class="ident">new</span>(<span class="ident">read_trust_anchor</span>(<span class="ident">trust_anchor</span>)<span class="question-mark">?</span>)
+            <span class="ident">TlsClientAuth::Off</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NoClientAuth::new</span>(),
+            <span class="ident">TlsClientAuth::Optional</span>(<span class="ident">trust_anchor</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">AllowAnyAnonymousOrAuthenticatedClient::new</span>(<span class="ident">read_trust_anchor</span>(<span class="ident">trust_anchor</span>)<span class="question-mark">?</span>)
             }
-            <span class="ident">TlsClientAuth</span>::<span class="ident">Required</span>(<span class="ident">trust_anchor</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">AllowAnyAuthenticatedClient</span>::<span class="ident">new</span>(<span class="ident">read_trust_anchor</span>(<span class="ident">trust_anchor</span>)<span class="question-mark">?</span>),
+            <span class="ident">TlsClientAuth::Required</span>(<span class="ident">trust_anchor</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">AllowAnyAuthenticatedClient::new</span>(<span class="ident">read_trust_anchor</span>(<span class="ident">trust_anchor</span>)<span class="question-mark">?</span>),
         };
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">ServerConfig</span>::<span class="ident">new</span>(<span class="ident">client_auth</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">ServerConfig::new</span>(<span class="ident">client_auth</span>);
         <span class="ident">config</span>
-            .<span class="ident">set_single_cert_with_ocsp_and_sct</span>(<span class="ident">cert</span>, <span class="ident">key</span>, <span class="self">self</span>.<span class="ident">ocsp_resp</span>, <span class="ident">Vec</span>::<span class="ident">new</span>())
-            .<span class="ident">map_err</span>(<span class="ident">TlsConfigError</span>::<span class="ident">InvalidKey</span>)<span class="question-mark">?</span>;
+            .<span class="ident">set_single_cert_with_ocsp_and_sct</span>(<span class="ident">cert</span>, <span class="ident">key</span>, <span class="self">self</span>.<span class="ident">ocsp_resp</span>, <span class="ident">Vec::new</span>())
+            .<span class="ident">map_err</span>(<span class="ident">TlsConfigError::InvalidKey</span>)<span class="question-mark">?</span>;
         <span class="ident">config</span>.<span class="ident">set_protocols</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;h2&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;http/1.1&quot;</span>.<span class="ident">into</span>()]);
         <span class="prelude-val">Ok</span>(<span class="ident">config</span>)
     }
@@ -627,9 +627,9 @@
 }
 
 <span class="kw">impl</span> <span class="ident">LazyFile</span> {
-    <span class="kw">fn</span> <span class="ident">lazy_read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">lazy_read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">file</span>.<span class="ident">is_none</span>() {
-            <span class="self">self</span>.<span class="ident">file</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">File</span>::<span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">path</span>)<span class="question-mark">?</span>);
+            <span class="self">self</span>.<span class="ident">file</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">File::open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">path</span>)<span class="question-mark">?</span>);
         }
 
         <span class="self">self</span>.<span class="ident">file</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>().<span class="ident">read</span>(<span class="ident">buf</span>)
@@ -637,18 +637,18 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">LazyFile</span> {
-    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">lazy_read</span>(<span class="ident">buf</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">kind</span> <span class="op">=</span> <span class="ident">err</span>.<span class="ident">kind</span>();
-            <span class="ident">tracing</span>::<span class="macro">error!</span>(<span class="ident">path</span> <span class="op">=</span> <span class="question-mark">?</span><span class="self">self</span>.<span class="ident">path</span>, <span class="ident">error</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">err</span>, <span class="string">&quot;error reading file&quot;</span>);
-            <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">kind</span>, <span class="macro">format!</span>(<span class="string">&quot;error reading file ({:?}): {}&quot;</span>, <span class="self">self</span>.<span class="ident">path</span>.<span class="ident">display</span>(), <span class="ident">err</span>))
+            <span class="macro">tracing::error!</span>(<span class="ident">path</span> <span class="op">=</span> <span class="question-mark">?</span><span class="self">self</span>.<span class="ident">path</span>, <span class="ident">error</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">err</span>, <span class="string">&quot;error reading file&quot;</span>);
+            <span class="ident">io::Error::new</span>(<span class="ident">kind</span>, <span class="macro">format!</span>(<span class="string">&quot;error reading file ({:?}): {}&quot;</span>, <span class="self">self</span>.<span class="ident">path</span>.<span class="ident">display</span>(), <span class="ident">err</span>))
         })
     }
 }
 
 <span class="kw">enum</span> <span class="ident">State</span> {
-    <span class="ident">Handshaking</span>(<span class="ident">tokio_rustls</span>::<span class="ident">Accept</span><span class="op">&lt;</span><span class="ident">AddrStream</span><span class="op">&gt;</span>),
-    <span class="ident">Streaming</span>(<span class="ident">tokio_rustls</span>::<span class="ident">server</span>::<span class="ident">TlsStream</span><span class="op">&lt;</span><span class="ident">AddrStream</span><span class="op">&gt;</span>),
+    <span class="ident">Handshaking</span>(<span class="ident">tokio_rustls::Accept</span><span class="op">&lt;</span><span class="ident">AddrStream</span><span class="op">&gt;</span>),
+    <span class="ident">Streaming</span>(<span class="ident">tokio_rustls::server::TlsStream</span><span class="op">&lt;</span><span class="ident">AddrStream</span><span class="op">&gt;</span>),
 }
 
 <span class="comment">// tokio_rustls::server::TlsStream doesn&#39;t expose constructor methods,</span>
@@ -667,58 +667,58 @@
 <span class="kw">impl</span> <span class="ident">TlsStream</span> {
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">stream</span>: <span class="ident">AddrStream</span>, <span class="ident">config</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">ServerConfig</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TlsStream</span> {
         <span class="kw">let</span> <span class="ident">remote_addr</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">remote_addr</span>();
-        <span class="kw">let</span> <span class="ident">accept</span> <span class="op">=</span> <span class="ident">tokio_rustls</span>::<span class="ident">TlsAcceptor</span>::<span class="ident">from</span>(<span class="ident">config</span>).<span class="ident">accept</span>(<span class="ident">stream</span>);
+        <span class="kw">let</span> <span class="ident">accept</span> <span class="op">=</span> <span class="ident">tokio_rustls::TlsAcceptor::from</span>(<span class="ident">config</span>).<span class="ident">accept</span>(<span class="ident">stream</span>);
         <span class="ident">TlsStream</span> {
-            <span class="ident">state</span>: <span class="ident">State</span>::<span class="ident">Handshaking</span>(<span class="ident">accept</span>),
+            <span class="ident">state</span>: <span class="ident">State::Handshaking</span>(<span class="ident">accept</span>),
             <span class="ident">remote_addr</span>,
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">AsyncRead</span> <span class="kw">for</span> <span class="ident">TlsStream</span> {
-    <span class="kw">fn</span> <span class="ident">poll_read</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReadBuf</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_read</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReadBuf</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pin</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_mut</span>();
         <span class="kw">match</span> <span class="ident">pin</span>.<span class="ident">state</span> {
-            <span class="ident">State</span>::<span class="ident">Handshaking</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">accept</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="macro">ready!</span>(<span class="ident">Pin</span>::<span class="ident">new</span>(<span class="ident">accept</span>).<span class="ident">poll</span>(<span class="ident">cx</span>)) {
+            <span class="ident">State::Handshaking</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">accept</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="macro">ready!</span>(<span class="ident">Pin::new</span>(<span class="ident">accept</span>).<span class="ident">poll</span>(<span class="ident">cx</span>)) {
                 <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">Pin</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">stream</span>).<span class="ident">poll_read</span>(<span class="ident">cx</span>, <span class="ident">buf</span>);
-                    <span class="ident">pin</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Streaming</span>(<span class="ident">stream</span>);
+                    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">Pin::new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">stream</span>).<span class="ident">poll_read</span>(<span class="ident">cx</span>, <span class="ident">buf</span>);
+                    <span class="ident">pin</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">State::Streaming</span>(<span class="ident">stream</span>);
                     <span class="ident">result</span>
                 }
-                <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
+                <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
             },
-            <span class="ident">State</span>::<span class="ident">Streaming</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Pin</span>::<span class="ident">new</span>(<span class="ident">stream</span>).<span class="ident">poll_read</span>(<span class="ident">cx</span>, <span class="ident">buf</span>),
+            <span class="ident">State::Streaming</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Pin::new</span>(<span class="ident">stream</span>).<span class="ident">poll_read</span>(<span class="ident">cx</span>, <span class="ident">buf</span>),
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">AsyncWrite</span> <span class="kw">for</span> <span class="ident">TlsStream</span> {
-    <span class="kw">fn</span> <span class="ident">poll_write</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_write</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pin</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_mut</span>();
         <span class="kw">match</span> <span class="ident">pin</span>.<span class="ident">state</span> {
-            <span class="ident">State</span>::<span class="ident">Handshaking</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">accept</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="macro">ready!</span>(<span class="ident">Pin</span>::<span class="ident">new</span>(<span class="ident">accept</span>).<span class="ident">poll</span>(<span class="ident">cx</span>)) {
+            <span class="ident">State::Handshaking</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">accept</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="macro">ready!</span>(<span class="ident">Pin::new</span>(<span class="ident">accept</span>).<span class="ident">poll</span>(<span class="ident">cx</span>)) {
                 <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">Pin</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">stream</span>).<span class="ident">poll_write</span>(<span class="ident">cx</span>, <span class="ident">buf</span>);
-                    <span class="ident">pin</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Streaming</span>(<span class="ident">stream</span>);
+                    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">Pin::new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">stream</span>).<span class="ident">poll_write</span>(<span class="ident">cx</span>, <span class="ident">buf</span>);
+                    <span class="ident">pin</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">State::Streaming</span>(<span class="ident">stream</span>);
                     <span class="ident">result</span>
                 }
-                <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
+                <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>)),
             },
-            <span class="ident">State</span>::<span class="ident">Streaming</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Pin</span>::<span class="ident">new</span>(<span class="ident">stream</span>).<span class="ident">poll_write</span>(<span class="ident">cx</span>, <span class="ident">buf</span>),
+            <span class="ident">State::Streaming</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Pin::new</span>(<span class="ident">stream</span>).<span class="ident">poll_write</span>(<span class="ident">cx</span>, <span class="ident">buf</span>),
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">poll_flush</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_flush</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
-            <span class="ident">State</span>::<span class="ident">Handshaking</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Ok</span>(())),
-            <span class="ident">State</span>::<span class="ident">Streaming</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Pin</span>::<span class="ident">new</span>(<span class="ident">stream</span>).<span class="ident">poll_flush</span>(<span class="ident">cx</span>),
+            <span class="ident">State::Handshaking</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Ok</span>(())),
+            <span class="ident">State::Streaming</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Pin::new</span>(<span class="ident">stream</span>).<span class="ident">poll_flush</span>(<span class="ident">cx</span>),
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">poll_shutdown</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_shutdown</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
-            <span class="ident">State</span>::<span class="ident">Handshaking</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Ok</span>(())),
-            <span class="ident">State</span>::<span class="ident">Streaming</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Pin</span>::<span class="ident">new</span>(<span class="ident">stream</span>).<span class="ident">poll_shutdown</span>(<span class="ident">cx</span>),
+            <span class="ident">State::Handshaking</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Ok</span>(())),
+            <span class="ident">State::Streaming</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Pin::new</span>(<span class="ident">stream</span>).<span class="ident">poll_shutdown</span>(<span class="ident">cx</span>),
         }
     }
 }
@@ -731,7 +731,7 @@
 <span class="kw">impl</span> <span class="ident">TlsAcceptor</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">config</span>: <span class="ident">ServerConfig</span>, <span class="ident">incoming</span>: <span class="ident">AddrIncoming</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TlsAcceptor</span> {
         <span class="ident">TlsAcceptor</span> {
-            <span class="ident">config</span>: <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">config</span>),
+            <span class="ident">config</span>: <span class="ident">Arc::new</span>(<span class="ident">config</span>),
             <span class="ident">incoming</span>,
         }
     }
@@ -739,14 +739,14 @@
 
 <span class="kw">impl</span> <span class="ident">Accept</span> <span class="kw">for</span> <span class="ident">TlsAcceptor</span> {
     <span class="kw">type</span> <span class="ident">Conn</span> <span class="op">=</span> <span class="ident">TlsStream</span>;
-    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">io::Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">poll_accept</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Conn</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_accept</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Conn</span>, <span class="self">Self</span><span class="ident">::Error</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pin</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_mut</span>();
-        <span class="kw">match</span> <span class="macro">ready!</span>(<span class="ident">Pin</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">pin</span>.<span class="ident">incoming</span>).<span class="ident">poll_accept</span>(<span class="ident">cx</span>)) {
-            <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">sock</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">TlsStream</span>::<span class="ident">new</span>(<span class="ident">sock</span>, <span class="ident">pin</span>.<span class="ident">config</span>.<span class="ident">clone</span>())))),
-            <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>))),
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>),
+        <span class="kw">match</span> <span class="macro">ready!</span>(<span class="ident">Pin::new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">pin</span>.<span class="ident">incoming</span>).<span class="ident">poll_accept</span>(<span class="ident">cx</span>)) {
+            <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">sock</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">TlsStream::new</span>(<span class="ident">sock</span>, <span class="ident">pin</span>.<span class="ident">config</span>.<span class="ident">clone</span>())))),
+            <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>))),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>),
         }
     }
 }
@@ -757,7 +757,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">file_cert_key</span>() {
-        <span class="ident">TlsConfigBuilder</span>::<span class="ident">new</span>()
+        <span class="ident">TlsConfigBuilder::new</span>()
             .<span class="ident">key_path</span>(<span class="string">&quot;../examples/tls/key.rsa&quot;</span>)
             .<span class="ident">cert_path</span>(<span class="string">&quot;../examples/tls/cert.pem&quot;</span>)
             .<span class="ident">build</span>()
@@ -769,7 +769,7 @@
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">include_str!</span>(<span class="string">&quot;../../examples/tls/key.rsa&quot;</span>);
         <span class="kw">let</span> <span class="ident">cert</span> <span class="op">=</span> <span class="macro">include_str!</span>(<span class="string">&quot;../../examples/tls/cert.pem&quot;</span>);
 
-        <span class="ident">TlsConfigBuilder</span>::<span class="ident">new</span>()
+        <span class="ident">TlsConfigBuilder::new</span>()
             .<span class="ident">key</span>(<span class="ident">key</span>.<span class="ident">as_bytes</span>())
             .<span class="ident">cert</span>(<span class="ident">cert</span>.<span class="ident">as_bytes</span>())
             .<span class="ident">build</span>()

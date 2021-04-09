@@ -129,15 +129,15 @@
 <span class="kw">mod</span> <span class="ident">or</span>;
 <span class="kw">mod</span> <span class="ident">or_else</span>;
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span>::<span class="ident">and</span>::<span class="ident">And</span>;
-<span class="kw">use</span> <span class="self">self</span>::<span class="ident">and_then</span>::<span class="ident">AndThen</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span>::<span class="ident">or</span>::<span class="ident">Or</span>;
-<span class="kw">use</span> <span class="self">self</span>::<span class="ident">or_else</span>::<span class="ident">OrElse</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">Request</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">routing</span>::<span class="ident">PathState</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span><span class="ident">::and::And</span>;
+<span class="kw">use</span> <span class="self">self</span><span class="ident">::and_then::AndThen</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span><span class="ident">::or::Or</span>;
+<span class="kw">use</span> <span class="self">self</span><span class="ident">::or_else::OrElse</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::Request</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::routing::PathState</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">impls</span>::<span class="kw-2">*</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">Method</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::Method</span>;
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Filter</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
     <span class="kw">fn</span> <span class="ident">and</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">And</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span>
@@ -214,35 +214,35 @@
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">path</span>(<span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PathFilter</span> {
-    <span class="ident">PathFilter</span>::<span class="ident">new</span>(<span class="ident">path</span>)
+    <span class="ident">PathFilter::new</span>(<span class="ident">path</span>)
 }
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
-    <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">GET</span>)
+    <span class="ident">MethodFilter</span>(<span class="ident">Method::GET</span>)
 }
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">head</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
-    <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">HEAD</span>)
+    <span class="ident">MethodFilter</span>(<span class="ident">Method::HEAD</span>)
 }
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">options</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
-    <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">OPTIONS</span>)
+    <span class="ident">MethodFilter</span>(<span class="ident">Method::OPTIONS</span>)
 }
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">post</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
-    <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">POST</span>)
+    <span class="ident">MethodFilter</span>(<span class="ident">Method::POST</span>)
 }
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">patch</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
-    <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">PATCH</span>)
+    <span class="ident">MethodFilter</span>(<span class="ident">Method::PATCH</span>)
 }
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">put</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
-    <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">PUT</span>)
+    <span class="ident">MethodFilter</span>(<span class="ident">Method::PUT</span>)
 }
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delete</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MethodFilter</span> {
-    <span class="ident">MethodFilter</span>(<span class="ident">Method</span>::<span class="ident">DELETE</span>)
+    <span class="ident">MethodFilter</span>(<span class="ident">Method::DELETE</span>)
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="salvo_core" data-search-js="../../../../search-index.js"></div>

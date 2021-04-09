@@ -18,8 +18,8 @@ attach more than one Cookie header field.</p>
 <span class="kw">use</span> <span class="ident">headers</span>::{<span class="ident">Cookie</span>, <span class="ident">HeaderMap</span>, <span class="ident">HeaderMapExt</span>, <span class="ident">HeaderValue</span>};
 
 <span class="comment">// Setup the header map with strings...</span>
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
-<span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;cookie&quot;</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_static</span>(<span class="string">&quot;lang=en-US&quot;</span>));
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
+<span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;cookie&quot;</span>, <span class="ident">HeaderValue::from_static</span>(<span class="string">&quot;lang=en-US&quot;</span>));
 
 <span class="comment">// Parse a `Cookie` so we can play with it...</span>
 <span class="kw">let</span> <span class="ident">cookie</span> <span class="op">=</span> <span class="ident">headers</span>

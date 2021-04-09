@@ -93,8 +93,8 @@
 <span id="90">90</span>
 <span id="91">91</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::{<span class="ident">guess_accept_mime</span>, <span class="ident">header</span>, <span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">StatusCode</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http</span>::{<span class="ident">guess_accept_mime</span>, <span class="ident">header</span>, <span class="ident">Request</span>, <span class="ident">Response</span>, <span class="ident">StatusCode</span>};
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Catcher</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
     <span class="kw">fn</span> <span class="ident">catch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span>, <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
@@ -108,7 +108,7 @@
 }
 <span class="kw">impl</span> <span class="ident">Catcher</span> <span class="kw">for</span> <span class="ident">CatcherImpl</span> {
     <span class="kw">fn</span> <span class="ident">catch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span>, <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Response</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">status_code</span>().<span class="ident">unwrap_or</span>(<span class="ident">StatusCode</span>::<span class="ident">NOT_FOUND</span>);
+        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">status_code</span>().<span class="ident">unwrap_or</span>(<span class="ident">StatusCode::NOT_FOUND</span>);
         <span class="kw">if</span> <span class="ident">status</span> <span class="op">!</span><span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">code</span> {
             <span class="kw">return</span> <span class="bool-val">false</span>;
         }
@@ -120,7 +120,7 @@
         };
         <span class="kw">let</span> (<span class="ident">format</span>, <span class="ident">data</span>) <span class="op">=</span> <span class="ident">err</span>.<span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">format</span>);
         <span class="ident">res</span>.<span class="ident">headers_mut</span>()
-            .<span class="ident">insert</span>(<span class="ident">header</span>::<span class="ident">CONTENT_TYPE</span>, <span class="ident">format</span>.<span class="ident">to_string</span>().<span class="ident">parse</span>().<span class="ident">unwrap</span>());
+            .<span class="ident">insert</span>(<span class="ident">header::CONTENT_TYPE</span>, <span class="ident">format</span>.<span class="ident">to_string</span>().<span class="ident">parse</span>().<span class="ident">unwrap</span>());
         <span class="ident">res</span>.<span class="ident">write_body_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>);
         <span class="bool-val">true</span>
     }
@@ -130,7 +130,7 @@
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">code</span>:<span class="ident">expr</span>),<span class="op">+</span>) <span class="op">=</span><span class="op">&gt;</span> (
         <span class="kw">let</span> <span class="ident">list</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Catcher</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[
         $(
-            <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">CatcherImpl</span>::<span class="ident">new</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">http</span>::<span class="ident">errors</span>::<span class="ident">http_error</span>::<span class="ident">from_code</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">code</span>).<span class="ident">unwrap</span>())),
+            <span class="ident">Box::new</span>(<span class="ident">CatcherImpl::new</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::http::errors::http_error::from_code</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">code</span>).<span class="ident">unwrap</span>())),
         )<span class="op">+</span>];
         <span class="ident">list</span>
     )
@@ -138,49 +138,49 @@
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">defaults</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Catcher</span>, <span class="ident">CatcherImpl</span>};
-    <span class="kw">use</span> <span class="ident">http</span>::<span class="ident">status</span>::<span class="ident">StatusCode</span>;
+    <span class="kw">use</span> <span class="ident">http::status::StatusCode</span>;
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Catcher</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="macro">default_catchers!</span> {
-            <span class="ident">StatusCode</span>::<span class="ident">BAD_REQUEST</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">UNAUTHORIZED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">PAYMENT_REQUIRED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">FORBIDDEN</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">NOT_FOUND</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">METHOD_NOT_ALLOWED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">NOT_ACCEPTABLE</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">PROXY_AUTHENTICATION_REQUIRED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">REQUEST_TIMEOUT</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">CONFLICT</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">GONE</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">LENGTH_REQUIRED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">PRECONDITION_FAILED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">PAYLOAD_TOO_LARGE</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">URI_TOO_LONG</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">UNSUPPORTED_MEDIA_TYPE</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">RANGE_NOT_SATISFIABLE</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">EXPECTATION_FAILED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">IM_A_TEAPOT</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">MISDIRECTED_REQUEST</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">UNPROCESSABLE_ENTITY</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">LOCKED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">FAILED_DEPENDENCY</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">UPGRADE_REQUIRED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">PRECONDITION_REQUIRED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">TOO_MANY_REQUESTS</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">REQUEST_HEADER_FIELDS_TOO_LARGE</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">UNAVAILABLE_FOR_LEGAL_REASONS</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">INTERNAL_SERVER_ERROR</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">NOT_IMPLEMENTED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">BAD_GATEWAY</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">SERVICE_UNAVAILABLE</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">GATEWAY_TIMEOUT</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">HTTP_VERSION_NOT_SUPPORTED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">VARIANT_ALSO_NEGOTIATES</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">INSUFFICIENT_STORAGE</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">LOOP_DETECTED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">NOT_EXTENDED</span>,
-            <span class="ident">StatusCode</span>::<span class="ident">NETWORK_AUTHENTICATION_REQUIRED</span>
+            <span class="ident">StatusCode::BAD_REQUEST</span>,
+            <span class="ident">StatusCode::UNAUTHORIZED</span>,
+            <span class="ident">StatusCode::PAYMENT_REQUIRED</span>,
+            <span class="ident">StatusCode::FORBIDDEN</span>,
+            <span class="ident">StatusCode::NOT_FOUND</span>,
+            <span class="ident">StatusCode::METHOD_NOT_ALLOWED</span>,
+            <span class="ident">StatusCode::NOT_ACCEPTABLE</span>,
+            <span class="ident">StatusCode::PROXY_AUTHENTICATION_REQUIRED</span>,
+            <span class="ident">StatusCode::REQUEST_TIMEOUT</span>,
+            <span class="ident">StatusCode::CONFLICT</span>,
+            <span class="ident">StatusCode::GONE</span>,
+            <span class="ident">StatusCode::LENGTH_REQUIRED</span>,
+            <span class="ident">StatusCode::PRECONDITION_FAILED</span>,
+            <span class="ident">StatusCode::PAYLOAD_TOO_LARGE</span>,
+            <span class="ident">StatusCode::URI_TOO_LONG</span>,
+            <span class="ident">StatusCode::UNSUPPORTED_MEDIA_TYPE</span>,
+            <span class="ident">StatusCode::RANGE_NOT_SATISFIABLE</span>,
+            <span class="ident">StatusCode::EXPECTATION_FAILED</span>,
+            <span class="ident">StatusCode::IM_A_TEAPOT</span>,
+            <span class="ident">StatusCode::MISDIRECTED_REQUEST</span>,
+            <span class="ident">StatusCode::UNPROCESSABLE_ENTITY</span>,
+            <span class="ident">StatusCode::LOCKED</span>,
+            <span class="ident">StatusCode::FAILED_DEPENDENCY</span>,
+            <span class="ident">StatusCode::UPGRADE_REQUIRED</span>,
+            <span class="ident">StatusCode::PRECONDITION_REQUIRED</span>,
+            <span class="ident">StatusCode::TOO_MANY_REQUESTS</span>,
+            <span class="ident">StatusCode::REQUEST_HEADER_FIELDS_TOO_LARGE</span>,
+            <span class="ident">StatusCode::UNAVAILABLE_FOR_LEGAL_REASONS</span>,
+            <span class="ident">StatusCode::INTERNAL_SERVER_ERROR</span>,
+            <span class="ident">StatusCode::NOT_IMPLEMENTED</span>,
+            <span class="ident">StatusCode::BAD_GATEWAY</span>,
+            <span class="ident">StatusCode::SERVICE_UNAVAILABLE</span>,
+            <span class="ident">StatusCode::GATEWAY_TIMEOUT</span>,
+            <span class="ident">StatusCode::HTTP_VERSION_NOT_SUPPORTED</span>,
+            <span class="ident">StatusCode::VARIANT_ALSO_NEGOTIATES</span>,
+            <span class="ident">StatusCode::INSUFFICIENT_STORAGE</span>,
+            <span class="ident">StatusCode::LOOP_DETECTED</span>,
+            <span class="ident">StatusCode::NOT_EXTENDED</span>,
+            <span class="ident">StatusCode::NETWORK_AUTHENTICATION_REQUIRED</span>
         }
     }
 }

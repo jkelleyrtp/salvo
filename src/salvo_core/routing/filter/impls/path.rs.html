@@ -853,16 +853,16 @@
 <span id="850">850</span>
 <span id="851">851</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
+<span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
+<span class="kw">use</span> <span class="ident">std::fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
+<span class="kw">use</span> <span class="ident">std::sync::Arc</span>;
 
-<span class="kw">use</span> <span class="ident">once_cell</span>::<span class="ident">sync</span>::<span class="ident">Lazy</span>;
-<span class="kw">use</span> <span class="ident">regex</span>::<span class="ident">Regex</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">RwLock</span>;
+<span class="kw">use</span> <span class="ident">once_cell::sync::Lazy</span>;
+<span class="kw">use</span> <span class="ident">regex::Regex</span>;
+<span class="kw">use</span> <span class="ident">std::sync::RwLock</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">Request</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">routing</span>::{<span class="ident">Filter</span>, <span class="ident">PathState</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::Request</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::routing</span>::{<span class="ident">Filter</span>, <span class="ident">PathState</span>};
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PathPart</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">Debug</span> {
     <span class="kw">fn</span> <span class="ident">detect</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">PathState</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
@@ -872,11 +872,11 @@
 }
 
 <span class="kw">type</span> <span class="ident">PartBuilderMap</span> <span class="op">=</span> <span class="ident">RwLock</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">PartBuilder</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>;
-<span class="kw">static</span> <span class="ident">PART_BUILDERS</span>: <span class="ident">Lazy</span><span class="op">&lt;</span><span class="ident">PartBuilderMap</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Lazy</span>::<span class="ident">new</span>(<span class="op">|</span><span class="op">|</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">PartBuilder</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">with_capacity</span>(<span class="number">8</span>);
-    <span class="ident">map</span>.<span class="ident">insert</span>(<span class="string">&quot;num&quot;</span>.<span class="ident">into</span>(), <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">CharPartBuilder</span>::<span class="ident">new</span>(<span class="ident">is_num</span>))));
-    <span class="ident">map</span>.<span class="ident">insert</span>(<span class="string">&quot;hex&quot;</span>.<span class="ident">into</span>(), <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">CharPartBuilder</span>::<span class="ident">new</span>(<span class="ident">is_hex</span>))));
-    <span class="ident">RwLock</span>::<span class="ident">new</span>(<span class="ident">map</span>)
+<span class="kw">static</span> <span class="ident">PART_BUILDERS</span>: <span class="ident">Lazy</span><span class="op">&lt;</span><span class="ident">PartBuilderMap</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Lazy::new</span>(<span class="op">|</span><span class="op">|</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">PartBuilder</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::with_capacity</span>(<span class="number">8</span>);
+    <span class="ident">map</span>.<span class="ident">insert</span>(<span class="string">&quot;num&quot;</span>.<span class="ident">into</span>(), <span class="ident">Arc::new</span>(<span class="ident">Box::new</span>(<span class="ident">CharPartBuilder::new</span>(<span class="ident">is_num</span>))));
+    <span class="ident">map</span>.<span class="ident">insert</span>(<span class="string">&quot;hex&quot;</span>.<span class="ident">into</span>(), <span class="ident">Arc::new</span>(<span class="ident">Box::new</span>(<span class="ident">CharPartBuilder::new</span>(<span class="ident">is_hex</span>))));
+    <span class="ident">RwLock::new</span>(<span class="ident">map</span>)
 });
 
 <span class="kw">fn</span> <span class="ident">is_num</span>(<span class="ident">ch</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
@@ -894,7 +894,7 @@
 }
 <span class="kw">impl</span> <span class="ident">PartBuilder</span> <span class="kw">for</span> <span class="ident">RegexPartBuilder</span> {
     <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="ident">String</span>, <span class="ident">_sign</span>: <span class="ident">String</span>, <span class="ident">_args</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">PathPart</span><span class="op">&gt;</span>, <span class="ident">String</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">RegexPart</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">Box::new</span>(<span class="ident">RegexPart</span> {
             <span class="ident">name</span>,
             <span class="ident">regex</span>: <span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>(),
         }))
@@ -904,7 +904,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CharPartBuilder</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>(<span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>);
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="ident">CharPartBuilder</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">checker</span>: <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>(<span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">checker</span>))
+        <span class="self">Self</span>(<span class="ident">Arc::new</span>(<span class="ident">checker</span>))
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="ident">PartBuilder</span> <span class="kw">for</span> <span class="ident">CharPartBuilder</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>
@@ -956,7 +956,7 @@
                 }
             }
         };
-        <span class="prelude-val">Ok</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">CharPart</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">Box::new</span>(<span class="ident">CharPart</span> {
             <span class="ident">name</span>,
             <span class="ident">checker</span>: <span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>(),
             <span class="ident">min_width</span>,
@@ -971,8 +971,8 @@
     <span class="ident">min_width</span>: <span class="ident">usize</span>,
     <span class="ident">max_width</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
 }
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">CharPart</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">CharPart</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(
             <span class="ident">f</span>,
             <span class="string">&quot;CharPart {{ name: {:?}, min_width: {:?}, max_width: {:?} }}&quot;</span>,
@@ -991,7 +991,7 @@
         }
         <span class="kw">let</span> <span class="ident">segment</span> <span class="op">=</span> <span class="ident">url_path</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="string">&#39;/&#39;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()[<span class="number">0</span>];
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">max_width</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">max_width</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chars</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">max_width</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chars</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">max_width</span>);
             <span class="kw">for</span> <span class="ident">ch</span> <span class="kw">in</span> <span class="ident">segment</span>.<span class="ident">chars</span>() {
                 <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">checker</span>)(<span class="ident">ch</span>) {
                     <span class="ident">chars</span>.<span class="ident">push</span>(<span class="ident">ch</span>);
@@ -1010,7 +1010,7 @@
                 <span class="bool-val">false</span>
             }
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chars</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="number">16</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chars</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="number">16</span>);
             <span class="kw">for</span> <span class="ident">ch</span> <span class="kw">in</span> <span class="ident">segment</span>.<span class="ident">chars</span>() {
                 <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">checker</span>)(<span class="ident">ch</span>) {
                     <span class="ident">chars</span>.<span class="ident">push</span>(<span class="ident">ch</span>);
@@ -1277,7 +1277,7 @@
                     <span class="kw">if</span> <span class="self">self</span>.<span class="ident">offset</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">path</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span> {
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="string">&quot;no chars allowed after rest segment&quot;</span>.<span class="ident">to_owned</span>());
                     }
-                    <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">RestPart</span>::<span class="ident">new</span>(<span class="ident">name</span>)));
+                    <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">Box::new</span>(<span class="ident">RestPart::new</span>(<span class="ident">name</span>)));
                     <span class="self">self</span>.<span class="ident">next</span>(<span class="bool-val">false</span>);
                     <span class="kw">break</span>;
                 } <span class="kw">else</span> {
@@ -1341,11 +1341,11 @@
                             <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">builder</span>.<span class="ident">build</span>(<span class="ident">name</span>, <span class="ident">sign</span>, <span class="ident">args</span>)<span class="question-mark">?</span>);
                         } <span class="kw">else</span> {
                             <span class="self">self</span>.<span class="ident">next</span>(<span class="bool-val">false</span>);
-                            <span class="kw">let</span> <span class="ident">regex</span> <span class="op">=</span> <span class="ident">Regex</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">scan_regex</span>()<span class="question-mark">?</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">to_string</span>())<span class="question-mark">?</span>;
-                            <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">RegexPart</span>::<span class="ident">new</span>(<span class="ident">name</span>, <span class="ident">regex</span>)));
+                            <span class="kw">let</span> <span class="ident">regex</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">scan_regex</span>()<span class="question-mark">?</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">to_string</span>())<span class="question-mark">?</span>;
+                            <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">Box::new</span>(<span class="ident">RegexPart::new</span>(<span class="ident">name</span>, <span class="ident">regex</span>)));
                         }
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ch</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;&gt;&#39;</span> {
-                        <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">NamedPart</span>(<span class="ident">name</span>)));
+                        <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">Box::new</span>(<span class="ident">NamedPart</span>(<span class="ident">name</span>)));
                         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">peek</span>(<span class="bool-val">false</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;/&#39;</span>).<span class="ident">unwrap_or</span>(<span class="bool-val">true</span>) {
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">format!</span>(
                                 <span class="string">&quot;named part must be the last one in current segement, expect &#39;/&#39; or end, but found {:?} at offset: {}&quot;</span>,
@@ -1372,7 +1372,7 @@
                 <span class="kw">if</span> <span class="ident">part</span>.<span class="ident">is_empty</span>() {
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="string">&quot;const part is empty string&quot;</span>.<span class="ident">to_owned</span>());
                 }
-                <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">ConstPart</span>(<span class="ident">part</span>)));
+                <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">Box::new</span>(<span class="ident">ConstPart</span>(<span class="ident">part</span>)));
             }
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">curr</span>() {
                 <span class="kw">if</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;/&#39;</span> {
@@ -1400,7 +1400,7 @@
             }
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parts</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scan_parts</span>()<span class="question-mark">?</span>;
             <span class="kw">if</span> <span class="ident">parts</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">1</span> {
-                <span class="ident">path_parts</span>.<span class="ident">push</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">CombPart</span>(<span class="ident">parts</span>)));
+                <span class="ident">path_parts</span>.<span class="ident">push</span>(<span class="ident">Box::new</span>(<span class="ident">CombPart</span>(<span class="ident">parts</span>)));
             } <span class="kw">else</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">parts</span>.<span class="ident">is_empty</span>() {
                 <span class="ident">path_parts</span>.<span class="ident">push</span>(<span class="ident">parts</span>.<span class="ident">pop</span>().<span class="ident">unwrap</span>());
             } <span class="kw">else</span> {
@@ -1428,7 +1428,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">PathFilter</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{{ raw_value: &#39;{}&#39;}}&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">raw_value</span>)
     }
 }
@@ -1440,7 +1440,7 @@
 <span class="kw">impl</span> <span class="ident">PathFilter</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">raw_value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">raw_value</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="kw-2">&amp;</span><span class="ident">raw_value</span>);
         <span class="kw">let</span> <span class="ident">path_parts</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">parser</span>.<span class="ident">parse</span>() {
             <span class="prelude-val">Ok</span>(<span class="ident">path_parts</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">path_parts</span>,
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
@@ -1453,13 +1453,13 @@
     <span class="kw">where</span>
         <span class="ident">B</span>: <span class="ident">PartBuilder</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     {
-        <span class="ident">PART_BUILDERS</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>().<span class="ident">insert</span>(<span class="ident">name</span>, <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">builder</span>)));
+        <span class="ident">PART_BUILDERS</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>().<span class="ident">insert</span>(<span class="ident">name</span>, <span class="ident">Arc::new</span>(<span class="ident">Box::new</span>(<span class="ident">builder</span>)));
     }
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_path_part_regex</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="ident">String</span>, <span class="ident">regex</span>: <span class="ident">Regex</span>) {
         <span class="ident">PART_BUILDERS</span>
             .<span class="ident">write</span>()
             .<span class="ident">unwrap</span>()
-            .<span class="ident">insert</span>(<span class="ident">name</span>, <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">RegexPartBuilder</span>::<span class="ident">new</span>(<span class="ident">regex</span>))));
+            .<span class="ident">insert</span>(<span class="ident">name</span>, <span class="ident">Arc::new</span>(<span class="ident">Box::new</span>(<span class="ident">RegexPartBuilder::new</span>(<span class="ident">regex</span>))));
     }
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">PathState</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">path_parts</span>.<span class="ident">is_empty</span>() {
@@ -1489,43 +1489,43 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">PathParser</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">routing</span>::{<span class="ident">PathFilter</span>, <span class="ident">PathState</span>};
+    <span class="kw">use</span> <span class="kw">super</span><span class="ident">::PathParser</span>;
+    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::routing</span>::{<span class="ident">PathFilter</span>, <span class="ident">PathState</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_empty</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">&quot;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">&quot;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert!</span>(<span class="ident">segments</span>.<span class="ident">is_empty</span>());
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_root</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">&quot;/&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">&quot;/&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert!</span>(<span class="ident">segments</span>.<span class="ident">is_empty</span>());
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_rest_without_name</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">&quot;/hello/&lt;*&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">&quot;/hello/&lt;*&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>), <span class="string">r#&quot;[ConstPart(&quot;hello&quot;), RestPart(&quot;*&quot;)]&quot;#</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_single_const</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">&quot;/hello&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">&quot;/hello&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>), <span class="string">r#&quot;[ConstPart(&quot;hello&quot;)]&quot;#</span>);
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_multi_const</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">&quot;/hello/world&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">&quot;/hello/world&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>), <span class="string">r#&quot;[ConstPart(&quot;hello&quot;), ConstPart(&quot;world&quot;)]&quot;#</span>);
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_single_regex</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>), <span class="string">r#&quot;[RegexPart { name: &quot;abc&quot;, regex: \d+ }]&quot;#</span>);
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_single_regex_with_prefix</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/prefix_&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/prefix_&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;prefix_&quot;), RegexPart { name: &quot;abc&quot;, regex: \d+ }])]&quot;#</span>
@@ -1533,7 +1533,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_single_regex_with_suffix</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/&lt;abc:/\d+/&gt;_suffix.png&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/&lt;abc:/\d+/&gt;_suffix.png&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([RegexPart { name: &quot;abc&quot;, regex: \d+ }, ConstPart(&quot;_suffix.png&quot;)])]&quot;#</span>
@@ -1541,7 +1541,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_single_regex_with_prefix_and_suffix</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/prefix&lt;abc:/\d+/&gt;suffix.png&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/prefix&lt;abc:/\d+/&gt;suffix.png&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;prefix&quot;), RegexPart { name: &quot;abc&quot;, regex: \d+ }, ConstPart(&quot;suffix.png&quot;)])]&quot;#</span>
@@ -1549,7 +1549,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_multi_regex</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;/prefix&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id&gt;/prefix&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), NamedPart(&quot;id&quot;)]), CombPart([ConstPart(&quot;prefix&quot;), RegexPart { name: &quot;abc&quot;, regex: \d+ }])]&quot;#</span>
@@ -1557,7 +1557,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_multi_regex_with_prefix</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;/prefix&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id&gt;/prefix&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), NamedPart(&quot;id&quot;)]), CombPart([ConstPart(&quot;prefix&quot;), RegexPart { name: &quot;abc&quot;, regex: \d+ }])]&quot;#</span>
@@ -1565,7 +1565,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_multi_regex_with_suffix</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id:/\d+/&gt;/prefix&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id:/\d+/&gt;/prefix&lt;abc:/\d+/&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), RegexPart { name: &quot;id&quot;, regex: \d+ }]), CombPart([ConstPart(&quot;prefix&quot;), RegexPart { name: &quot;abc&quot;, regex: \d+ }])]&quot;#</span>
@@ -1573,7 +1573,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_multi_regex_with_prefix_and_suffix</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;/prefix&lt;abc:/\d+/&gt;ext&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id&gt;/prefix&lt;abc:/\d+/&gt;ext&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), NamedPart(&quot;id&quot;)]), CombPart([ConstPart(&quot;prefix&quot;), RegexPart { name: &quot;abc&quot;, regex: \d+ }, ConstPart(&quot;ext&quot;)])]&quot;#</span>
@@ -1581,7 +1581,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_rest</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;/&lt;*rest&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id&gt;/&lt;*rest&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), NamedPart(&quot;id&quot;)]), RestPart(&quot;*rest&quot;)]&quot;#</span>
@@ -1589,7 +1589,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_num</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id:num(10)&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id:num(10)&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), CharPart { name: &quot;id&quot;, min_width: 10, max_width: None }])]&quot;#</span>
@@ -1597,7 +1597,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_num2</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id:num(..10)&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id:num(..10)&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), CharPart { name: &quot;id&quot;, min_width: 1, max_width: Some(9) }])]&quot;#</span>
@@ -1605,7 +1605,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_num3</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id:num(3..10)&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id:num(3..10)&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), CharPart { name: &quot;id&quot;, min_width: 3, max_width: Some(9) }])]&quot;#</span>
@@ -1613,7 +1613,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_num4</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id:num[3..]&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id:num[3..]&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), CharPart { name: &quot;id&quot;, min_width: 3, max_width: None }])]&quot;#</span>
@@ -1621,7 +1621,7 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_num5</span>() {
-        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id:num(3..=10)&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">segments</span> <span class="op">=</span> <span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id:num(3..=10)&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">segments</span>),
             <span class="string">r#&quot;[CombPart([ConstPart(&quot;first&quot;), CharPart { name: &quot;id&quot;, min_width: 3, max_width: Some(10) }])]&quot;#</span>
@@ -1629,22 +1629,22 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_named_failed1</span>() {
-        <span class="macro">assert!</span>(<span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2&quot;</span>).<span class="ident">parse</span>().<span class="ident">is_err</span>());
+        <span class="macro">assert!</span>(<span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2&quot;</span>).<span class="ident">parse</span>().<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_rest_failed1</span>() {
-        <span class="macro">assert!</span>(<span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2&lt;*rest&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">is_err</span>());
+        <span class="macro">assert!</span>(<span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2&lt;*rest&gt;&quot;</span>).<span class="ident">parse</span>().<span class="ident">is_err</span>());
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_rest_failed2</span>() {
-        <span class="macro">assert!</span>(<span class="ident">PathParser</span>::<span class="ident">new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2/&lt;*rest&gt;wefwe&quot;</span>).<span class="ident">parse</span>().<span class="ident">is_err</span>());
+        <span class="macro">assert!</span>(<span class="ident">PathParser::new</span>(<span class="string">r&quot;/first&lt;id&gt;ext2/&lt;*rest&gt;wefwe&quot;</span>).<span class="ident">parse</span>().<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_detect_consts</span>() {
-        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter</span>::<span class="ident">new</span>(<span class="string">&quot;/hello/world&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState</span>::<span class="ident">new</span>(<span class="string">&quot;hello/world&quot;</span>);
+        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter::new</span>(<span class="string">&quot;/hello/world&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState::new</span>(<span class="string">&quot;hello/world&quot;</span>);
         <span class="ident">filter</span>.<span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">state</span>);
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">state</span>),
@@ -1653,8 +1653,8 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_detect_consts0</span>() {
-        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter</span>::<span class="ident">new</span>(<span class="string">&quot;/hello/world/&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState</span>::<span class="ident">new</span>(<span class="string">&quot;hello/world&quot;</span>);
+        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter::new</span>(<span class="string">&quot;/hello/world/&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState::new</span>(<span class="string">&quot;hello/world&quot;</span>);
         <span class="macro">assert!</span>(<span class="ident">filter</span>.<span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">state</span>));
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">state</span>),
@@ -1663,8 +1663,8 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_detect_consts1</span>() {
-        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter</span>::<span class="ident">new</span>(<span class="string">&quot;/hello/world&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState</span>::<span class="ident">new</span>(<span class="string">&quot;hello/world/&quot;</span>);
+        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter::new</span>(<span class="string">&quot;/hello/world&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState::new</span>(<span class="string">&quot;hello/world/&quot;</span>);
         <span class="macro">assert!</span>(<span class="ident">filter</span>.<span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">state</span>));
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">state</span>),
@@ -1673,8 +1673,8 @@
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_detect_consts2</span>() {
-        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter</span>::<span class="ident">new</span>(<span class="string">&quot;/hello/world2&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState</span>::<span class="ident">new</span>(<span class="string">&quot;hello/world&quot;</span>);
+        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter::new</span>(<span class="string">&quot;/hello/world2&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState::new</span>(<span class="string">&quot;hello/world&quot;</span>);
         <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">filter</span>.<span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">state</span>));
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">state</span>),
@@ -1684,8 +1684,8 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_detect_const_and_named</span>() {
-        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter</span>::<span class="ident">new</span>(<span class="string">&quot;/hello/world&lt;id&gt;&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState</span>::<span class="ident">new</span>(<span class="string">&quot;hello/worldabc&quot;</span>);
+        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter::new</span>(<span class="string">&quot;/hello/world&lt;id&gt;&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState::new</span>(<span class="string">&quot;hello/worldabc&quot;</span>);
         <span class="ident">filter</span>.<span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">state</span>);
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">state</span>),
@@ -1695,8 +1695,8 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_detect_many</span>() {
-        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter</span>::<span class="ident">new</span>(<span class="string">&quot;/users/&lt;id&gt;/emails&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState</span>::<span class="ident">new</span>(<span class="string">&quot;/users/29/emails&quot;</span>);
+        <span class="kw">let</span> <span class="ident">filter</span> <span class="op">=</span> <span class="ident">PathFilter::new</span>(<span class="string">&quot;/users/&lt;id&gt;/emails&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">PathState::new</span>(<span class="string">&quot;/users/29/emails&quot;</span>);
         <span class="macro">assert!</span>(<span class="ident">filter</span>.<span class="ident">detect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">state</span>));
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">state</span>),

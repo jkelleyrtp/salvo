@@ -53,12 +53,12 @@
 <span class="kw">mod</span> <span class="ident">named_file</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">named_file</span>::<span class="kw-2">*</span>;
 
-<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">Stream</span>;
-<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">body</span>::<span class="ident">Bytes</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">Read</span>, <span class="ident">Seek</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">pin</span>::<span class="ident">Pin</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">task</span>::{<span class="ident">Context</span>, <span class="ident">Poll</span>};
+<span class="kw">use</span> <span class="ident">futures::Stream</span>;
+<span class="kw">use</span> <span class="ident">hyper::body::Bytes</span>;
+<span class="kw">use</span> <span class="ident">std::fs::File</span>;
+<span class="kw">use</span> <span class="ident">std::io</span>::{<span class="ident">Read</span>, <span class="ident">Seek</span>};
+<span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+<span class="kw">use</span> <span class="ident">std::task</span>::{<span class="ident">Context</span>, <span class="ident">Poll</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">cmp</span>, <span class="ident">io</span>};
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileChunk</span> {
@@ -69,9 +69,9 @@
     <span class="ident">file</span>: <span class="ident">File</span>,
 }
 <span class="kw">impl</span> <span class="ident">Stream</span> <span class="kw">for</span> <span class="ident">FileChunk</span> {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Bytes</span>, <span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Bytes</span>, <span class="ident">io::Error</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">_cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">_cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Item</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="self">Self</span> {
             <span class="ident">chunk_size</span>,
             <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">read_size</span>,
@@ -81,19 +81,19 @@
         } <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>;
 
         <span class="kw">if</span> <span class="ident">chunk_size</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="ident">read_size</span> {
-            <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>)
+            <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>)
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">max_bytes</span>: <span class="ident">usize</span>;
-            <span class="ident">max_bytes</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">chunk_size</span>.<span class="ident">saturating_sub</span>(<span class="kw-2">*</span><span class="ident">read_size</span>), <span class="ident">buffer_size</span>) <span class="kw">as</span> <span class="ident">usize</span>;
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">max_bytes</span>);
-            <span class="ident">file</span>.<span class="ident">seek</span>(<span class="ident">io</span>::<span class="ident">SeekFrom</span>::<span class="ident">Start</span>(<span class="kw-2">*</span><span class="ident">offset</span>))<span class="question-mark">?</span>;
+            <span class="ident">max_bytes</span> <span class="op">=</span> <span class="ident">cmp::min</span>(<span class="ident">chunk_size</span>.<span class="ident">saturating_sub</span>(<span class="kw-2">*</span><span class="ident">read_size</span>), <span class="ident">buffer_size</span>) <span class="kw">as</span> <span class="ident">usize</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">max_bytes</span>);
+            <span class="ident">file</span>.<span class="ident">seek</span>(<span class="ident">io::SeekFrom::Start</span>(<span class="kw-2">*</span><span class="ident">offset</span>))<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">nbytes</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">by_ref</span>().<span class="ident">take</span>(<span class="ident">max_bytes</span> <span class="kw">as</span> <span class="ident">u64</span>).<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span>;
             <span class="kw">if</span> <span class="ident">nbytes</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
-                <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">UnexpectedEof</span>.<span class="ident">into</span>())))
+                <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">std::io::ErrorKind::UnexpectedEof</span>.<span class="ident">into</span>())))
             } <span class="kw">else</span> {
                 <span class="kw-2">*</span><span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="ident">nbytes</span> <span class="kw">as</span> <span class="ident">u64</span>;
                 <span class="kw-2">*</span><span class="ident">read_size</span> <span class="op">+</span><span class="op">=</span> <span class="ident">nbytes</span> <span class="kw">as</span> <span class="ident">u64</span>;
-                <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">Bytes</span>::<span class="ident">from</span>(<span class="ident">buf</span>))))
+                <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">Bytes::from</span>(<span class="ident">buf</span>))))
             }
         }
     }

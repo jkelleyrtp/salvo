@@ -573,33 +573,33 @@
 <span class="comment">// copied, modified, or distributed except according to those terms.</span>
 
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Stream</span>, <span class="ident">TryStream</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">pin</span>::<span class="ident">Pin</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">task</span>::{<span class="ident">Context</span>, <span class="ident">Poll</span>};
+<span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+<span class="kw">use</span> <span class="ident">std::task</span>::{<span class="ident">Context</span>, <span class="ident">Poll</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">mem</span>};
 
-<span class="kw">use</span> <span class="self">self</span>::<span class="ident">State</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">helpers</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">errors</span>::<span class="ident">ReadError</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">BodyChunk</span>;
+<span class="kw">use</span> <span class="self">self</span><span class="ident">::State</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::helpers</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::errors::ReadError</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::BodyChunk</span>;
 
 <span class="doccomment">/// A struct implementing `Read` and `BufRead` that will yield bytes until it sees a given sequence.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BoundaryFinder</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">TryStream</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">S</span>::<span class="ident">Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
+    <span class="ident">S::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
 {
     <span class="ident">stream</span>: <span class="ident">S</span>,
-    <span class="ident">state</span>: <span class="ident">State</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span><span class="op">&gt;</span>,
+    <span class="ident">state</span>: <span class="ident">State</span><span class="op">&lt;</span><span class="ident">S::Ok</span><span class="op">&gt;</span>,
     <span class="ident">boundary</span>: <span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">TryStream</span><span class="op">&gt;</span> <span class="ident">BoundaryFinder</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">S</span>::<span class="ident">Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
+    <span class="ident">S::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
 {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">stream</span>: <span class="ident">S</span>, <span class="ident">boundary</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">BoundaryFinder</span> {
             <span class="ident">stream</span>,
-            <span class="ident">state</span>: <span class="ident">State</span>::<span class="ident">Watching</span>,
+            <span class="ident">state</span>: <span class="ident">State::Watching</span>,
             <span class="ident">boundary</span>: <span class="ident">boundary</span>.<span class="ident">into</span>().<span class="ident">into_boxed_slice</span>(),
         }
     }
@@ -614,39 +614,39 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="ident">BoundaryFinder</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">S</span>: <span class="ident">TryStream</span>,
-    <span class="ident">S</span>::<span class="prelude-val">Ok</span>: <span class="ident">BodyChunk</span>,
-    <span class="ident">S</span>::<span class="ident">Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
+    <span class="ident">S::Ok</span>: <span class="ident">BodyChunk</span>,
+    <span class="ident">S::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
 {
     <span class="macro">unsafe_pinned!</span>(<span class="ident">stream</span>: <span class="ident">S</span>);
-    <span class="macro">unsafe_unpinned!</span>(<span class="ident">state</span>: <span class="ident">State</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span><span class="op">&gt;</span>);
+    <span class="macro">unsafe_unpinned!</span>(<span class="ident">state</span>: <span class="ident">State</span><span class="op">&lt;</span><span class="ident">S::Ok</span><span class="op">&gt;</span>);
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">body_chunk</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">ReadError</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">body_chunk</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">ReadError</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="macro">macro_rules!</span> <span class="ident">try_ready_opt</span> (
             (<span class="macro-nonterminal">$</span><span class="kw">try</span>:<span class="macro-nonterminal">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
                 <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="kw">try</span> {
-                    <span class="macro-nonterminal">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">val</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">val</span>,
-                    <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()))),
-                    <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro-nonterminal">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">val</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">val</span>,
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()))),
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="macro">set_state!</span>(<span class="self">self</span> <span class="op">=</span> <span class="ident">End</span>);
-                        <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>);
+                        <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>);
                     }
-                    <span class="ident">Poll</span>::<span class="ident">Pending</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Pending</span>,
+                    <span class="ident">Poll::Pending</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">Poll::Pending</span>,
                 }
             );
             (<span class="macro-nonterminal">$</span><span class="kw">try</span>:<span class="macro-nonterminal">expr</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">restore</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
                 <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="kw">try</span> {
-                    <span class="macro-nonterminal">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">val</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">val</span>,
-                    <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>))) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro-nonterminal">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">val</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">val</span>,
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>))) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="macro">set_state!</span>(<span class="self">self</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">restore</span>);
-                        <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>.<span class="ident">into</span>())));
+                        <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>.<span class="ident">into</span>())));
                     },
-                    <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="macro">set_state!</span>(<span class="self">self</span> <span class="op">=</span> <span class="ident">End</span>);
-                        <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>);
+                        <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>);
                     },
-                    <span class="ident">Poll</span>::<span class="ident">Pending</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Poll::Pending</span> <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="macro">set_state!</span>(<span class="self">self</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">restore</span>);
-                        <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Pending</span>;
+                        <span class="kw">return</span> <span class="ident">Poll::Pending</span>;
                     }
                 }
             )
@@ -655,11 +655,11 @@
         <span class="kw">loop</span> {
             <span class="comment">// tracing::debug!(&quot;body_chunk() loop state: {:?}&quot;, self.state);</span>
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
-                <span class="ident">Found</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Split</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">|</span> <span class="ident">End</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>),
+                <span class="ident">Found</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Split</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">|</span> <span class="ident">End</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>),
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (),
             }
 
-            <span class="kw">match</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">state</span>(), <span class="ident">Watching</span>) {
+            <span class="kw">match</span> <span class="ident">mem::replace</span>(<span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">state</span>(), <span class="ident">Watching</span>) {
                 <span class="ident">Watching</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> <span class="macro">try_ready_opt!</span>(<span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">stream</span>().<span class="ident">try_poll_next</span>(<span class="ident">cx</span>));
 
@@ -679,21 +679,21 @@
                 }
                 <span class="ident">Partial</span>(<span class="ident">partial</span>, <span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">stream</span>().<span class="ident">try_poll_next</span>(<span class="ident">cx</span>) {
-                        <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="ident">chunk</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">chunk</span> {
+                        <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="ident">chunk</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">chunk</span> {
                             <span class="prelude-val">Ok</span>(<span class="ident">chunk</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">chunk</span>,
-                            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()))),
+                            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()))),
                         },
-                        <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> {
                             <span class="macro">set_state!</span>(<span class="self">self</span> <span class="op">=</span> <span class="ident">End</span>);
-                            <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="macro">fmt_err!</span>(
+                            <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="macro">fmt_err!</span>(
                                 <span class="string">&quot;unable to verify multipart boundary; expected: \&quot;{}\&quot; found: \&quot;{}\&quot;&quot;</span>,
                                 <span class="ident">show_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">boundary</span>),
                                 <span class="ident">show_bytes</span>(<span class="ident">partial</span>.<span class="ident">as_slice</span>())
                             )));
                         }
-                        <span class="ident">Poll</span>::<span class="ident">Pending</span> <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="ident">Poll::Pending</span> <span class="op">=</span><span class="op">&gt;</span> {
                             <span class="macro">set_state!</span>(<span class="self">self</span> <span class="op">=</span> <span class="ident">Partial</span>(<span class="ident">partial</span>, <span class="ident">res</span>));
-                            <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Pending</span>;
+                            <span class="kw">return</span> <span class="ident">Poll::Pending</span>;
                         }
                     };
 
@@ -708,7 +708,7 @@
 
                     <span class="kw">if</span> <span class="ident">needed_len</span> <span class="op">&gt;</span> <span class="ident">chunk</span>.<span class="ident">len</span>() {
                         <span class="comment">// hopefully rare; must be dealing with a poorly behaved stream impl</span>
-                        <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Some</span>(<span class="macro">fmt_err!</span>(
+                        <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="macro">fmt_err!</span>(
                             <span class="string">&quot;needed {} more bytes to verify boundary, got {}&quot;</span>,
                             <span class="ident">needed_len</span>,
                             <span class="ident">chunk</span>.<span class="ident">len</span>()
@@ -749,7 +749,7 @@
                         <span class="kw">return</span> <span class="ident">ready_ok</span>(<span class="ident">ret</span>);
                     } <span class="kw">else</span> {
                         <span class="comment">// Don&#39;t return an empty chunk at the end</span>
-                        <span class="kw">return</span> <span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">None</span>);
+                        <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>);
                     }
                 }
                 <span class="ident">state</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(<span class="string">&quot;invalid state: {:?}&quot;</span>, <span class="ident">state</span>),
@@ -757,7 +757,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">check_chunk</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">chunk</span>: <span class="ident">S</span>::<span class="prelude-val">Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">check_chunk</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">chunk</span>: <span class="ident">S::Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">S::Ok</span><span class="op">&gt;</span> {
         <span class="comment">// tracing::debug!(&quot;check chunk: &#39;{}&#39;&quot;, show_bytes(chunk.as_slice()));</span>
         <span class="kw">if</span> <span class="ident">chunk</span>.<span class="ident">is_empty</span>() {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
@@ -796,8 +796,8 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">find_boundary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">chunk</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SearchResult</span><span class="op">&gt;</span> {
-        <span class="ident">twoway</span>::<span class="ident">find_bytes</span>(<span class="ident">chunk</span>.<span class="ident">as_slice</span>(), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">boundary</span>)
+    <span class="kw">fn</span> <span class="ident">find_boundary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">chunk</span>: <span class="kw-2">&amp;</span><span class="ident">S::Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SearchResult</span><span class="op">&gt;</span> {
+        <span class="ident">twoway::find_bytes</span>(<span class="ident">chunk</span>.<span class="ident">as_slice</span>(), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">boundary</span>)
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">idx</span><span class="op">|</span> <span class="ident">check_crlf</span>(<span class="ident">chunk</span>.<span class="ident">as_slice</span>(), <span class="ident">idx</span>))
             .<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">partial_find_boundary</span>(<span class="ident">chunk</span>))
     }
@@ -814,7 +814,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">partial_find_boundary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">chunk</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SearchResult</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_find_boundary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">chunk</span>: <span class="kw-2">&amp;</span><span class="ident">S::Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SearchResult</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> <span class="ident">chunk</span>.<span class="ident">as_slice</span>();
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">chunk</span>.<span class="ident">len</span>();
 
@@ -861,7 +861,7 @@
             <span class="comment">// tracing::debug!(&quot;body chunk loop!&quot;);</span>
         }
         <span class="comment">// tracing::debug!(&quot;consume_boundary() after-loop state: {:?}&quot;, self.state,);</span>
-        <span class="kw">match</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">state</span>(), <span class="ident">Watching</span>) {
+        <span class="kw">match</span> <span class="ident">mem::replace</span>(<span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">state</span>(), <span class="ident">Watching</span>) {
             <span class="ident">Found</span>(<span class="ident">bnd</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">confirm_boundary</span>(<span class="ident">bnd</span>),
             <span class="ident">Split</span>(<span class="ident">first</span>, <span class="ident">second</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">confirm_boundary_split</span>(<span class="ident">first</span>, <span class="ident">second</span>),
             <span class="ident">End</span> <span class="op">=</span><span class="op">&gt;</span> {
@@ -872,7 +872,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">confirm_boundary</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">boundary</span>: <span class="ident">S</span>::<span class="prelude-val">Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">ReadError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">confirm_boundary</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">boundary</span>: <span class="ident">S::Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">ReadError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">boundary</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">boundary_size</span>(<span class="bool-val">false</span>) {
             <span class="macro">ret_err!</span>(<span class="string">&quot;boundary sequence too short: {}&quot;</span>, <span class="ident">show_bytes</span>(<span class="ident">boundary</span>.<span class="ident">as_slice</span>()));
         }
@@ -902,7 +902,7 @@
         <span class="ident">ready_ok</span>(<span class="op">!</span><span class="ident">is_end</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">confirm_boundary_split</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">first</span>: <span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">second</span>: <span class="ident">S</span>::<span class="prelude-val">Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">ReadError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">confirm_boundary_split</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">first</span>: <span class="ident">S::Ok</span>, <span class="ident">second</span>: <span class="ident">S::Ok</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">ReadError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">first</span>.<span class="ident">as_slice</span>();
         <span class="kw">let</span> <span class="ident">check_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">boundary_size</span>(<span class="bool-val">false</span>) <span class="op">-</span> <span class="ident">first</span>.<span class="ident">len</span>();
 
@@ -948,22 +948,22 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Stream</span> <span class="kw">for</span> <span class="ident">BoundaryFinder</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">S</span>: <span class="ident">TryStream</span>,
-    <span class="ident">S</span>::<span class="prelude-val">Ok</span>: <span class="ident">BodyChunk</span>,
-    <span class="ident">S</span>::<span class="ident">Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
+    <span class="ident">S::Ok</span>: <span class="ident">BodyChunk</span>,
+    <span class="ident">S::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
 {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">ReadError</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">ReadError</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Item</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">body_chunk</span>(<span class="ident">cx</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">TryStream</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">BoundaryFinder</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">TryStream</span> <span class="op">+</span> <span class="ident">fmt::Debug</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">BoundaryFinder</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">S</span>::<span class="prelude-val">Ok</span>: <span class="ident">BodyChunk</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span>,
-    <span class="ident">S</span>::<span class="ident">Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
+    <span class="ident">S::Ok</span>: <span class="ident">BodyChunk</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>,
+    <span class="ident">S::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ReadError</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;BoundaryFinder&quot;</span>)
             .<span class="ident">field</span>(<span class="string">&quot;stream&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">stream</span>)
             .<span class="ident">field</span>(<span class="string">&quot;state&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">state</span>)
@@ -984,9 +984,9 @@
     <span class="ident">End</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BodyChunk</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">State</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">State</span>::<span class="kw-2">*</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BodyChunk</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">State</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="kw">use</span> <span class="self">self</span><span class="ident">::State</span>::<span class="kw-2">*</span>;
 
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">Watching</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;State::Watching&quot;</span>),
@@ -1036,7 +1036,7 @@
     <span class="kw">let</span> <span class="ident">is_end</span> <span class="op">=</span> <span class="ident">boundary</span>.<span class="ident">ends_with</span>(<span class="string">b&quot;--&quot;</span>);
 
     <span class="kw">if</span> <span class="op">!</span><span class="ident">is_end</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">boundary</span>.<span class="ident">ends_with</span>(<span class="string">b&quot;\r\n&quot;</span>) <span class="op">&amp;&amp;</span> <span class="ident">boundary</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">2</span> {
-        <span class="ident">tracing</span>::<span class="macro">warn!</span>(<span class="string">&quot;unexpected bytes after boundary&quot;</span>);
+        <span class="macro">tracing::warn!</span>(<span class="string">&quot;unexpected bytes after boundary&quot;</span>);
     }
 
     <span class="ident">is_end</span>
@@ -1050,7 +1050,7 @@
 
     <span class="comment">// If the haystack is smaller than the needle, we still need to test it</span>
     <span class="kw">let</span> <span class="ident">trim_start</span> <span class="op">=</span> <span class="ident">haystack</span>.<span class="ident">len</span>().<span class="ident">saturating_sub</span>(<span class="ident">needle</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>);
-    <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="macro">try_opt!</span>(<span class="ident">twoway</span>::<span class="ident">find_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">haystack</span>[<span class="ident">trim_start</span>..], <span class="kw-2">&amp;</span><span class="ident">needle</span>[..<span class="number">1</span>])) <span class="op">+</span> <span class="ident">trim_start</span>;
+    <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="macro">try_opt!</span>(<span class="ident">twoway::find_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">haystack</span>[<span class="ident">trim_start</span>..], <span class="kw-2">&amp;</span><span class="ident">needle</span>[..<span class="number">1</span>])) <span class="op">+</span> <span class="ident">trim_start</span>;
     <span class="comment">// tracing::debug!(&quot;partial_rmatch found start: {:?}&quot;, idx);</span>
     <span class="comment">// If the rest of `haystack` matches `needle`, then we have our partial match</span>
     <span class="kw">if</span> <span class="ident">haystack</span>[<span class="ident">idx</span>..].<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">needle</span>).<span class="ident">all</span>(<span class="op">|</span>(<span class="ident">l</span>, <span class="ident">r</span>)<span class="op">|</span> <span class="ident">l</span> <span class="op">=</span><span class="op">=</span> <span class="ident">r</span>) {
@@ -1062,19 +1062,19 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">BoundaryFinder</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">multipart</span>::<span class="ident">test_util</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="kw">super</span><span class="ident">::BoundaryFinder</span>;
+    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::http::multipart::test_util</span>::<span class="kw-2">*</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_empty_stream</span>() {
-        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder</span>::<span class="ident">new</span>(<span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[]), <span class="ident">BOUNDARY</span>);
+        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder::new</span>(<span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[]), <span class="ident">BOUNDARY</span>);
         <span class="macro">pin_mut!</span>(<span class="ident">finder</span>);
         <span class="macro">ready_assert_ok_eq!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">finder</span>.<span class="ident">as_mut</span>().<span class="ident">consume_boundary</span>(<span class="ident">cx</span>), <span class="bool-val">false</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_one_boundary</span>() {
-        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder</span>::<span class="ident">new</span>(<span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[<span class="string">b&quot;--boundary\r\n&quot;</span>]), <span class="ident">BOUNDARY</span>);
+        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder::new</span>(<span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[<span class="string">b&quot;--boundary\r\n&quot;</span>]), <span class="ident">BOUNDARY</span>);
         <span class="macro">pin_mut!</span>(<span class="ident">finder</span>);
         <span class="macro">ready_assert_ok_eq!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">finder</span>.<span class="ident">as_mut</span>().<span class="ident">consume_boundary</span>(<span class="ident">cx</span>), <span class="bool-val">true</span>);
         <span class="macro">ready_assert_ok_eq!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">finder</span>.<span class="ident">as_mut</span>().<span class="ident">consume_boundary</span>(<span class="ident">cx</span>), <span class="bool-val">false</span>);
@@ -1082,7 +1082,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_one_incomplete_boundary</span>() {
-        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder</span>::<span class="ident">new</span>(<span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[<span class="string">b&quot;--bound&quot;</span>]), <span class="ident">BOUNDARY</span>);
+        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder::new</span>(<span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[<span class="string">b&quot;--bound&quot;</span>]), <span class="ident">BOUNDARY</span>);
         <span class="macro">pin_mut!</span>(<span class="ident">finder</span>);
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="macro">until_ready!</span>(<span class="op">|</span><span class="ident">cx</span><span class="op">|</span> <span class="ident">finder</span>.<span class="ident">as_mut</span>().<span class="ident">consume_boundary</span>(<span class="ident">cx</span>));
         <span class="macro">assert_eq!</span>(<span class="ident">result</span>.<span class="ident">is_err</span>(), <span class="bool-val">true</span>);
@@ -1090,7 +1090,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_one_empty_field</span>() {
-        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder</span>::<span class="ident">new</span>(
+        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder::new</span>(
             <span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[<span class="string">b&quot;--boundary&quot;</span>, <span class="string">b&quot;\r\n&quot;</span>, <span class="string">b&quot;\r\n&quot;</span>, <span class="string">b&quot;--boundary--&quot;</span>]),
             <span class="ident">BOUNDARY</span>,
         );
@@ -1102,7 +1102,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_one_nonempty_field</span>() {
-        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder</span>::<span class="ident">new</span>(
+        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder::new</span>(
             <span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[<span class="string">b&quot;--boundary&quot;</span>, <span class="string">b&quot;\r\n&quot;</span>, <span class="string">b&quot;field data&quot;</span>, <span class="string">b&quot;\r\n&quot;</span>, <span class="string">b&quot;--boundary--&quot;</span>]),
             <span class="ident">BOUNDARY</span>,
         );
@@ -1116,7 +1116,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_two_empty_fields</span>() {
-        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder</span>::<span class="ident">new</span>(
+        <span class="kw">let</span> <span class="ident">finder</span> <span class="op">=</span> <span class="ident">BoundaryFinder::new</span>(
             <span class="ident">mock_stream</span>(<span class="kw-2">&amp;</span>[<span class="string">b&quot;--boundary&quot;</span>, <span class="string">b&quot;\r\n&quot;</span>, <span class="string">b&quot;\r\n--boundary\r\n&quot;</span>, <span class="string">b&quot;\r\n&quot;</span>, <span class="string">b&quot;--boundary--&quot;</span>]),
             <span class="ident">BOUNDARY</span>,
         );
