@@ -13,18 +13,22 @@
 <span id="10">10</span>
 <span id="11">11</span>
 <span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">salvo_core</span> <span class="kw">as</span> <span class="ident">core</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">salvo_core</span>::<span class="kw-2">*</span>;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;basic_auth&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;jwt_auth&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compression&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;proxy&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serve&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;sse&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ws&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;size_limiter&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(
+    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;basic_auth&quot;</span>,
+    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;jwt_auth&quot;</span>,
+    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compression&quot;</span>,
+    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;proxy&quot;</span>,
+    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serve&quot;</span>,
+    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;sse&quot;</span>,
+    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ws&quot;</span>,
+    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;size_limiter&quot;</span>
+))]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">salvo_extra</span> <span class="kw">as</span> <span class="ident">extra</span>;
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="salvo" data-search-js="../../search-index.js"></div>
