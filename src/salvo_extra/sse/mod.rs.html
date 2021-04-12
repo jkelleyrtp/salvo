@@ -438,7 +438,7 @@
     <span class="doccomment">/// Set Server-sent event retry</span>
     <span class="doccomment">/// Retry timeout field (&quot;retry:&lt;timeout&gt;&quot;)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">retry</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">duration</span>: <span class="ident">Duration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SseEvent</span> {
-        <span class="self">self</span>.<span class="ident">retry</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">duration</span>.<span class="ident">into</span>());
+        <span class="self">self</span>.<span class="ident">retry</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">duration</span>);
         <span class="self">self</span>
     }
 
