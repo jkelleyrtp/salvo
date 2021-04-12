@@ -163,11 +163,13 @@
 <span id="160">160</span>
 <span id="161">161</span>
 <span id="162">162</span>
+<span id="163">163</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! ProxyHandler.</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy::mutex_atomic</span>)]</span>
 <span class="kw">use</span> <span class="ident">std::convert::TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::sync</span>::{<span class="ident">Arc</span>, <span class="ident">Mutex</span>};
+<span class="kw">use</span> <span class="ident">std::sync::Mutex</span>;
 
 <span class="kw">use</span> <span class="ident">async_trait::async_trait</span>;
 <span class="kw">use</span> <span class="ident">hyper</span>::{<span class="ident">Client</span>, <span class="ident">Uri</span>};
@@ -198,7 +200,7 @@
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ProxyHandler</span> {
     <span class="kw">pub</span> <span class="ident">upstreams</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">counter</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">counter</span>: <span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ProxyHandler</span> {
@@ -208,7 +210,7 @@
         }
         <span class="ident">ProxyHandler</span> {
             <span class="ident">upstreams</span>,
-            <span class="ident">counter</span>: <span class="ident">Arc::new</span>(<span class="ident">Mutex::new</span>(<span class="number">0</span>)),
+            <span class="ident">counter</span>: <span class="ident">Mutex::new</span>(<span class="number">0</span>),
         }
     }
 }

@@ -82,6 +82,7 @@
 <span id="79">79</span>
 <span id="80">80</span>
 <span id="81">81</span>
+<span id="82">82</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">mod</span> <span class="ident">named_file</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">named_file</span>::<span class="kw-2">*</span>;
@@ -155,6 +156,7 @@
                     <span class="comment">// so return read these data</span>
                     <span class="kw">if</span> <span class="ident">read_num</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                         <span class="ident">data</span>.<span class="ident">truncate</span>(<span class="ident">read_num</span>);
+                        <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">data</span>)));
                     } <span class="kw">else</span> {
                         <span class="kw">return</span> <span class="ident">Poll::Pending</span>;
                     }
